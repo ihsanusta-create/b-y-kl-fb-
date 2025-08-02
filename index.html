@@ -13,10 +13,17 @@
       padding: 0;
       transition: background-color 0.3s, color 0.3s;
     }
+    body.light {
+      background-color: #f9f9f9;
+      color: #222;
+    }
     header {
       text-align: center;
       padding: 2rem 1rem;
       background-color: #1a1a1a;
+    }
+    body.light header {
+      background-color: #ddd;
     }
     header img {
       width: 120px;
@@ -27,6 +34,9 @@
       margin-top: 1rem;
       color: #ffcc00;
       font-size: 2rem;
+    }
+    body.light h1 {
+      color: #c59c00;
     }
     main {
       max-width: 700px;
@@ -39,6 +49,9 @@
     h2 {
       color: #ffcc00;
     }
+    body.light h2 {
+      color: #c59c00;
+    }
     input, textarea {
       width: 100%;
       padding: 0.75rem;
@@ -47,6 +60,12 @@
       color: white;
       border-radius: 6px;
       margin-bottom: 1rem;
+    }
+    body.light input,
+    body.light textarea {
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #999;
     }
     button {
       background-color: #ffcc00;
@@ -66,12 +85,19 @@
       border-left: 4px solid #444;
       border-radius: 6px;
     }
+    body.light .yorum {
+      background-color: #eee;
+      border-left: 4px solid #ccc;
+    }
     .yorum .ad {
       font-weight: bold;
     }
     .yorum .tarih {
       font-size: 0.8rem;
       color: #aaa;
+    }
+    body.light .yorum .tarih {
+      color: #666;
     }
     footer {
       text-align: center;
@@ -80,22 +106,27 @@
       background-color: #111;
       color: #666;
     }
-    .tema-toggle {
+    body.light footer {
+      background-color: #ccc;
+      color: #333;
+    }
+    .tema-butonu {
       position: fixed;
       top: 20px;
       right: 20px;
-      background-color: #444;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
       border: none;
       border-radius: 6px;
-      padding: 0.5rem;
-      cursor: pointer;
+      background-color: #444;
       color: #fff;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-<button class="tema-toggle" id="temaBtn">🌙 Tema</button>
+<button class="tema-butonu" onclick="toggleTema()">🌙 Tema Değiştir</button>
 
 <header>
   <img src="biyiklifi-logo.png" alt="Bıyıklıfbi Logo">
@@ -125,30 +156,18 @@
 </footer>
 
 <script>
-  // Tema geçişi
-  const temaBtn = document.getElementById("temaBtn");
-  temaBtn.addEventListener("click", () => {
-    if(document.body.style.backgroundColor === "white"){
-      document.body.style.backgroundColor = "#0d0d0d";
-      document.body.style.color = "#f0f0f0";
-      temaBtn.textContent = "🌙 Tema";
-    } else {
-      document.body.style.backgroundColor = "white";
-      document.body.style.color = "#0d0d0d";
-      temaBtn.textContent = "🌑 Tema";
-    }
-  });
+  function toggleTema() {
+    document.body.classList.toggle("light");
+  }
 
   const form = document.getElementById("yorumForm");
   const yorumlar = document.getElementById("yorumlar");
 
-  // LocalStorage yükle
   window.addEventListener("load", () => {
     const kayitli = JSON.parse(localStorage.getItem("yorumlar")) || [];
     kayitli.forEach(ekleYorum);
   });
 
-  // Form gönder
   form.addEventListener("submit", function(e) {
     e.preventDefault();
 
@@ -160,7 +179,6 @@
       const veri = { ad, yorum, tarih };
       ekleYorum(veri);
 
-      // LocalStorage'a kaydet
       const kayitli = JSON.parse(localStorage.getItem("yorumlar")) || [];
       kayitli.unshift(veri);
       localStorage.setItem("yorumlar", JSON.stringify(kayitli));
