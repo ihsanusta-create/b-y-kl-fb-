@@ -1,386 +1,157 @@
-<!DOCTYPE html>
-<html lang="tr">
+<!DOCTYPE html><html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bıyıklıfbı – Ana Sayfa</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BıyıklıFBİ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-color: #f9f9f9;
-      color: #333;
-      font-family: 'Georgia', serif;
-      margin: 0;
-      padding: 0;
-      transition: background-color 0.3s, color 0.3s;
+    :root {
+      --bg-color: #f0f2f5;
+      --text-color: #222;
+      --card-bg: white;
+      --nav-bg: #ffffff;
     }
-    .dark-mode {
-      background-color: #0d0d0d !important;
-      color: #f0f0f0 !important;
-    }
-    header {
-      text-align: center;
-      padding: 2rem 1rem;
-      background-color: #1a1a1a;
-      color: #fff;
-      position: relative;
-    }
-    .dark-mode header {
-      background-color: #222 !important;
-      color: #ffcc00 !important;
-    }
-    header img {
-      width: 100px;
-      height: auto;
-      border-radius: 12px;
-    }
-    nav {
-      margin-top: 1rem;
-      background-color: #333;
-      border-radius: 8px;
-    }
-    .dark-mode nav {
-      background-color: #262626 !important;
-    }
-    nav ul {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      margin: 0;
-    }
-    nav ul li {
-      margin: 0 1rem;
-    }
-    nav ul li a {
-      color: #fff;
-      text-decoration: none;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      transition: background-color 0.3s;
-      display: inline-block;
-    }
-    nav ul li a:hover {
-      background-color: #444;
-    }
-    .dark-mode nav ul li a:hover {
-      background-color: #666;
-      color: #ffcc00;
-    }
-    main {
-      max-width: 700px;
-      margin: auto;
-      padding: 2rem;
-    }
-    section {
-      margin-bottom: 2rem;
-      background-color: #fff;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s, color 0.3s;
-    }
-    .dark-mode section {
-      background-color: #181818 !important;
-      color: #f0f0f0 !important;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    h2 {
-      color: #ffcc00;
-    }
-    .dark-mode h2 {
-      color: #ffd700;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 0.75rem;
-      background-color: #f1f1f1;
-      border: 1px solid #ccc;
-      color: #333;
-      border-radius: 6px;
-      margin-bottom: 1rem;
-      font-family: inherit;
-      font-size: 1rem;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    .dark-mode input, .dark-mode textarea {
-      background-color: #292929;
-      border: 1px solid #666;
-      color: #eee;
-    }
-    button {
-      background-color: #ffcc00;
-      color: black;
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3em;
-    }
-    button:hover {
-      background-color: #e6b800;
-    }
-    .dark-mode button {
-      background-color: #ffd700;
-      color: #111;
-    }
-    .yorum {
-      background-color: #f9f9f9;
-      padding: 1rem;
-      margin-top: 1rem;
-      border-left: 4px solid #444;
-      border-radius: 6px;
-      position: relative;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    .dark-mode .yorum {
-      background-color: #222;
-      border-left: 4px solid #ffd700;
-      color: #f0f0f0;
-    }
-    .yorum .ad {
-      font-weight: bold;
-      margin-bottom: 0.2em;
-    }
-    .yorum .tarih {
-      font-size: 0.8rem;
-      color: #aaa;
-      margin-bottom: 0.4em;
-    }
-    .dark-mode .yorum .tarih {
-      color: #ccc;
-    }
-    .yorum .actions {
-      margin-top: 0.7em;
-      display: flex;
-      gap: 0.5em;
-    }
-    .yanit {
-      margin-top: 0.7em;
-      margin-left: 1.5em;
-      background: #fffbe0;
-      color: #222;
-      border-left: 3px solid #ffcc00;
-      border-radius: 5px;
-      padding: 0.7em 1em;
-      font-size: 0.97em;
-    }
-    .dark-mode .yanit {
-      background: #292200;
-      color: #ffd700;
-      border-left: 3px solid #ffd700;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      background-color: #111;
-      color: #666;
-      margin-top: 2rem;
-    }
-    .dark-mode footer {
-      background: #191919;
-      color: #888;
-    }
-    .social-buttons {
-      margin-top: 1rem;
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-    }
-    .social-buttons a {
-      display: inline-block;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: #e6e6e6;
-      text-align: center;
-      line-height: 40px;
-      text-decoration: none;
-      color: #333;
-      font-size: 1.3em;
-      transition: background-color 0.3s;
-    }
-    .social-buttons a:hover {
-      background-color: #ccc;
-    }
-    .dark-mode .social-buttons a {
-      background: #2b2b2b;
-      color: #ffd700;
-    }
-    .theme-toggle {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background-color: #ffcc00;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      font-size: 1em;
-      z-index: 2;
-    }
-    .theme-toggle:hover {
-      background-color: #e6b800;
-    }
-    .dark-mode .theme-toggle {
-      background: #ffd700;
-      color: #222;
-    }
+    [data-theme="dark"] {
+      --bg-color: #1e1e1e;
+      --text-color: #f5f5f5;
+      --card-bg: #2c2c2c;
+      --nav-bg: #2a2a2a;
+    }body {
+  margin: 0;
+  font-family: 'Rubik', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s, color 0.3s;
+}
 
-    /* Mobile responsive styles */
-    @media (max-width: 600px) {
-      main {
-        padding: 1rem;
-      }
-      section {
-        padding: 0.7rem;
-      }
-      nav ul {
-        flex-direction: column;
-        gap: 0.5em;
-      }
-      nav ul li {
-        margin: 0.3rem 0;
-      }
-      .theme-toggle {
-        right: 0.6rem;
-        top: 0.6rem;
-        font-size: 0.97em;
-        padding: 0.4rem 0.8rem;
-      }
-      header img {
-        width: 70px;
-      }
-      .social-buttons a {
-        width: 32px;
-        height: 32px;
-        line-height: 32px;
-        font-size: 1em;
-      }
-    }
+header {
+  background-color: var(--nav-bg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 20px;
+  text-align: center;
+}
+
+header img {
+  height: 80px;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 8px 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 10px 0 5px;
+}
+
+nav {
+  background: var(--nav-bg);
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.content {
+  padding: 30px;
+  text-align: center;
+}
+
+.card {
+  background: var(--card-bg);
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 700px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+footer {
+  margin-top: 50px;
+  background: var(--nav-bg);
+  padding: 20px;
+  text-align: center;
+}
+
+.socials a {
+  display: inline-block;
+  margin: 5px 10px;
+  padding: 10px 16px;
+  background: #007bff;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.socials a:hover {
+  background: #0056b3;
+}
+
   </style>
 </head>
-<body>
+<body><button class="theme-toggle" onclick="toggleTheme()">Tema Değiştir</button>
 
 <header>
-  <button class="theme-toggle" id="themeToggle" aria-label="Tema Değiştir">🌙/☀️</button>
-  <img src="https://example.com/path/to/your/logo.png" alt="Bıyıklıfbı Logo">
-  <h1>Bıyıklıfbı</h1>
-  <p>Yerli, bağımsız, tartışılabilir bilgi platformu</p>
-  <nav>
-    <ul>
-      <li><a href="#giris">Giriş</a></li>
-      <li><a href="#tartismalar">Tartışmalar</a></li>
-      <li><a href="#hakkimizda">Hakkımızda</a></li>
-    </ul>
-  </nav>
-</header>
-
-<main>
-  <section id="giris">
-    <h2>📚 Giriş</h2>
-    <p>Burası Bıyıklıfbı'nın ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
-  </section>
-
-  <section id="tartismalar">
-    <h2>💬 Tartışmalar</h2>
-    <form id="yorumForm" autocomplete="off">
-      <input type="text" id="kullaniciAdi" placeholder="Adınız" required maxlength="32">
-      <textarea id="yorumMetni" rows="4" placeholder="Tartışmanızı yazın..." required maxlength="400"></textarea>
-      <button type="submit">➕ Gönder</button>
-    </form>
-    <div id="yorumlar"></div>
-  </section>
-
-  <section id="hakkimizda">
-    <h2>📝 Hakkımızda</h2>
-    <p>Bıyıklıfbı, bilgi paylaşımını teşvik eden ve tartışmalara açık bir platformdur. Amacımız, farklı bakış açılarını bir araya getirerek daha zengin bir bilgi havuzu oluşturmak ve kullanıcılarımızın katılımını sağlamaktır.</p>
-  </section>
-</main>
-
-<footer>
-  <div class="social-buttons">
-    <a href="https://www.instagram.com/biyiklifbi61/" target="_blank" title="Instagram">📷</a>
-    <a href="https://youtube.com/@biyiklifbi6161" target="_blank" title="YouTube">📺</a>
-    <a href="https://x.com/BIYIKLIFBI61" target="_blank" title="X(Twitter)">🐦</a>
-    <a href="https://sosyal.teknofest.app/@biyiklifbi61" target="_blank" title="Sosyal Ağ">🌐</a>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Logo_2024_v2.png" alt="Logo">
+  <h1>BıyıklıFBİ</h1>
+</header><nav>
+  <a href="#">Anasayfa</a>
+  <a href="#">Hakkında</a>
+  <a href="#">İçerikler</a>
+  <a href="#">Katkı Yap</a>
+</nav><div class="content">
+  <div class="card">
+    <h2>📚 Nedir BıyıklıFBİ?</h2>
+    <p>Yerli ve bağımsız bir bilgi platformu. Özgürce bilgi paylaşabileceğiniz, fikir alışverişi yapabileceğiniz bir ortam.</p>
+  </div>  <div class="card">
+    <h2>💬 Tartışma</h2>
+    <div id="disqus_thread"></div>
   </div>
-  © 2025 Bıyıklıfbı — Tüm hakları saklıdır.
-</footer>
-
-<script>
-  // Escape user input to prevent HTML injection
-  function escapeHTML(str) {
-    return str.replace(/[&<>"']/g, function(m) {
-      return ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;'
-      })[m];
-    });
-  }
-
-  const form = document.getElementById("yorumForm");
-  const yorumlar = document.getElementById("yorumlar");
-  const themeToggle = document.getElementById("themeToggle");
-
-  // Theme persistence
-  if (localStorage.getItem("biyiklifbi-theme") === "dark") {
-    document.body.classList.add("dark-mode");
-  }
-
-  themeToggle.addEventListener("click", function() {
-    document.body.classList.toggle("dark-mode");
-    localStorage.setItem("biyiklifbi-theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
-  });
-
-  form.addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const ad = document.getElementById("kullaniciAdi").value.trim();
-    const yorum = document.getElementById("yorumMetni").value.trim();
-    const tarih = new Date().toLocaleString("tr-TR");
-
-    if (ad && yorum) {
-      const yeniYorum = document.createElement("div");
-      yeniYorum.classList.add("yorum");
-      yeniYorum.innerHTML = `
-        <div class="ad">${escapeHTML(ad)}</div>
-        <div class="tarih">${tarih}</div>
-        <div class="icerik">${escapeHTML(yorum)}</div>
-        <div class="actions">
-          <button type="button" class="beğen" title="Beğen">👍 Beğen</button>
-          <button type="button" class="şikayet" title="Şikayet Et">🚩 Şikayet</button>
-          <button type="button" class="yanıtla" title="Yanıtla">💬 Yanıtla</button>
-        </div>
-      `;
-      yorumlar.prepend(yeniYorum);
-      form.reset();
-    }
-  });
-
-  yorumlar.addEventListener("click", function(e) {
-    if (e.target.classList.contains("beğen")) {
-      alert("Yorum beğenildi!");
-    } else if (e.target.classList.contains("şikayet")) {
-      alert("Yorum şikayet edildi!");
-    } else if (e.target.classList.contains("yanıtla")) {
-      const yanit = prompt("Cevabınızı yazın:");
-      if (yanit && yanit.trim().length > 0) {
-        const yanitDiv = document.createElement("div");
-        yanitDiv.classList.add("yanit");
-        yanitDiv.innerHTML = `<strong>Yanıtınız:</strong><br>${escapeHTML(yanit.trim())}`;
-        e.target.closest(".yorum").appendChild(yanitDiv);
-      }
-    }
-  });
-</script>
+</div><footer>
+  <div class="socials">
+    <a href="https://www.instagram.com/biyiklifbi61" target="_blank">Instagram</a>
+    <a href="https://sosyal.teknofest.app/@biyiklifbi61" target="_blank">Teknofest</a>
+    <a href="https://x.com/BIYIKLIFBI61" target="_blank">X (Twitter)</a>
+    <a href="https://youtube.com/@biyiklifbi6161" target="_blank">YouTube</a>
+  </div>
+  <p>© 2025 BıyıklıFBİ</p>
+</footer><script>
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute("data-theme");
+  document.documentElement.setAttribute(
+    "data-theme",
+    currentTheme === "dark" ? "light" : "dark"
+  );
+}
+</script><!-- Disqus --><script>
+  var disqus_config = function () {
+    this.page.url = window.location.href;
+    this.page.identifier = 'anasayfa';
+  };
+  (function() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://biyiklifbi.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script><noscript>Lütfen tartışmaları görebilmek için JavaScript'i etkinleştirin.</noscript>
 
 </body>
 </html>
