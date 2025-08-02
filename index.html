@@ -6,25 +6,51 @@
   <title>Bıyıklıfbı.org – Ana Sayfa</title>
   <style>
     body {
-      background-color: #0d0d0d;
-      color: #f0f0f0;
-      font-family: Arial, sans-serif;
+      background-color: #f9f9f9; /* Açık tema varsayılan arka plan */
+      color: #333; /* Koyu metin rengi */
+      font-family: 'Georgia', serif; /* Klasik yazı tipi */
       margin: 0;
       padding: 0;
+      transition: background-color 0.3s, color 0.3s; /* Geçiş efekti */
+    }
+    .dark-mode {
+      background-color: #0d0d0d; /* Koyu tema arka plan */
+      color: #f0f0f0; /* Açık metin rengi */
     }
     header {
       text-align: center;
       padding: 2rem 1rem;
       background-color: #1a1a1a;
+      color: #fff;
     }
     header img {
       width: 100px;
       height: auto;
       border-radius: 12px;
     }
-    h1 {
+    nav {
       margin-top: 1rem;
-      color: #ffcc00;
+      background-color: #333;
+      border-radius: 8px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+    nav ul li {
+      margin: 0 1rem;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+    nav ul li a:hover {
+      background-color: #444;
     }
     main {
       max-width: 700px;
@@ -33,6 +59,10 @@
     }
     section {
       margin-bottom: 2rem;
+      background-color: #fff; /* Beyaz arka plan */
+      padding: 1rem;
+      border-radius: 8px; /* Yuvarlatılmış köşeler */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Hafif gölge */
     }
     h2 {
       color: #ffcc00;
@@ -40,9 +70,9 @@
     input, textarea {
       width: 100%;
       padding: 0.75rem;
-      background-color: #1e1e1e;
-      border: 1px solid #444;
-      color: white;
+      background-color: #f1f1f1; /* Daha açık giriş alanı */
+      border: 1px solid #ccc;
+      color: #333;
       border-radius: 6px;
       margin-bottom: 1rem;
     }
@@ -58,7 +88,7 @@
       background-color: #e6b800;
     }
     .yorum {
-      background-color: #1a1a1a;
+      background-color: #f9f9f9;
       padding: 1rem;
       margin-top: 1rem;
       border-left: 4px solid #444;
@@ -77,41 +107,97 @@
       font-size: 0.9rem;
       background-color: #111;
       color: #666;
+      margin-top: 2rem; /* Üstten boşluk */
+    }
+    .social-buttons {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .social-buttons a {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #e6e6e6; /* Buton rengi */
+      text-align: center;
+      line-height: 40px; /* Dikey ortalama */
+      text-decoration: none;
+      color: #333;
+      transition: background-color 0.3s;
+    }
+    .social-buttons a:hover {
+      background-color: #ccc; /* Hover rengi */
+    }
+    .theme-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background-color: #ffcc00;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .theme-toggle:hover {
+      background-color: #e6b800;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <img src="logo.png" alt="Bıyıklıfbı Logo">
+  <button class="theme-toggle" id="themeToggle">Dark/Light</button>
+  <img src="https://example.com/path/to/your/logo.png" alt="Bıyıklıfbı Logo">
   <h1>Bıyıklıfbı.org</h1>
   <p>Yerli, bağımsız, tartışılabilir bilgi platformu</p>
+  <nav>
+    <ul>
+      <li><a href="#giris">Giriş</a></li>
+      <li><a href="#tartismalar">Tartışmalar</a></li>
+      <li><a href="#hakkimizda">Hakkımızda</a></li>
+    </ul>
+  </nav>
 </header>
 
 <main>
-  <section>
+  <section id="giris">
     <h2>📚 Giriş</h2>
     <p>Burası Bıyıklıfbı.org'un ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
   </section>
 
-  <section>
-    <h2>💬 Yorumlar</h2>
+  <section id="tartismalar">
+    <h2>💬 Tartışmalar</h2>
     <form id="yorumForm">
       <input type="text" id="kullaniciAdi" placeholder="Adınız" required>
-      <textarea id="yorumMetni" rows="4" placeholder="Yorumunuzu yazın..." required></textarea>
+      <textarea id="yorumMetni" rows="4" placeholder="Tartışmanızı yazın..." required></textarea>
       <button type="submit">Gönder</button>
     </form>
     <div id="yorumlar"></div>
   </section>
+
+  <section id="hakkimizda">
+    <h2>📝 Hakkımızda</h2>
+    <p>Bıyıklıfbı.org, bilgi paylaşımını teşvik eden ve tartışmalara açık bir platformdur. Amacımız, farklı bakış açılarını bir araya getirerek daha zengin bir bilgi havuzu oluşturmak ve kullanıcılarımızın katılımını sağlamaktır.</p>
+  </section>
 </main>
 
 <footer>
+  <div class="social-buttons">
+    <a href="https://www.instagram.com/biyiklifbi61/" target="_blank">📷</a>
+    <a href="https://youtube.com/@biyiklifbi6161" target="_blank">📺</a>
+    <a href="https://x.com/BIYIKLIFBI61" target="_blank">🐦</a>
+    <a href="https://sosyal.teknofest.app/@biyiklifbi61" target="_blank">🌐</a>
+  </div>
   © 2025 Bıyıklıfbı.org — Tüm hakları saklıdır.
 </footer>
 
 <script>
   const form = document.getElementById("yorumForm");
   const yorumlar = document.getElementById("yorumlar");
+  const themeToggle = document.getElementById("themeToggle");
 
   form.addEventListener("submit", function(e) {
     e.preventDefault();
@@ -127,10 +213,35 @@
         <div class="ad">${ad}</div>
         <div class="tarih">${tarih}</div>
         <div class="icerik">${yorum}</div>
+        <div class="actions">
+          <button class="beğen">Beğen</button>
+          <button class="şikayet">Şikayet</button>
+          <button class="yanıtla">Yanıtla</button>
+        </div>
       `;
       yorumlar.prepend(yeniYorum);
       form.reset();
     }
+  });
+
+  yorumlar.addEventListener("click", function(e) {
+    if (e.target.classList.contains("beğen")) {
+      alert("Yorum beğenildi!");
+    } else if (e.target.classList.contains("şikayet")) {
+      alert("Yorum şikayet edildi!");
+    } else if (e.target.classList.contains("yanıtla")) {
+      const yanit = prompt("Cevabınızı yazın:");
+      if (yanit) {
+        const yanitDiv = document.createElement("div");
+        yanitDiv.classList.add("yorum");
+        yanitDiv.innerHTML = `<div class="ad">Yanıtınız</div><div class="icerik">${yanit}</div>`;
+        e.target.closest(".yorum").appendChild(yanitDiv);
+      }
+    }
+  });
+
+  themeToggle.addEventListener("click", function() {
+    document.body.classList.toggle("dark-mode");
   });
 </script>
 
