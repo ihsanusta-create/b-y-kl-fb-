@@ -1,45 +1,53 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bıyıklıfbi – Ana Sayfa</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bıyıklıfbi</title>
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       background-color: #0d0d0d;
       color: #f0f0f0;
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    body.light {
-      background-color: #f9f9f9;
-      color: #222;
     }
     header {
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 2rem 1rem 1rem;
       background-color: #1a1a1a;
     }
-    body.light header {
-      background-color: #ddd;
-    }
     header img {
-      width: 120px;
+      width: 130px;
       height: auto;
       border-radius: 12px;
     }
     h1 {
       margin-top: 1rem;
       color: #ffcc00;
-      font-size: 2rem;
     }
-    body.light h1 {
-      color: #c59c00;
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      background-color: #111;
+      padding: 1rem 0;
+    }
+    nav a {
+      color: #f0f0f0;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    nav a:hover {
+      transform: scale(1.1);
+      color: #ffcc00;
     }
     main {
-      max-width: 700px;
+      max-width: 800px;
       margin: auto;
       padding: 2rem;
     }
@@ -48,9 +56,7 @@
     }
     h2 {
       color: #ffcc00;
-    }
-    body.light h2 {
-      color: #c59c00;
+      margin-bottom: 1rem;
     }
     input, textarea {
       width: 100%;
@@ -61,12 +67,6 @@
       border-radius: 6px;
       margin-bottom: 1rem;
     }
-    body.light input,
-    body.light textarea {
-      background-color: #fff;
-      color: #000;
-      border: 1px solid #999;
-    }
     button {
       background-color: #ffcc00;
       color: black;
@@ -74,6 +74,7 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      font-weight: bold;
     }
     button:hover {
       background-color: #e6b800;
@@ -85,10 +86,6 @@
       border-left: 4px solid #444;
       border-radius: 6px;
     }
-    body.light .yorum {
-      background-color: #eee;
-      border-left: 4px solid #ccc;
-    }
     .yorum .ad {
       font-weight: bold;
     }
@@ -96,8 +93,13 @@
       font-size: 0.8rem;
       color: #aaa;
     }
-    body.light .yorum .tarih {
-      color: #666;
+    .hakkimizda-kutu {
+      background-color: #1a1a1a;
+      border-left: 6px solid #ffcc00;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 8px rgba(255, 204, 0, 0.2);
     }
     footer {
       text-align: center;
@@ -106,97 +108,122 @@
       background-color: #111;
       color: #666;
     }
-    body.light footer {
-      background-color: #ccc;
-      color: #333;
-    }
-    .tema-butonu {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 6px;
-      background-color: #444;
-      color: #fff;
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
 
-<button class="tema-butonu" onclick="toggleTema()">🌙 Tema Değiştir</button>
-
 <header>
-  <img src="biyiklifi-logo.png" alt="Bıyıklıfbi Logo">
+  <img src="biyiklifi-logo.png" alt="Bıyıklıfbi Logo" />
   <h1>Bıyıklıfbi</h1>
   <p>Yerli, bağımsız, tartışılabilir bilgi platformu</p>
 </header>
 
+<nav>
+  <a href="#">Ana Sayfa</a>
+  <a href="#tartismalar">Tartışmalar</a>
+  <a href="#hakkimizda">Hakkımızda</a>
+</nav>
+
 <main>
-  <section>
+  <section id="giris">
     <h2>📚 Giriş</h2>
     <p>Burası Bıyıklıfbi'nin ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
   </section>
 
-  <section>
+  <section id="tartismalar">
     <h2>💬 Tartışmalar</h2>
     <form id="yorumForm">
-      <input type="text" id="kullaniciAdi" placeholder="Adınız" required>
+      <input type="text" id="kullaniciAdi" placeholder="Adınız" required />
       <textarea id="yorumMetni" rows="4" placeholder="Yorumunuzu yazın..." required></textarea>
       <button type="submit">Gönder</button>
     </form>
     <div id="yorumlar"></div>
   </section>
+
+  <section id="hakkimizda">
+    <h2>ℹ️ Hakkımızda</h2>
+    <div class="hakkimizda-kutu">
+      <strong>Misyonumuz:</strong>
+      <p>Yerli ve bağımsız bilgi platformu olarak özgür düşünceyi, doğru bilgiye ulaşımı ve toplumsal diyaloğu desteklemek.</p>
+    </div>
+    <div class="hakkimizda-kutu">
+      <strong>Vizyonumuz:</strong>
+      <p>Türkiye'nin her köşesinden bireylerin katkısıyla büyüyen, özgür ve şeffaf bir dijital bilgi kütüphanesi olmak.</p>
+    </div>
+    <div class="hakkimizda-kutu">
+      <strong>Değerlerimiz:</strong>
+      <p>Tarafsızlık, açıklık, katılım ve eleştirel düşünce.</p>
+    </div>
+    <div class="hakkimizda-kutu">
+      <strong>Sen de Katıl!</strong>
+      <p>İster yorum yap, ister tartışmalara katıl – bu platform senin katkılarınla büyüyor.</p>
+    </div>
+  </section>
 </main>
+
+<section style="background-color:#111; padding: 2rem; text-align: center;">
+  <h2 style="color:#ffcc00; margin-bottom: 1rem;">📱 Bizi Takip Et</h2>
+  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;">
+    <a href="https://www.instagram.com/biyiklifbi61" target="_blank" style="text-decoration: none;">
+      <button style="background:#E1306C; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">
+        📸 Instagram
+      </button>
+    </a>
+    <a href="https://sosyal.teknofest.app/@biyiklifbi61" target="_blank" style="text-decoration: none;">
+      <button style="background:#6364FF; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">
+        🧠 Teknofest Sosyal
+      </button>
+    </a>
+    <a href="https://x.com/BIYIKLIFBI61" target="_blank" style="text-decoration: none;">
+      <button style="background:#000; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">
+        🐦 X (Twitter)
+      </button>
+    </a>
+    <a href="https://youtube.com/@biyiklifbi6161" target="_blank" style="text-decoration: none;">
+      <button style="background:#FF0000; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">
+        ▶️ YouTube
+      </button>
+    </a>
+  </div>
+</section>
 
 <footer>
   © 2025 Bıyıklıfbi — Tüm hakları saklıdır.
 </footer>
 
 <script>
-  function toggleTema() {
-    document.body.classList.toggle("light");
-  }
-
   const form = document.getElementById("yorumForm");
   const yorumlar = document.getElementById("yorumlar");
 
-  window.addEventListener("load", () => {
-    const kayitli = JSON.parse(localStorage.getItem("yorumlar")) || [];
-    kayitli.forEach(ekleYorum);
-  });
-
-  form.addEventListener("submit", function(e) {
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
-
     const ad = document.getElementById("kullaniciAdi").value.trim();
     const yorum = document.getElementById("yorumMetni").value.trim();
     const tarih = new Date().toLocaleString("tr-TR");
 
     if (ad && yorum) {
-      const veri = { ad, yorum, tarih };
-      ekleYorum(veri);
-
-      const kayitli = JSON.parse(localStorage.getItem("yorumlar")) || [];
-      kayitli.unshift(veri);
-      localStorage.setItem("yorumlar", JSON.stringify(kayitli));
-
+      const yeniYorum = document.createElement("div");
+      yeniYorum.classList.add("yorum");
+      yeniYorum.innerHTML = `
+        <div class="ad">${ad}</div>
+        <div class="tarih">${tarih}</div>
+        <div class="icerik">${yorum}</div>
+      `;
+      yorumlar.prepend(yeniYorum);
       form.reset();
+
+      // Yorumları yerel depolamaya kaydet
+      localStorage.setItem("yorumlar", yorumlar.innerHTML);
     }
   });
 
-  function ekleYorum({ad, yorum, tarih}) {
-    const yeniYorum = document.createElement("div");
-    yeniYorum.classList.add("yorum");
-    yeniYorum.innerHTML = `
-      <div class="ad">${ad}</div>
-      <div class="tarih">${tarih}</div>
-      <div class="icerik">${yorum}</div>
-    `;
-    yorumlar.prepend(yeniYorum);
-  }
+  // Sayfa yüklenince yorumları getir
+  window.addEventListener("DOMContentLoaded", () => {
+    const kayitliYorumlar = localStorage.getItem("yorumlar");
+    if (kayitliYorumlar) {
+      yorumlar.innerHTML = kayitliYorumlar;
+    }
+  });
 </script>
 
 </body>
