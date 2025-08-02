@@ -1,130 +1,173 @@
 <!DOCTYPE html><html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bıyıklıfbi</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bıyıklıfbi – Ana Sayfa</title>
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
-    body {
-      background-color: #0d0d0d;
-      color: #f0f0f0;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    body.light {
-      background-color: #ffffff;
-      color: #000000;
-    }
-    header {
-      text-align: center;
-      padding: 2rem 1rem 1rem;
-      background-color: #1a1a1a;
-    }
-    header img {
-      width: 130px;
-      height: auto;
-      border-radius: 12px;
-    }
-    h1 {
-      margin-top: 1rem;
-      color: #ffcc00;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      background-color: #111;
-      padding: 1rem 0;
-    }
-    nav a {
-      color: #f0f0f0;
-      text-decoration: none;
-      font-weight: bold;
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
-    nav a:hover {
-      transform: scale(1.1);
-      color: #ffcc00;
-    }
-    main {
-      max-width: 800px;
-      margin: auto;
-      padding: 2rem;
-    }
-    section {
-      margin-bottom: 2rem;
-    }
-    h2 {
-      color: #ffcc00;
-      margin-bottom: 1rem;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 0.75rem;
-      background-color: #1e1e1e;
-      border: 1px solid #444;
-      color: white;
-      border-radius: 6px;
-      margin-bottom: 1rem;
-    }
-    button {
-      background-color: #ffcc00;
-      color: black;
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    button:hover {
-      background-color: #e6b800;
-    }
-    .yorum {
-      background-color: #1a1a1a;
-      padding: 1rem;
-      margin-top: 1rem;
-      border-left: 4px solid #444;
-      border-radius: 6px;
-    }
-    .yorum .ad {
-      font-weight: bold;
-    }
-    .yorum .tarih {
-      font-size: 0.8rem;
-      color: #aaa;
-    }
-    .yorum .butonlar {
-      margin-top: 0.5rem;
-    }
-    .yorum .butonlar button {
-      margin-right: 0.5rem;
-    }
-    .hakkimizda-kutu {
-      background-color: #1a1a1a;
-      border-left: 6px solid #ffcc00;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-      box-shadow: 0 0 8px rgba(255, 204, 0, 0.2);
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      background-color: #111;
-      color: #666;
-    }
+    :root {
+      --bg-color: #0d0d0d;
+      --text-color: #f0f0f0;
+      --accent-color: #ffcc00;
+      --section-bg: #1a1a1a;
+      --input-bg: #1e1e1e;
+      --border-color: #444;
+    }body.light-mode {
+  --bg-color: #fdfdfd;
+  --text-color: #111;
+  --accent-color: #ff9900;
+  --section-bg: #f0f0f0;
+  --input-bg: #fff;
+  --border-color: #ccc;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: var(--section-bg);
+  position: relative;
+}
+
+header img {
+  width: 100px;
+  height: auto;
+  border-radius: 12px;
+}
+
+#themeToggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--accent-color);
+  color: black;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#themeToggle:hover {
+  background: #e6b800;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--section-bg);
+}
+
+nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: bold;
+  transition: transform 0.3s, color 0.3s;
+}
+
+nav a:hover {
+  transform: scale(1.05);
+  color: var(--accent-color);
+}
+
+main {
+  max-width: 700px;
+  margin: auto;
+  padding: 2rem;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+h2 {
+  color: var(--accent-color);
+}
+
+input, textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+button {
+  background-color: var(--accent-color);
+  color: black;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.yorum {
+  background-color: var(--section-bg);
+  padding: 1rem;
+  margin-top: 1rem;
+  border-left: 4px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.yorum .ad {
+  font-weight: bold;
+}
+
+.yorum .tarih {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.yorum .btn-grup {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.yorum .btn-grup button {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+.balon-kutu {
+  background-color: var(--section-bg);
+  border: 2px solid var(--accent-color);
+  border-radius: 20px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  background-color: #111;
+  color: #666;
+}
+
   </style>
 </head>
 <body><header>
-  <img src="biyiklifi-logo.png" alt="Bıyıklıfbi Logo" />
+  <button id="themeToggle">🌙 Tema</button>
+  <img src="biyiklifi-logo.png" alt="Bıyıklıfbi Logo">
   <h1>Bıyıklıfbi</h1>
   <p>Yerli, bağımsız, tartışılabilir bilgi platformu</p>
-  <button onclick="temaDegistir()">🎨 Tema Değiştir</button>
 </header><nav>
   <a href="#">Ana Sayfa</a>
   <a href="#tartismalar">Tartışmalar</a>
@@ -136,46 +179,37 @@
   </section>  <section id="tartismalar">
     <h2>💬 Tartışmalar</h2>
     <form id="yorumForm">
-      <input type="text" id="kullaniciAdi" placeholder="Adınız" required />
+      <input type="text" id="kullaniciAdi" placeholder="Adınız" required>
       <textarea id="yorumMetni" rows="4" placeholder="Yorumunuzu yazın..." required></textarea>
       <button type="submit">Gönder</button>
     </form>
     <div id="yorumlar"></div>
   </section>  <section id="hakkimizda">
     <h2>ℹ️ Hakkımızda</h2>
-    <div class="hakkimizda-kutu">
-      <strong>Misyonumuz:</strong>
-      <p>Yerli ve bağımsız bilgi platformu olarak özgür düşünceyi, doğru bilgiye ulaşımı ve toplumsal diyaloğu desteklemek.</p>
+    <div class="balon-kutu">
+      <p><strong>Misyonumuz:</strong> Bilgiyi özgürce paylaşmak ve herkesin fikir beyan edebileceği bir platform sunmak.</p>
+      <p><strong>Vizyonumuz:</strong> Türkiye'nin en bağımsız ve güvenilir bilgi kaynağı olmak.</p>
+      <p><strong>Değerlerimiz:</strong> Özgürlük, şeffaflık, katılım, tarafsızlık.</p>
+      <p><strong>Katılım:</strong> Herkes tartışmalara katılabilir, bilgi paylaşabilir ve topluluğu zenginleştirebilir.</p>
     </div>
-    <div class="hakkimizda-kutu">
-      <strong>Vizyonumuz:</strong>
-      <p>Türkiye'nin her köşesinden bireylerin katkısıyla büyüyen, özgür ve şeffaf bir dijital bilgi kütüphanesi olmak.</p>
-    </div>
-    <div class="hakkimizda-kutu">
-      <strong>Değerlerimiz:</strong>
-      <p>Tarafsızlık, açıklık, katılım ve eleştirel düşünce.</p>
-    </div>
-    <div class="hakkimizda-kutu">
-      <strong>Sen de Katıl!</strong>
-      <p>İster yorum yap, ister tartışmalara katıl – bu platform senin katkılarınla büyüyor.</p>
+  </section>  <section style="background-color:#111; padding: 2rem; text-align: center;">
+    <h2 style="color:#ffcc00; margin-bottom: 1rem;">📱 Bizi Takip Et</h2>
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;">
+      <a href="https://www.instagram.com/biyiklifbi61" target="_blank"><button style="background:#E1306C; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">📸 Instagram</button></a>
+      <a href="https://sosyal.teknofest.app/@biyiklifbi61" target="_blank"><button style="background:#6364FF; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">🧠 Teknofest Sosyal</button></a>
+      <a href="https://x.com/BIYIKLIFBI61" target="_blank"><button style="background:#000; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">🐦 X (Twitter)</button></a>
+      <a href="https://youtube.com/@biyiklifbi6161" target="_blank"><button style="background:#FF0000; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">▶️ YouTube</button></a>
     </div>
   </section>
-</main><section style="background-color:#111; padding: 2rem; text-align: center;">
-  <h2 style="color:#ffcc00; margin-bottom: 1rem;">📱 Bizi Takip Et</h2>
-  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;">
-    <a href="https://www.instagram.com/biyiklifbi61" target="_blank"><button style="background:#E1306C; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">📸 Instagram</button></a>
-    <a href="https://sosyal.teknofest.app/@biyiklifbi61" target="_blank"><button style="background:#6364FF; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">🧠 Teknofest Sosyal</button></a>
-    <a href="https://x.com/BIYIKLIFBI61" target="_blank"><button style="background:#000; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">🐦 X (Twitter)</button></a>
-    <a href="https://youtube.com/@biyiklifbi6161" target="_blank"><button style="background:#FF0000; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">▶️ YouTube</button></a>
-  </div>
-</section><footer>
+</main><footer>
   © 2025 Bıyıklıfbi — Tüm hakları saklıdır.
 </footer><script>
   const form = document.getElementById("yorumForm");
   const yorumlar = document.getElementById("yorumlar");
 
-  form.addEventListener("submit", function (e) {
+  form.addEventListener("submit", function(e) {
     e.preventDefault();
+
     const ad = document.getElementById("kullaniciAdi").value.trim();
     const yorum = document.getElementById("yorumMetni").value.trim();
     const tarih = new Date().toLocaleString("tr-TR");
@@ -187,47 +221,21 @@
         <div class="ad">${ad}</div>
         <div class="tarih">${tarih}</div>
         <div class="icerik">${yorum}</div>
-        <div class="butonlar">
-          <button onclick="begen(this)">👍 Beğen</button>
-          <button onclick="yanitla(this)">💬 Yanıtla</button>
-          <button onclick="sil(this)">🗑 Sil</button>
+        <div class="btn-grup">
+          <button onclick="alert('Beğenildi!')">👍 Beğen</button>
+          <button onclick="this.closest('.yorum').remove()">🗑 Sil</button>
+          <button onclick="alert('Yanıtla özelliği yakında!')">↩️ Yanıtla</button>
         </div>
       `;
       yorumlar.prepend(yeniYorum);
       form.reset();
-      localStorage.setItem("yorumlar", yorumlar.innerHTML);
     }
   });
 
-  window.addEventListener("DOMContentLoaded", () => {
-    const kayitliYorumlar = localStorage.getItem("yorumlar");
-    if (kayitliYorumlar) {
-      yorumlar.innerHTML = kayitliYorumlar;
-    }
+  const themeToggle = document.getElementById("themeToggle");
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("light-mode");
+    themeToggle.textContent = document.body.classList.contains("light-mode") ? "🌙 Karanlık" : "☀️ Aydınlık";
   });
-
-  function sil(btn) {
-    btn.closest(".yorum").remove();
-    localStorage.setItem("yorumlar", yorumlar.innerHTML);
-  }
-  function begen(btn) {
-    btn.disabled = true;
-    btn.innerText = "👍 Beğenildi";
-  }
-  function yanitla(btn) {
-    const cevap = prompt("Yanıtınızı yazın:");
-    if (cevap) {
-      const cevapDiv = document.createElement("div");
-      cevapDiv.style.marginTop = "0.5rem";
-      cevapDiv.style.paddingLeft = "1rem";
-      cevapDiv.style.borderLeft = "2px dashed #ffcc00";
-      cevapDiv.innerHTML = `<strong>Yanıt:</strong> ${cevap}`;
-      btn.closest(".yorum").appendChild(cevapDiv);
-      localStorage.setItem("yorumlar", yorumlar.innerHTML);
-    }
-  }
-  function temaDegistir() {
-    document.body.classList.toggle("light");
-  }
 </script></body>
 </html>
