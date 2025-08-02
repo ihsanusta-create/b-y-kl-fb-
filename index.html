@@ -1,157 +1,138 @@
-<!DOCTYPE html><html lang="tr">
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BıyıklıFBİ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bıyıklıfbı.org – Ana Sayfa</title>
   <style>
-    :root {
-      --bg-color: #f0f2f5;
-      --text-color: #222;
-      --card-bg: white;
-      --nav-bg: #ffffff;
+    body {
+      background-color: #0d0d0d;
+      color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
     }
-    [data-theme="dark"] {
-      --bg-color: #1e1e1e;
-      --text-color: #f5f5f5;
-      --card-bg: #2c2c2c;
-      --nav-bg: #2a2a2a;
-    }body {
-  margin: 0;
-  font-family: 'Rubik', sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: background 0.3s, color 0.3s;
-}
-
-header {
-  background-color: var(--nav-bg);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  padding: 20px;
-  text-align: center;
-}
-
-header img {
-  height: 80px;
-}
-
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 8px 16px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-h1 {
-  font-size: 2em;
-  margin: 10px 0 5px;
-}
-
-nav {
-  background: var(--nav-bg);
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-}
-
-nav a {
-  color: var(--text-color);
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.content {
-  padding: 30px;
-  text-align: center;
-}
-
-.card {
-  background: var(--card-bg);
-  margin: 20px auto;
-  padding: 20px;
-  max-width: 700px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
-}
-
-footer {
-  margin-top: 50px;
-  background: var(--nav-bg);
-  padding: 20px;
-  text-align: center;
-}
-
-.socials a {
-  display: inline-block;
-  margin: 5px 10px;
-  padding: 10px 16px;
-  background: #007bff;
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.3s;
-}
-
-.socials a:hover {
-  background: #0056b3;
-}
-
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      background-color: #1a1a1a;
+    }
+    header img {
+      width: 100px;
+      height: auto;
+      border-radius: 12px;
+    }
+    h1 {
+      margin-top: 1rem;
+      color: #ffcc00;
+    }
+    main {
+      max-width: 700px;
+      margin: auto;
+      padding: 2rem;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+    h2 {
+      color: #ffcc00;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #1e1e1e;
+      border: 1px solid #444;
+      color: white;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+    button {
+      background-color: #ffcc00;
+      color: black;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e6b800;
+    }
+    .yorum {
+      background-color: #1a1a1a;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-left: 4px solid #444;
+      border-radius: 6px;
+    }
+    .yorum .ad {
+      font-weight: bold;
+    }
+    .yorum .tarih {
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      background-color: #111;
+      color: #666;
+    }
   </style>
 </head>
-<body><button class="theme-toggle" onclick="toggleTheme()">Tema Değiştir</button>
+<body>
 
 <header>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Logo_2024_v2.png" alt="Logo">
-  <h1>BıyıklıFBİ</h1>
-</header><nav>
-  <a href="#">Anasayfa</a>
-  <a href="#">Hakkında</a>
-  <a href="#">İçerikler</a>
-  <a href="#">Katkı Yap</a>
-</nav><div class="content">
-  <div class="card">
-    <h2>📚 Nedir BıyıklıFBİ?</h2>
-    <p>Yerli ve bağımsız bir bilgi platformu. Özgürce bilgi paylaşabileceğiniz, fikir alışverişi yapabileceğiniz bir ortam.</p>
-  </div>  <div class="card">
-    <h2>💬 Tartışma</h2>
-    <div id="disqus_thread"></div>
-  </div>
-</div><footer>
-  <div class="socials">
-    <a href="https://www.instagram.com/biyiklifbi61" target="_blank">Instagram</a>
-    <a href="https://sosyal.teknofest.app/@biyiklifbi61" target="_blank">Teknofest</a>
-    <a href="https://x.com/BIYIKLIFBI61" target="_blank">X (Twitter)</a>
-    <a href="https://youtube.com/@biyiklifbi6161" target="_blank">YouTube</a>
-  </div>
-  <p>© 2025 BıyıklıFBİ</p>
-</footer><script>
-function toggleTheme() {
-  const currentTheme = document.documentElement.getAttribute("data-theme");
-  document.documentElement.setAttribute(
-    "data-theme",
-    currentTheme === "dark" ? "light" : "dark"
-  );
-}
-</script><!-- Disqus --><script>
-  var disqus_config = function () {
-    this.page.url = window.location.href;
-    this.page.identifier = 'anasayfa';
-  };
-  (function() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://biyiklifbi.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-  })();
-</script><noscript>Lütfen tartışmaları görebilmek için JavaScript'i etkinleştirin.</noscript>
+  <img src="logo.png" alt="Bıyıklıfbı Logo">
+  <h1>Bıyıklıfbı.org</h1>
+  <p>Yerli, bağımsız, tartışılabilir bilgi platformu</p>
+</header>
+
+<main>
+  <section>
+    <h2>📚 Giriş</h2>
+    <p>Burası Bıyıklıfbı.org'un ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
+  </section>
+
+  <section>
+    <h2>💬 Yorumlar</h2>
+    <form id="yorumForm">
+      <input type="text" id="kullaniciAdi" placeholder="Adınız" required>
+      <textarea id="yorumMetni" rows="4" placeholder="Yorumunuzu yazın..." required></textarea>
+      <button type="submit">Gönder</button>
+    </form>
+    <div id="yorumlar"></div>
+  </section>
+</main>
+
+<footer>
+  © 2025 Bıyıklıfbı.org — Tüm hakları saklıdır.
+</footer>
+
+<script>
+  const form = document.getElementById("yorumForm");
+  const yorumlar = document.getElementById("yorumlar");
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const ad = document.getElementById("kullaniciAdi").value.trim();
+    const yorum = document.getElementById("yorumMetni").value.trim();
+    const tarih = new Date().toLocaleString("tr-TR");
+
+    if (ad && yorum) {
+      const yeniYorum = document.createElement("div");
+      yeniYorum.classList.add("yorum");
+      yeniYorum.innerHTML = `
+        <div class="ad">${ad}</div>
+        <div class="tarih">${tarih}</div>
+        <div class="icerik">${yorum}</div>
+      `;
+      yorumlar.prepend(yeniYorum);
+      form.reset();
+    }
+  });
+</script>
 
 </body>
 </html>
