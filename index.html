@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html lang="tr">
+<!DOCTYPE html><html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bıyıklıfbı.org – Ana Sayfa</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bıyıklıfbı – Ana Sayfa</title>
   <style>
     body {
       background-color: #0d0d0d;
@@ -63,6 +62,7 @@
       margin-top: 1rem;
       border-left: 4px solid #444;
       border-radius: 6px;
+      position: relative;
     }
     .yorum .ad {
       font-weight: bold;
@@ -71,6 +71,22 @@
       font-size: 0.8rem;
       color: #aaa;
     }
+    .alt-yorumlar {
+      margin-top: 1rem;
+      margin-left: 1.5rem;
+      border-left: 2px solid #444;
+      padding-left: 1rem;
+    }
+    .yorum-btn {
+      background: none;
+      color: #888;
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+      cursor: pointer;
+    }
+    .yorum-btn:hover {
+      color: #fff;
+    }
     footer {
       text-align: center;
       padding: 1rem;
@@ -78,61 +94,152 @@
       background-color: #111;
       color: #666;
     }
+    .light {
+      background-color: #f5f5f5;
+      color: #111;
+    }
+    .light header, .light footer {
+      background-color: #e0e0e0;
+      color: #333;
+    }
+    .light .yorum {
+      background-color: #fafafa;
+      border-left: 4px solid #ccc;
+    }
   </style>
 </head>
 <body>
+  <button id="temaDegistirBtn" aria-label="Tema değiştir">🌙 Tema Değiştir</button>  <header>
+    <img src="logo.png" alt="Bıyıklıfbı Logo" />
+    <h1>Bıyıklıfbı</h1>
+    <p>Yerli, bağımsız, tartışılabilir bilgi platformu</p>
+  </header>  <main>
+    <section>
+      <h2>📚 Giriş</h2>
+      <p>Burası Bıyıklıfbı'nın ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
+    </section><section>
+  <h2>💬 Tartışmalar</h2>
+  <label for="sirala">Tartışmaları sırala:</label>
+  <select id="sirala">
+    <option value="yeni">Yeniye göre</option>
+    <option value="eski">Eskiye göre</option>
+    <option value="isim">İsme göre (A-Z)</option>
+  </select>
 
-<header>
-  <img src="logo.png" alt="Bıyıklıfbı Logo">
-  <h1>Bıyıklıfbı.org</h1>
-  <p>Yerli, bağımsız, tartışılabilir bilgi platformu</p>
-</header>
+  <span id="yorumSayisi">0 tartışma</span>
 
-<main>
-  <section>
-    <h2>📚 Giriş</h2>
-    <p>Burası Bıyıklıfbı.org'un ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
-  </section>
+  <form id="yorumForm">
+    <input type="text" id="kullaniciAdi" placeholder="Adınız" required autocomplete="off" />
+    <textarea id="yorumMetni" rows="4" placeholder="Görüşünüzü yazın..." required></textarea>
+    <button type="submit">Gönder</button>
+  </form>
 
-  <section>
-    <h2>💬 Yorumlar</h2>
-    <form id="yorumForm">
-      <input type="text" id="kullaniciAdi" placeholder="Adınız" required>
-      <textarea id="yorumMetni" rows="4" placeholder="Yorumunuzu yazın..." required></textarea>
-      <button type="submit">Gönder</button>
-    </form>
-    <div id="yorumlar"></div>
-  </section>
-</main>
+  <div id="yorumlar"></div>
+</section>
 
-<footer>
-  © 2025 Bıyıklıfbı.org — Tüm hakları saklıdır.
-</footer>
+  </main>  <footer>
+    © 2025 Bıyıklıfbı — Tüm hakları saklıdır.
+  </footer>  <script>
+    const form = document.getElementById("yorumForm");
+    const yorumlar = document.getElementById("yorumlar");
+    const yorumSayisi = document.getElementById("yorumSayisi");
+    const temaBtn = document.getElementById("temaDegistirBtn");
+    const sirala = document.getElementById("sirala");
 
-<script>
-  const form = document.getElementById("yorumForm");
-  const yorumlar = document.getElementById("yorumlar");
+    let tumYorumlar = JSON.parse(localStorage.getItem("yorumlar")) || [];
 
-  form.addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const ad = document.getElementById("kullaniciAdi").value.trim();
-    const yorum = document.getElementById("yorumMetni").value.trim();
-    const tarih = new Date().toLocaleString("tr-TR");
-
-    if (ad && yorum) {
-      const yeniYorum = document.createElement("div");
-      yeniYorum.classList.add("yorum");
-      yeniYorum.innerHTML = `
-        <div class="ad">${ad}</div>
-        <div class="tarih">${tarih}</div>
-        <div class="icerik">${yorum}</div>
-      `;
-      yorumlar.prepend(yeniYorum);
-      form.reset();
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, function(tag) {
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[tag] || tag;
+      });
     }
-  });
-</script>
 
-</body>
+    function emojiDonustur(metin) {
+      return metin
+        .replace(/:\)/g, "😊")
+        .replace(/:\(/g, "😞")
+        .replace(/:D/g, "😄")
+        .replace(/<3/g, "❤️");
+    }
+
+    function guncelleYorumSayisi() {
+      yorumSayisi.textContent = `${tumYorumlar.length} tartışma`;
+    }
+
+    function yorumHTML(orum, index) {
+      return `
+        <div class="yorum" data-index="${index}">
+          <div class="ad">${escapeHTML(orum.ad)}</div>
+          <div class="tarih">${orum.tarih}</div>
+          <div class="icerik">${emojiDonustur(escapeHTML(orum.yorum))}</div>
+          <div>
+            <button class="yorum-btn begen">👍 ${orum.begen || 0}</button>
+            <button class="yorum-btn cevapla">Yanıtla</button>
+            <button class="yorum-btn sil">Sil</button>
+          </div>
+          <div class="alt-yorumlar"></div>
+        </div>
+      `;
+    }
+
+    function yorumlariGoster() {
+      yorumlar.innerHTML = "";
+      let sirali = [...tumYorumlar];
+      if (sirala.value === "eski") sirali.reverse();
+      else if (sirala.value === "isim") sirali.sort((a,b)=>a.ad.localeCompare(b.ad));
+      sirali.forEach((y, i) => yorumlar.insertAdjacentHTML("beforeend", yorumHTML(y, i)));
+      guncelleYorumSayisi();
+    }
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const ad = document.getElementById("kullaniciAdi").value.trim();
+      const yorum = document.getElementById("yorumMetni").value.trim();
+      if (ad.length < 2 || yorum.length < 4) return alert("Daha anlamlı bir tartışma yazmalısınız.");
+      const tarih = new Date().toLocaleString("tr-TR");
+      tumYorumlar.unshift({ ad, yorum, tarih });
+      localStorage.setItem("yorumlar", JSON.stringify(tumYorumlar));
+      yorumlariGoster();
+      form.reset();
+    });
+
+    yorumlar.addEventListener("click", function(e) {
+      const yorumEl = e.target.closest(".yorum");
+      const index = yorumEl.dataset.index;
+      if (e.target.classList.contains("begen")) {
+        tumYorumlar[index].begen = (tumYorumlar[index].begen || 0) + 1;
+        localStorage.setItem("yorumlar", JSON.stringify(tumYorumlar));
+        yorumlariGoster();
+      } else if (e.target.classList.contains("sil")) {
+        if (confirm("Yorumu silmek istediğine emin misin?")) {
+          tumYorumlar.splice(index, 1);
+          localStorage.setItem("yorumlar", JSON.stringify(tumYorumlar));
+          yorumlariGoster();
+        }
+      } else if (e.target.classList.contains("cevapla")) {
+        const ad = prompt("Yanıtlayan adın?");
+        const yorum = prompt("Yanıtın?");
+        if (ad && yorum) {
+          const tarih = new Date().toLocaleString("tr-TR");
+          const alt = yorumEl.querySelector(".alt-yorumlar");
+          alt.insertAdjacentHTML("beforeend", `
+            <div class="yorum">
+              <div class="ad">${escapeHTML(ad)}</div>
+              <div class="tarih">${tarih}</div>
+              <div class="icerik">${emojiDonustur(escapeHTML(yorum))}</div>
+            </div>
+          `);
+        }
+      }
+    });
+
+    temaBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+      temaBtn.textContent = document.body.classList.contains("light") ? "🌑 Koyu Tema" : "🌙 Açık Tema";
+    });
+
+    sirala.addEventListener("change", yorumlariGoster);
+
+    yorumlariGoster();
+  </script></body>
 </html>
