@@ -1,103 +1,157 @@
-<!DOCTYPE html>
-<html lang="tr">
+<!DOCTYPE html><html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BıyıklıFBİ – Özgür Bilgi Platformu</title>
+  <title>BıyıklıFBİ</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Rubik', sans-serif;
-      background-color: #f0f2f5;
-      color: #222;
-      text-align: center;
+    :root {
+      --bg-color: #f0f2f5;
+      --text-color: #222;
+      --card-bg: white;
+      --nav-bg: #ffffff;
     }
+    [data-theme="dark"] {
+      --bg-color: #1e1e1e;
+      --text-color: #f5f5f5;
+      --card-bg: #2c2c2c;
+      --nav-bg: #2a2a2a;
+    }body {
+  margin: 0;
+  font-family: 'Rubik', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s, color 0.3s;
+}
 
-    header {
-      background-color: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      padding: 20px;
-    }
+header {
+  background-color: var(--nav-bg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 20px;
+  text-align: center;
+}
 
-    header img {
-      height: 80px;
-    }
+header img {
+  height: 80px;
+}
 
-    h1 {
-      font-size: 2em;
-      margin: 20px 0 10px;
-    }
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 8px 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-    p {
-      max-width: 600px;
-      margin: 0 auto 30px;
-      line-height: 1.6;
-    }
+h1 {
+  font-size: 2em;
+  margin: 10px 0 5px;
+}
 
-    .content {
-      padding: 30px;
-    }
+nav {
+  background: var(--nav-bg);
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
 
-    .card {
-      background: white;
-      margin: 20px auto;
-      padding: 20px;
-      max-width: 700px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
+nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: bold;
+}
 
-    footer {
-      margin-top: 50px;
-      padding: 10px;
-      font-size: 0.9em;
-      color: #888;
-    }
+.content {
+  padding: 30px;
+  text-align: center;
+}
+
+.card {
+  background: var(--card-bg);
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 700px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+footer {
+  margin-top: 50px;
+  background: var(--nav-bg);
+  padding: 20px;
+  text-align: center;
+}
+
+.socials a {
+  display: inline-block;
+  margin: 5px 10px;
+  padding: 10px 16px;
+  background: #007bff;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.socials a:hover {
+  background: #0056b3;
+}
+
   </style>
 </head>
-<body>
+<body><button class="theme-toggle" onclick="toggleTheme()">Tema Değiştir</button>
 
 <header>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Logo_2024_v2.png" alt="BıyıklıFBİ Logo">
-</header>
-
-<div class="content">
-  <h1>🎩 BıyıklıFBİ'ye Hoş Geldiniz</h1>
-  <p>Bu platformda özgürce bilgi paylaşabilir, fikir tartışmalarına katılabilir ve katkı sunabilirsiniz.</p>
-
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Logo_2024_v2.png" alt="Logo">
+  <h1>BıyıklıFBİ</h1>
+</header><nav>
+  <a href="#">Anasayfa</a>
+  <a href="#">Hakkında</a>
+  <a href="#">İçerikler</a>
+  <a href="#">Katkı Yap</a>
+</nav><div class="content">
   <div class="card">
     <h2>📚 Nedir BıyıklıFBİ?</h2>
-    <p>Burası, Vikipedi'ye alternatif, daha özgür, yerli ve bağımsız bir bilgi platformudur. Hiçbir baskı altında kalmadan bilgi üretmek isteyen herkese açık.</p>
+    <p>Yerli ve bağımsız bir bilgi platformu. Özgürce bilgi paylaşabileceğiniz, fikir alışverişi yapabileceğiniz bir ortam.</p>
+  </div>  <div class="card">
+    <h2>💬 Tartışma</h2>
+    <div id="disqus_thread"></div>
   </div>
-
-  <div class="card">
-    <h2>🧠 Katkı Sun</h2>
-    <p>İstediğin konularda içerik ekleyebilir, bilgi ekleyerek topluluğa katkı sunabilirsin.</p>
+</div><footer>
+  <div class="socials">
+    <a href="https://www.instagram.com/biyiklifbi61" target="_blank">Instagram</a>
+    <a href="https://sosyal.teknofest.app/@biyiklifbi61" target="_blank">Teknofest</a>
+    <a href="https://x.com/BIYIKLIFBI61" target="_blank">X (Twitter)</a>
+    <a href="https://youtube.com/@biyiklifbi6161" target="_blank">YouTube</a>
   </div>
-
-  <h2 style="margin-top: 50px;">💬 Tartışma</h2>
-  <div id="disqus_thread"></div>
-</div>
-
-<footer>
-  © 2025 BıyıklıFBİ – Tüm Hakları Saklıdır.
-</footer>
-
-<!-- Disqus Tartışma Kodu -->
-<script>
+  <p>© 2025 BıyıklıFBİ</p>
+</footer><script>
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute("data-theme");
+  document.documentElement.setAttribute(
+    "data-theme",
+    currentTheme === "dark" ? "light" : "dark"
+  );
+}
+</script><!-- Disqus --><script>
   var disqus_config = function () {
     this.page.url = window.location.href;
     this.page.identifier = 'anasayfa';
   };
   (function() {
     var d = document, s = d.createElement('script');
-    s.src = 'https://biyiklifbi.disqus.com/embed.js';  // ← shortname burada
+    s.src = 'https://biyiklifbi.disqus.com/embed.js';
     s.setAttribute('data-timestamp', +new Date());
     (d.head || d.body).appendChild(s);
   })();
-</script>
-<noscript>Lütfen tartışmaları görebilmek için JavaScript'i etkinleştirin.</noscript>
+</script><noscript>Lütfen tartışmaları görebilmek için JavaScript'i etkinleştirin.</noscript>
 
 </body>
 </html>
