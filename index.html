@@ -1,11 +1,103 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BıyıklıFBİ – Özgür Bilgi Platformu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Rubik', sans-serif;
+      background-color: #f0f2f5;
+      color: #222;
+      text-align: center;
+    }
+
+    header {
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 20px;
+    }
+
+    header img {
+      height: 80px;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin: 20px 0 10px;
+    }
+
+    p {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      line-height: 1.6;
+    }
+
+    .content {
+      padding: 30px;
+    }
+
+    .card {
+      background: white;
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 700px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 10px;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hoş Geldiniz</h1>
-  <p>Burası BıyıklıFBİ, bağımsız ve özgür bir bilgi paylaşım platformudur.</p>
+
+<header>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Logo_2024_v2.png" alt="BıyıklıFBİ Logo">
+</header>
+
+<div class="content">
+  <h1>🎩 BıyıklıFBİ'ye Hoş Geldiniz</h1>
+  <p>Bu platformda özgürce bilgi paylaşabilir, fikir tartışmalarına katılabilir ve katkı sunabilirsiniz.</p>
+
+  <div class="card">
+    <h2>📚 Nedir BıyıklıFBİ?</h2>
+    <p>Burası, Vikipedi'ye alternatif, daha özgür, yerli ve bağımsız bir bilgi platformudur. Hiçbir baskı altında kalmadan bilgi üretmek isteyen herkese açık.</p>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Katkı Sun</h2>
+    <p>İstediğin konularda içerik ekleyebilir, bilgi ekleyerek topluluğa katkı sunabilirsin.</p>
+  </div>
+
+  <h2 style="margin-top: 50px;">💬 Tartışma</h2>
+  <div id="disqus_thread"></div>
+</div>
+
+<footer>
+  © 2025 BıyıklıFBİ – Tüm Hakları Saklıdır.
+</footer>
+
+<!-- Disqus Tartışma Kodu -->
+<script>
+  var disqus_config = function () {
+    this.page.url = window.location.href;
+    this.page.identifier = 'anasayfa';
+  };
+  (function() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://biyiklifbi.disqus.com/embed.js';  // ← shortname burada
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Lütfen tartışmaları görebilmek için JavaScript'i etkinleştirin.</noscript>
+
 </body>
 </html>
