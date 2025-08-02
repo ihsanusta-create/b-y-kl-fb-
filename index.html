@@ -3,25 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bıyıklıfbı.org – Ana Sayfa</title>
+  <title>Bıyıklıfbı – Ana Sayfa</title>
   <style>
     body {
-      background-color: #f9f9f9; /* Açık tema varsayılan arka plan */
-      color: #333; /* Koyu metin rengi */
-      font-family: 'Georgia', serif; /* Klasik yazı tipi */
+      background-color: #f9f9f9;
+      color: #333;
+      font-family: 'Georgia', serif;
       margin: 0;
       padding: 0;
-      transition: background-color 0.3s, color 0.3s; /* Geçiş efekti */
+      transition: background-color 0.3s, color 0.3s;
     }
     .dark-mode {
-      background-color: #0d0d0d; /* Koyu tema arka plan */
-      color: #f0f0f0; /* Açık metin rengi */
+      background-color: #0d0d0d !important;
+      color: #f0f0f0 !important;
     }
     header {
       text-align: center;
       padding: 2rem 1rem;
       background-color: #1a1a1a;
       color: #fff;
+      position: relative;
+    }
+    .dark-mode header {
+      background-color: #222 !important;
+      color: #ffcc00 !important;
     }
     header img {
       width: 100px;
@@ -33,11 +38,15 @@
       background-color: #333;
       border-radius: 8px;
     }
+    .dark-mode nav {
+      background-color: #262626 !important;
+    }
     nav ul {
       list-style: none;
       padding: 0;
       display: flex;
       justify-content: center;
+      margin: 0;
     }
     nav ul li {
       margin: 0 1rem;
@@ -48,9 +57,14 @@
       padding: 0.5rem 1rem;
       border-radius: 6px;
       transition: background-color 0.3s;
+      display: inline-block;
     }
     nav ul li a:hover {
       background-color: #444;
+    }
+    .dark-mode nav ul li a:hover {
+      background-color: #666;
+      color: #ffcc00;
     }
     main {
       max-width: 700px;
@@ -59,22 +73,39 @@
     }
     section {
       margin-bottom: 2rem;
-      background-color: #fff; /* Beyaz arka plan */
+      background-color: #fff;
       padding: 1rem;
-      border-radius: 8px; /* Yuvarlatılmış köşeler */
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .dark-mode section {
+      background-color: #181818 !important;
+      color: #f0f0f0 !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     h2 {
       color: #ffcc00;
     }
+    .dark-mode h2 {
+      color: #ffd700;
+    }
     input, textarea {
       width: 100%;
       padding: 0.75rem;
-      background-color: #f1f1f1; /* Daha açık giriş alanı */
+      background-color: #f1f1f1;
       border: 1px solid #ccc;
       color: #333;
       border-radius: 6px;
       margin-bottom: 1rem;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .dark-mode input, .dark-mode textarea {
+      background-color: #292929;
+      border: 1px solid #666;
+      color: #eee;
     }
     button {
       background-color: #ffcc00;
@@ -83,9 +114,17 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3em;
     }
     button:hover {
       background-color: #e6b800;
+    }
+    .dark-mode button {
+      background-color: #ffd700;
+      color: #111;
     }
     .yorum {
       background-color: #f9f9f9;
@@ -93,13 +132,45 @@
       margin-top: 1rem;
       border-left: 4px solid #444;
       border-radius: 6px;
+      position: relative;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .dark-mode .yorum {
+      background-color: #222;
+      border-left: 4px solid #ffd700;
+      color: #f0f0f0;
     }
     .yorum .ad {
       font-weight: bold;
+      margin-bottom: 0.2em;
     }
     .yorum .tarih {
       font-size: 0.8rem;
       color: #aaa;
+      margin-bottom: 0.4em;
+    }
+    .dark-mode .yorum .tarih {
+      color: #ccc;
+    }
+    .yorum .actions {
+      margin-top: 0.7em;
+      display: flex;
+      gap: 0.5em;
+    }
+    .yanit {
+      margin-top: 0.7em;
+      margin-left: 1.5em;
+      background: #fffbe0;
+      color: #222;
+      border-left: 3px solid #ffcc00;
+      border-radius: 5px;
+      padding: 0.7em 1em;
+      font-size: 0.97em;
+    }
+    .dark-mode .yanit {
+      background: #292200;
+      color: #ffd700;
+      border-left: 3px solid #ffd700;
     }
     footer {
       text-align: center;
@@ -107,7 +178,11 @@
       font-size: 0.9rem;
       background-color: #111;
       color: #666;
-      margin-top: 2rem; /* Üstten boşluk */
+      margin-top: 2rem;
+    }
+    .dark-mode footer {
+      background: #191919;
+      color: #888;
     }
     .social-buttons {
       margin-top: 1rem;
@@ -120,15 +195,20 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background-color: #e6e6e6; /* Buton rengi */
+      background-color: #e6e6e6;
       text-align: center;
-      line-height: 40px; /* Dikey ortalama */
+      line-height: 40px;
       text-decoration: none;
       color: #333;
+      font-size: 1.3em;
       transition: background-color 0.3s;
     }
     .social-buttons a:hover {
-      background-color: #ccc; /* Hover rengi */
+      background-color: #ccc;
+    }
+    .dark-mode .social-buttons a {
+      background: #2b2b2b;
+      color: #ffd700;
     }
     .theme-toggle {
       position: absolute;
@@ -140,18 +220,56 @@
       border-radius: 6px;
       cursor: pointer;
       transition: background-color 0.3s;
+      font-size: 1em;
+      z-index: 2;
     }
     .theme-toggle:hover {
       background-color: #e6b800;
+    }
+    .dark-mode .theme-toggle {
+      background: #ffd700;
+      color: #222;
+    }
+
+    /* Mobile responsive styles */
+    @media (max-width: 600px) {
+      main {
+        padding: 1rem;
+      }
+      section {
+        padding: 0.7rem;
+      }
+      nav ul {
+        flex-direction: column;
+        gap: 0.5em;
+      }
+      nav ul li {
+        margin: 0.3rem 0;
+      }
+      .theme-toggle {
+        right: 0.6rem;
+        top: 0.6rem;
+        font-size: 0.97em;
+        padding: 0.4rem 0.8rem;
+      }
+      header img {
+        width: 70px;
+      }
+      .social-buttons a {
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        font-size: 1em;
+      }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <button class="theme-toggle" id="themeToggle">Dark/Light</button>
+  <button class="theme-toggle" id="themeToggle" aria-label="Tema Değiştir">🌙/☀️</button>
   <img src="https://example.com/path/to/your/logo.png" alt="Bıyıklıfbı Logo">
-  <h1>Bıyıklıfbı.org</h1>
+  <h1>Bıyıklıfbı</h1>
   <p>Yerli, bağımsız, tartışılabilir bilgi platformu</p>
   <nav>
     <ul>
@@ -165,39 +283,62 @@
 <main>
   <section id="giris">
     <h2>📚 Giriş</h2>
-    <p>Burası Bıyıklıfbı.org'un ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
+    <p>Burası Bıyıklıfbı'nın ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
   </section>
 
   <section id="tartismalar">
     <h2>💬 Tartışmalar</h2>
-    <form id="yorumForm">
-      <input type="text" id="kullaniciAdi" placeholder="Adınız" required>
-      <textarea id="yorumMetni" rows="4" placeholder="Tartışmanızı yazın..." required></textarea>
-      <button type="submit">Gönder</button>
+    <form id="yorumForm" autocomplete="off">
+      <input type="text" id="kullaniciAdi" placeholder="Adınız" required maxlength="32">
+      <textarea id="yorumMetni" rows="4" placeholder="Tartışmanızı yazın..." required maxlength="400"></textarea>
+      <button type="submit">➕ Gönder</button>
     </form>
     <div id="yorumlar"></div>
   </section>
 
   <section id="hakkimizda">
     <h2>📝 Hakkımızda</h2>
-    <p>Bıyıklıfbı.org, bilgi paylaşımını teşvik eden ve tartışmalara açık bir platformdur. Amacımız, farklı bakış açılarını bir araya getirerek daha zengin bir bilgi havuzu oluşturmak ve kullanıcılarımızın katılımını sağlamaktır.</p>
+    <p>Bıyıklıfbı, bilgi paylaşımını teşvik eden ve tartışmalara açık bir platformdur. Amacımız, farklı bakış açılarını bir araya getirerek daha zengin bir bilgi havuzu oluşturmak ve kullanıcılarımızın katılımını sağlamaktır.</p>
   </section>
 </main>
 
 <footer>
   <div class="social-buttons">
-    <a href="https://www.instagram.com/biyiklifbi61/" target="_blank">📷</a>
-    <a href="https://youtube.com/@biyiklifbi6161" target="_blank">📺</a>
-    <a href="https://x.com/BIYIKLIFBI61" target="_blank">🐦</a>
-    <a href="https://sosyal.teknofest.app/@biyiklifbi61" target="_blank">🌐</a>
+    <a href="https://www.instagram.com/biyiklifbi61/" target="_blank" title="Instagram">📷</a>
+    <a href="https://youtube.com/@biyiklifbi6161" target="_blank" title="YouTube">📺</a>
+    <a href="https://x.com/BIYIKLIFBI61" target="_blank" title="X(Twitter)">🐦</a>
+    <a href="https://sosyal.teknofest.app/@biyiklifbi61" target="_blank" title="Sosyal Ağ">🌐</a>
   </div>
-  © 2025 Bıyıklıfbı.org — Tüm hakları saklıdır.
+  © 2025 Bıyıklıfbı — Tüm hakları saklıdır.
 </footer>
 
 <script>
+  // Escape user input to prevent HTML injection
+  function escapeHTML(str) {
+    return str.replace(/[&<>"']/g, function(m) {
+      return ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[m];
+    });
+  }
+
   const form = document.getElementById("yorumForm");
   const yorumlar = document.getElementById("yorumlar");
   const themeToggle = document.getElementById("themeToggle");
+
+  // Theme persistence
+  if (localStorage.getItem("biyiklifbi-theme") === "dark") {
+    document.body.classList.add("dark-mode");
+  }
+
+  themeToggle.addEventListener("click", function() {
+    document.body.classList.toggle("dark-mode");
+    localStorage.setItem("biyiklifbi-theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+  });
 
   form.addEventListener("submit", function(e) {
     e.preventDefault();
@@ -210,13 +351,13 @@
       const yeniYorum = document.createElement("div");
       yeniYorum.classList.add("yorum");
       yeniYorum.innerHTML = `
-        <div class="ad">${ad}</div>
+        <div class="ad">${escapeHTML(ad)}</div>
         <div class="tarih">${tarih}</div>
-        <div class="icerik">${yorum}</div>
+        <div class="icerik">${escapeHTML(yorum)}</div>
         <div class="actions">
-          <button class="beğen">Beğen</button>
-          <button class="şikayet">Şikayet</button>
-          <button class="yanıtla">Yanıtla</button>
+          <button type="button" class="beğen" title="Beğen">👍 Beğen</button>
+          <button type="button" class="şikayet" title="Şikayet Et">🚩 Şikayet</button>
+          <button type="button" class="yanıtla" title="Yanıtla">💬 Yanıtla</button>
         </div>
       `;
       yorumlar.prepend(yeniYorum);
@@ -231,17 +372,13 @@
       alert("Yorum şikayet edildi!");
     } else if (e.target.classList.contains("yanıtla")) {
       const yanit = prompt("Cevabınızı yazın:");
-      if (yanit) {
+      if (yanit && yanit.trim().length > 0) {
         const yanitDiv = document.createElement("div");
-        yanitDiv.classList.add("yorum");
-        yanitDiv.innerHTML = `<div class="ad">Yanıtınız</div><div class="icerik">${yanit}</div>`;
+        yanitDiv.classList.add("yanit");
+        yanitDiv.innerHTML = `<strong>Yanıtınız:</strong><br>${escapeHTML(yanit.trim())}`;
         e.target.closest(".yorum").appendChild(yanitDiv);
       }
     }
-  });
-
-  themeToggle.addEventListener("click", function() {
-    document.body.classList.toggle("dark-mode");
   });
 </script>
 
