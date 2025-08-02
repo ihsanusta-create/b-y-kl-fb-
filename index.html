@@ -1,270 +1,193 @@
-<!DOCTYPE html><html lang="tr">
+<!DOCTYPE html>
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bıyıklıfbı – Ana Sayfa</title>
+  <title>Bıyıklıfbi – Ana Sayfa</title>
   <style>
-    :root {
-      --bg: #0d0d0d;
-      --text: #f0f0f0;
-      --primary: #ffcc00;
-      --secondary-bg: #1a1a1a;
-      --input-bg: #1e1e1e;
-      --border: #444;
-      --footer-bg: #111;
-    }body.light {
-  --bg: #ffffff;
-  --text: #000000;
-  --primary: #ff9900;
-  --secondary-bg: #f0f0f0;
-  --input-bg: #ffffff;
-  --border: #ccc;
-  --footer-bg: #ddd;
-}
-
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  transition: all 0.3s ease;
-}
-header {
-  text-align: center;
-  padding: 2rem 1rem;
-  background-color: var(--secondary-bg);
-}
-header img {
-  width: 100px;
-  height: auto;
-  border-radius: 12px;
-}
-h1 {
-  margin-top: 1rem;
-  color: var(--primary);
-}
-main {
-  max-width: 700px;
-  margin: auto;
-  padding: 2rem;
-}
-section {
-  margin-bottom: 2rem;
-}
-h2 {
-  color: var(--primary);
-}
-input, textarea {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: var(--input-bg);
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 6px;
-  margin-bottom: 1rem;
-}
-button {
-  background-color: var(--primary);
-  color: black;
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-button:hover {
-  background-color: #e6b800;
-}
-.yorum {
-  background-color: var(--secondary-bg);
-  padding: 1rem;
-  margin-top: 1rem;
-  border-left: 4px solid var(--border);
-  border-radius: 6px;
-  position: relative;
-}
-.yorum .ad {
-  font-weight: bold;
-}
-.yorum .tarih {
-  font-size: 0.8rem;
-  color: #aaa;
-}
-.alt-yorum {
-  margin-left: 2rem;
-  margin-top: 1rem;
-}
-.avatar {
-  width: 32px;
-  height: 32px;
-  background-color: var(--border);
-  color: #fff;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 32px;
-  font-weight: bold;
-  display: inline-block;
-  margin-right: 0.5rem;
-}
-.yorum-buttons {
-  margin-top: 0.5rem;
-}
-.yorum-buttons button {
-  background: none;
-  border: none;
-  color: var(--text);
-  cursor: pointer;
-  margin-right: 0.5rem;
-}
-footer {
-  text-align: center;
-  padding: 1rem;
-  font-size: 0.9rem;
-  background-color: var(--footer-bg);
-  color: #666;
-}
-.tema-btn {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  background-color: var(--primary);
-  color: black;
-  border: none;
-  border-radius: 20px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
-}
-
+    body {
+      background-color: #0d0d0d;
+      color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      background-color: #1a1a1a;
+    }
+    header img {
+      width: 160px;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    h1 {
+      margin-top: 1rem;
+      color: #ffcc00;
+      font-size: 2rem;
+    }
+    main {
+      max-width: 700px;
+      margin: auto;
+      padding: 2rem;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+    h2 {
+      color: #ffcc00;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #1e1e1e;
+      border: 1px solid #444;
+      color: white;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+    button {
+      background-color: #ffcc00;
+      color: black;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #e6b800;
+    }
+    .yorum {
+      background-color: #1a1a1a;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-left: 4px solid #444;
+      border-radius: 6px;
+    }
+    .yorum .ad {
+      font-weight: bold;
+    }
+    .yorum .tarih {
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      background-color: #111;
+      color: #666;
+    }
+    .tema-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #444;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
 </head>
-<body><button class="tema-btn" onclick="temaDegistir()">🌙 Tema</button>
+<body>
+
+<button class="tema-toggle" id="temaBtn">🌙</button>
 
 <header>
-  <img src="logo.png" alt="Bıyıklıfbı Logo">
-  <h1>Bıyıklıfbı</h1>
+  <img src="biyiklifi-logo.png" alt="Bıyıklıfbi Logo">
+  <h1>Bıyıklıfbi</h1>
   <p>Yerli, bağımsız, tartışılabilir bilgi platformu</p>
-</header><main>
+</header>
+
+<main>
   <section>
     <h2>📚 Giriş</h2>
-    <p>Burası Bıyıklıfbı'nın ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
-  </section>  <section>
+    <p>Burası Bıyıklıfbi'nin ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
+  </section>
+
+  <section>
     <h2>💬 Tartışmalar</h2>
     <form id="yorumForm">
       <input type="text" id="kullaniciAdi" placeholder="Adınız" required>
-      <textarea id="yorumMetni" rows="4" placeholder="Görüşünüzü yazın..." required></textarea>
+      <textarea id="yorumMetni" rows="4" placeholder="Yorumunuzu yazın..." required></textarea>
       <button type="submit">Gönder</button>
     </form>
     <div id="yorumlar"></div>
   </section>
-</main><footer>
-  © 2025 Bıyıklıfbı — Tüm hakları saklıdır.
-</footer><script>
-  const body = document.body;
-  const temaBtn = document.querySelector(".tema-btn");
-  let tema = localStorage.getItem("tema") || "dark";
+</main>
 
-  function uygulaTema() {
-    if (tema === "light") {
-      body.classList.add("light");
-      temaBtn.textContent = "🌙 Karanlık";
+<footer>
+  © 2025 Bıyıklıfbi — Tüm hakları saklıdır.
+</footer>
+
+<script>
+  // Tema geçişi
+  const temaBtn = document.getElementById("temaBtn");
+  temaBtn.addEventListener("click", () => {
+    document.body.classList.toggle("light-theme");
+    if(document.body.classList.contains("light-theme")){
+      document.body.style.backgroundColor = "#f0f0f0";
+      document.body.style.color = "#0d0d0d";
+      temaBtn.textContent = "☀️";
     } else {
-      body.classList.remove("light");
-      temaBtn.textContent = "☀️ Aydınlık";
-    }
-  }
-
-  function temaDegistir() {
-    tema = tema === "light" ? "dark" : "light";
-    localStorage.setItem("tema", tema);
-    uygulaTema();
-  }
-
-  uygulaTema();
-
-  const form = document.getElementById("yorumForm");
-  const yorumlar = document.getElementById("yorumlar");
-  let yorumListesi = JSON.parse(localStorage.getItem("yorumlar")) || [];
-
-  function yorumHTML(yorumObj, alt = false) {
-    const avatar = yorumObj.ad.charAt(0).toUpperCase();
-    const yorumEl = document.createElement("div");
-    yorumEl.classList.add("yorum");
-    if (alt) yorumEl.classList.add("alt-yorum");
-    yorumEl.innerHTML = `
-      <div class="avatar">${avatar}</div>
-      <div class="ad">${yorumObj.ad}</div>
-      <div class="tarih">${yorumObj.tarih}</div>
-      <div class="icerik">${yorumObj.yorum}</div>
-      <div class="yorum-buttons">
-        <button onclick="cevapla('${yorumObj.id}')">↩️ Cevapla</button>
-        <button onclick="silYorum('${yorumObj.id}')">🗑️ Sil</button>
-        <button onclick="begen('${yorumObj.id}')">👍 ${yorumObj.begen}</button>
-      </div>
-    `;
-    if (yorumObj.altlar) {
-      yorumObj.altlar.forEach(alt => {
-        yorumEl.appendChild(yorumHTML(alt, true));
-      });
-    }
-    return yorumEl;
-  }
-
-  function guncelleGorunum() {
-    yorumlar.innerHTML = "";
-    yorumListesi.forEach(y => {
-      yorumlar.prepend(yorumHTML(y));
-    });
-    localStorage.setItem("yorumlar", JSON.stringify(yorumListesi));
-  }
-
-  function begen(id) {
-    const y = yorumListesi.find(y => y.id === id);
-    if (y) y.begen++;
-    guncelleGorunum();
-  }
-
-  function silYorum(id) {
-    yorumListesi = yorumListesi.filter(y => y.id !== id);
-    guncelleGorunum();
-  }
-
-  function cevapla(id) {
-    const ad = prompt("Adınız:");
-    const yorum = prompt("Yanıtınız:");
-    if (!ad || !yorum || yorum.length < 2) return;
-    const tarih = new Date().toLocaleString("tr-TR");
-    const yanit = { id: Date.now() + Math.random(), ad, yorum, tarih, begen: 0, altlar: [] };
-    const y = yorumListesi.find(y => y.id == id);
-    if (y) {
-      y.altlar = y.altlar || [];
-      y.altlar.push(yanit);
-    }
-    guncelleGorunum();
-  }
-
-  form.addEventListener("submit", function(e) {
-    e.preventDefault();
-    const ad = document.getElementById("kullaniciAdi").value.trim();
-    const yorum = document.getElementById("yorumMetni").value.trim().replace(":)", "😊").replace(":(", "☹️");
-    const tarih = new Date().toLocaleString("tr-TR");
-
-    if (ad && yorum.length > 2) {
-      const yeniYorum = {
-        id: Date.now().toString(),
-        ad,
-        yorum,
-        tarih,
-        begen: 0,
-        altlar: []
-      };
-      yorumListesi.push(yeniYorum);
-      form.reset();
-      guncelleGorunum();
+      document.body.style.backgroundColor = "#0d0d0d";
+      document.body.style.color = "#f0f0f0";
+      temaBtn.textContent = "🌙";
     }
   });
 
-  guncelleGorunum();
-</script></body>
+  const form = document.getElementById("yorumForm");
+  const yorumlar = document.getElementById("yorumlar");
+
+  // LocalStorage yükle
+  window.addEventListener("load", () => {
+    const kayitli = JSON.parse(localStorage.getItem("yorumlar")) || [];
+    kayitli.forEach(ekleYorum);
+  });
+
+  // Form gönder
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const ad = document.getElementById("kullaniciAdi").value.trim();
+    const yorum = document.getElementById("yorumMetni").value.trim();
+    const tarih = new Date().toLocaleString("tr-TR");
+
+    if (ad && yorum) {
+      const veri = { ad, yorum, tarih };
+      ekleYorum(veri);
+
+      // LocalStorage'a kaydet
+      const kayitli = JSON.parse(localStorage.getItem("yorumlar")) || [];
+      kayitli.unshift(veri);
+      localStorage.setItem("yorumlar", JSON.stringify(kayitli));
+
+      form.reset();
+    }
+  });
+
+  function ekleYorum({ad, yorum, tarih}) {
+    const yeniYorum = document.createElement("div");
+    yeniYorum.classList.add("yorum");
+    yeniYorum.innerHTML = `
+      <div class="ad">${ad}</div>
+      <div class="tarih">${tarih}</div>
+      <div class="icerik">${yorum}</div>
+    `;
+    yorumlar.prepend(yeniYorum);
+  }
+</script>
+
+</body>
 </html>
