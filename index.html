@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="tr">
+<!DOCTYPE html><html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,6 +13,11 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.light {
+      background-color: #ffffff;
+      color: #000000;
     }
     header {
       text-align: center;
@@ -93,6 +97,12 @@
       font-size: 0.8rem;
       color: #aaa;
     }
+    .yorum .butonlar {
+      margin-top: 0.5rem;
+    }
+    .yorum .butonlar button {
+      margin-right: 0.5rem;
+    }
     .hakkimizda-kutu {
       background-color: #1a1a1a;
       border-left: 6px solid #ffcc00;
@@ -110,27 +120,20 @@
     }
   </style>
 </head>
-<body>
-
-<header>
+<body><header>
   <img src="biyiklifi-logo.png" alt="Bıyıklıfbi Logo" />
   <h1>Bıyıklıfbi</h1>
   <p>Yerli, bağımsız, tartışılabilir bilgi platformu</p>
-</header>
-
-<nav>
+  <button onclick="temaDegistir()">🎨 Tema Değiştir</button>
+</header><nav>
   <a href="#">Ana Sayfa</a>
   <a href="#tartismalar">Tartışmalar</a>
   <a href="#hakkimizda">Hakkımızda</a>
-</nav>
-
-<main>
+</nav><main>
   <section id="giris">
     <h2>📚 Giriş</h2>
     <p>Burası Bıyıklıfbi'nin ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
-  </section>
-
-  <section id="tartismalar">
+  </section>  <section id="tartismalar">
     <h2>💬 Tartışmalar</h2>
     <form id="yorumForm">
       <input type="text" id="kullaniciAdi" placeholder="Adınız" required />
@@ -138,9 +141,7 @@
       <button type="submit">Gönder</button>
     </form>
     <div id="yorumlar"></div>
-  </section>
-
-  <section id="hakkimizda">
+  </section>  <section id="hakkimizda">
     <h2>ℹ️ Hakkımızda</h2>
     <div class="hakkimizda-kutu">
       <strong>Misyonumuz:</strong>
@@ -159,39 +160,17 @@
       <p>İster yorum yap, ister tartışmalara katıl – bu platform senin katkılarınla büyüyor.</p>
     </div>
   </section>
-</main>
-
-<section style="background-color:#111; padding: 2rem; text-align: center;">
+</main><section style="background-color:#111; padding: 2rem; text-align: center;">
   <h2 style="color:#ffcc00; margin-bottom: 1rem;">📱 Bizi Takip Et</h2>
   <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;">
-    <a href="https://www.instagram.com/biyiklifbi61" target="_blank" style="text-decoration: none;">
-      <button style="background:#E1306C; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">
-        📸 Instagram
-      </button>
-    </a>
-    <a href="https://sosyal.teknofest.app/@biyiklifbi61" target="_blank" style="text-decoration: none;">
-      <button style="background:#6364FF; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">
-        🧠 Teknofest Sosyal
-      </button>
-    </a>
-    <a href="https://x.com/BIYIKLIFBI61" target="_blank" style="text-decoration: none;">
-      <button style="background:#000; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">
-        🐦 X (Twitter)
-      </button>
-    </a>
-    <a href="https://youtube.com/@biyiklifbi6161" target="_blank" style="text-decoration: none;">
-      <button style="background:#FF0000; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">
-        ▶️ YouTube
-      </button>
-    </a>
+    <a href="https://www.instagram.com/biyiklifbi61" target="_blank"><button style="background:#E1306C; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">📸 Instagram</button></a>
+    <a href="https://sosyal.teknofest.app/@biyiklifbi61" target="_blank"><button style="background:#6364FF; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">🧠 Teknofest Sosyal</button></a>
+    <a href="https://x.com/BIYIKLIFBI61" target="_blank"><button style="background:#000; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">🐦 X (Twitter)</button></a>
+    <a href="https://youtube.com/@biyiklifbi6161" target="_blank"><button style="background:#FF0000; color:white; border:none; padding:0.6rem 1.2rem; border-radius:10px; font-weight:bold; cursor:pointer;">▶️ YouTube</button></a>
   </div>
-</section>
-
-<footer>
+</section><footer>
   © 2025 Bıyıklıfbi — Tüm hakları saklıdır.
-</footer>
-
-<script>
+</footer><script>
   const form = document.getElementById("yorumForm");
   const yorumlar = document.getElementById("yorumlar");
 
@@ -208,23 +187,47 @@
         <div class="ad">${ad}</div>
         <div class="tarih">${tarih}</div>
         <div class="icerik">${yorum}</div>
+        <div class="butonlar">
+          <button onclick="begen(this)">👍 Beğen</button>
+          <button onclick="yanitla(this)">💬 Yanıtla</button>
+          <button onclick="sil(this)">🗑 Sil</button>
+        </div>
       `;
       yorumlar.prepend(yeniYorum);
       form.reset();
-
-      // Yorumları yerel depolamaya kaydet
       localStorage.setItem("yorumlar", yorumlar.innerHTML);
     }
   });
 
-  // Sayfa yüklenince yorumları getir
   window.addEventListener("DOMContentLoaded", () => {
     const kayitliYorumlar = localStorage.getItem("yorumlar");
     if (kayitliYorumlar) {
       yorumlar.innerHTML = kayitliYorumlar;
     }
   });
-</script>
 
-</body>
+  function sil(btn) {
+    btn.closest(".yorum").remove();
+    localStorage.setItem("yorumlar", yorumlar.innerHTML);
+  }
+  function begen(btn) {
+    btn.disabled = true;
+    btn.innerText = "👍 Beğenildi";
+  }
+  function yanitla(btn) {
+    const cevap = prompt("Yanıtınızı yazın:");
+    if (cevap) {
+      const cevapDiv = document.createElement("div");
+      cevapDiv.style.marginTop = "0.5rem";
+      cevapDiv.style.paddingLeft = "1rem";
+      cevapDiv.style.borderLeft = "2px dashed #ffcc00";
+      cevapDiv.innerHTML = `<strong>Yanıt:</strong> ${cevap}`;
+      btn.closest(".yorum").appendChild(cevapDiv);
+      localStorage.setItem("yorumlar", yorumlar.innerHTML);
+    }
+  }
+  function temaDegistir() {
+    document.body.classList.toggle("light");
+  }
+</script></body>
 </html>
