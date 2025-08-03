@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bıyıklıfbı</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bıyıklıfbi – Ana Sayfa</title>
   <style>
+    :root {
+      --bg-color: #0d0d0d;
+      --text-color: #f0f0f0;
+      --accent-color: #ffcc00;
+      --section-bg: #1a1a1a;
+      --input-bg: #1e1e1e;
+      --border-color: #444;
+      --footer-bg: #111;
+    }
+    [data-theme="light"] {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --accent-color: #cc9900;
+      --section-bg: #f9f9f9;
+      --input-bg: #f0f0f0;
+      --border-color: #ccc;
+      --footer-bg: #eee;
+    }
+    html { scroll-behavior: smooth; }
     body {
-      background-color: #0d0d0d;
-      color: #f0f0f0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
@@ -15,152 +34,225 @@
     header {
       text-align: center;
       padding: 2rem 1rem;
-      background-color: #1a1a1a;
+      background-color: var(--section-bg);
     }
     header img {
       width: 100px;
       height: auto;
       border-radius: 12px;
     }
-    h1 {
-      margin-top: 1rem;
-      color: #ffcc00;
+    h1 { margin-top: 1rem; color: var(--accent-color); }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      background-color: var(--footer-bg);
+      padding: 1rem;
+    }
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    nav a:hover {
+      transform: scale(1.05);
+      color: var(--accent-color);
+    }
+    #themeToggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--accent-color);
+      color: var(--bg-color);
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      z-index: 1000;
     }
     main {
       max-width: 700px;
       margin: auto;
       padding: 2rem;
     }
-    section {
-      margin-bottom: 2rem;
-    }
-    h2 {
-      color: #ffcc00;
-    }
+    section { margin-bottom: 2rem; }
+    h2 { color: var(--accent-color); }
     input, textarea {
       width: 100%;
       padding: 0.75rem;
-      background-color: #1e1e1e;
-      border: 1px solid #444;
-      color: white;
+      background-color: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
       border-radius: 6px;
       margin-bottom: 1rem;
     }
     button {
-      background-color: #ffcc00;
-      color: black;
+      background-color: var(--accent-color);
+      color: var(--bg-color);
       padding: 0.6rem 1.2rem;
       border: none;
       border-radius: 6px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #e6b800;
-    }
+    button:hover { background-color: #e6b800; }
     .yorum {
-      background-color: #1a1a1a;
+      background-color: var(--section-bg);
       padding: 1rem;
       margin-top: 1rem;
-      border-left: 4px solid #444;
+      border-left: 4px solid var(--border-color);
       border-radius: 6px;
-      animation: fadeIn 0.3s ease-in-out;
     }
-    .yorum .ad {
-      font-weight: bold;
-    }
+    .yorum .ad { font-weight: bold; }
     .yorum .tarih {
       font-size: 0.8rem;
       color: #aaa;
+    }
+    .yorum .aksiyonlar button {
+      margin-right: 0.5rem;
+      background-color: var(--input-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 0.3rem 0.6rem;
     }
     footer {
       text-align: center;
       padding: 1rem;
       font-size: 0.9rem;
-      background-color: #111;
+      background-color: var(--footer-bg);
       color: #666;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
     }
   </style>
 </head>
-<body>
+<body data-theme="dark">
+  <button id="themeToggle">🌙</button>
+  <header>
+    <img src="logo.png" alt="Bıyıklıfbi Logo" />
+    <h1>Bıyıklıfbi</h1>
+    <p>Yerli, bağımsız, tartışılabilir bilgi platformu</p>
+  </header>
+  <nav>
+    <a href="#">Ana Sayfa</a>
+    <a href="#tartismalar">Tartışmalar</a>
+    <a href="#hakkimizda">Hakkımızda</a>
+  </nav>
+  <main>
+    <section>
+      <h2>📚 Giriş</h2>
+      <p>Burası Bıyıklıfbi'nin ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
+    </section>
+    <section id="tartismalar">
+      <h2>💬 Tartışmalar</h2>
+      <form id="yorumForm">
+        <input type="text" id="kullaniciAdi" placeholder="Adınız" required />
+        <textarea id="yorumMetni" rows="4" placeholder="Yorumunuzu yazın..." required></textarea>
+        <button type="submit">Gönder</button>
+      </form>
+      <div id="yorumlar"></div>
+    </section>
+    <section id="hakkimizda">
+      <h2>🎈 Hakkımızda</h2>
+      <div class="yorum">
+        <strong>Misyonumuz:</strong>
+        <p>Yerli ve bağımsız bir bilgi platformu olarak, herkesin özgürce fikirlerini paylaşabildiği bir ortam sunmak.</p>
+      </div>
+      <div class="yorum">
+        <strong>Vizyonumuz:</strong>
+        <p>Toplumun bilgiye erişimini kolaylaştırmak ve doğru tartışma kültürünü yaygınlaştırmak.</p>
+      </div>
+      <div class="yorum">
+        <strong>Değerlerimiz:</strong>
+        <p>Tarafsızlık, açıklık, şeffaflık, özgürlük.</p>
+      </div>
+    </section>
+  </main>
 
-<header>
-  <img src="logo.png" alt="Bıyıklıfbı Logo">
-  <h1>Bıyıklıfbı</h1>
-  <p>Yerli, bağımsız, tartışılabilir bilgi platformu</p>
-</header>
-
-<main>
-  <section>
-    <h2>📚 Giriş</h2>
-    <p>Burası Bıyıklıfbı'nın ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
+  <section style="background-color:#111; padding: 2rem; text-align: center;">
+    <h2 style="color:#ffcc00; margin-bottom: 1rem;">📱 Bizi Takip Et</h2>
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;">
+      <a href="https://www.instagram.com/biyiklifbi61" target="_blank"><button style="background:#E1306C;color:white;border:none;padding:0.6rem 1.2rem;border-radius:10px;">📸 Instagram</button></a>
+      <a href="https://sosyal.teknofest.app/@biyiklifbi61" target="_blank"><button style="background:#6364FF;color:white;border:none;padding:0.6rem 1.2rem;border-radius:10px;">🧠 Teknofest Sosyal</button></a>
+      <a href="https://x.com/BIYIKLIFBI61" target="_blank"><button style="background:#000;color:white;border:none;padding:0.6rem 1.2rem;border-radius:10px;">🐦 X (Twitter)</button></a>
+      <a href="https://youtube.com/@biyiklifbi6161" target="_blank"><button style="background:#FF0000;color:white;border:none;padding:0.6rem 1.2rem;border-radius:10px;">▶️ YouTube</button></a>
+    </div>
   </section>
 
-  <section>
-    <h2>💬 Tartışmalar</h2>
-    <form id="yorumForm">
-      <input type="text" id="kullaniciAdi" placeholder="Adınız" required>
-      <textarea id="yorumMetni" rows="4" placeholder="Yorumunuzu yazın..." required></textarea>
-      <button type="submit">Gönder</button>
-    </form>
-    <div id="yorumlar"></div>
-  </section>
-</main>
+  <footer>
+    © 2025 Bıyıklıfbi — Tüm hakları saklıdır.
+  </footer>
 
-<footer>
-  © 2025 Bıyıklıfbı — Tüm hakları saklıdır.
-</footer>
+  <!-- FIREBASE -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
-<!-- Firebase SDK -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-  import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyCNC1M0tgiKdV-YbE-zPrES2MP0oXN0xLU",
+      authDomain: "byklfb-c85d8.firebaseapp.com",
+      databaseURL: "https://byklfb-c85d8-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "byklfb-c85d8",
+      storageBucket: "byklfb-c85d8.appspot.com",
+      messagingSenderId: "115753196341",
+      appId: "1:115753196341:web:53eda190794a6e4b7e4a7c",
+    };
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCNC1M0tgiKdV-YbE-zPrES2MP0oXN0xLU",
-    authDomain: "byklfb-c85d8.firebaseapp.com",
-    databaseURL: "https://byklfb-c85d8-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "byklfb-c85d8",
-    storageBucket: "byklfb-c85d8.firebasestorage.app",
-    messagingSenderId: "115753196341",
-    appId: "1:115753196341:web:53eda190794a6e4b7e4a7c",
-    measurementId: "G-6GRY9LN4LE"
-  };
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const yorumlarRef = ref(db, "yorumlar");
+    const form = document.getElementById("yorumForm");
+    const yorumlarDiv = document.getElementById("yorumlar");
 
-  const form = document.getElementById("yorumForm");
-  const yorumlarDiv = document.getElementById("yorumlar");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const ad = document.getElementById("kullaniciAdi").value.trim();
+      const yorum = document.getElementById("yorumMetni").value.trim();
+      const tarih = new Date().toLocaleString("tr-TR");
+      if (ad && yorum) {
+        push(ref(db, "yorumlar"), { ad, yorum, tarih, begen: 0 });
+        form.reset();
+      }
+    });
 
-  form.addEventListener("submit", function(e) {
-    e.preventDefault();
-    const ad = document.getElementById("kullaniciAdi").value.trim();
-    const yorum = document.getElementById("yorumMetni").value.trim();
-    const tarih = new Date().toLocaleString("tr-TR");
+    onValue(ref(db, "yorumlar"), (snapshot) => {
+      yorumlarDiv.innerHTML = "";
+      snapshot.forEach((child) => {
+        const key = child.key;
+        const data = child.val();
+        const div = document.createElement("div");
+        div.className = "yorum";
+        div.innerHTML = `
+          <div class="ad">${data.ad}</div>
+          <div class="tarih">${data.tarih}</div>
+          <div class="icerik">${data.yorum}</div>
+          <div class="aksiyonlar">
+            <button onclick="begen('${key}', ${data.begen})">👍 Beğen (${data.begen})</button>
+            <button onclick="sil('${key}')">🗑 Sil</button>
+          </div>
+        `;
+        yorumlarDiv.prepend(div);
+      });
+    });
 
-    if (ad && yorum) {
-      push(yorumlarRef, { ad, yorum, tarih });
-      form.reset();
-    }
-  });
+    window.sil = (key) => remove(ref(db, "yorumlar/" + key));
+    window.begen = (key, mevcut) => update(ref(db, "yorumlar/" + key), { begen: mevcut + 1 });
+  </script>
 
-  onChildAdded(yorumlarRef, function(snapshot) {
-    const data = snapshot.val();
-    const yeniYorum = document.createElement("div");
-    yeniYorum.classList.add("yorum");
-    yeniYorum.innerHTML = `
-      <div class="ad">${data.ad}</div>
-      <div class="tarih">${data.tarih}</div>
-      <div class="icerik">${data.yorum}</div>
-    `;
-    yorumlarDiv.prepend(yeniYorum);
-  });
-</script>
+  <!-- Tema Değiştirici -->
+  <script>
+    const themeToggle = document.getElementById("themeToggle");
+    themeToggle.addEventListener("click", () => {
+      const yeniTema = document.body.getAttribute("data-theme") === "light" ? "dark" : "light";
+      document.body.setAttribute("data-theme", yeniTema);
+      localStorage.setItem("tema", yeniTema);
+      themeToggle.textContent = yeniTema === "light" ? "🌙" : "☀️";
+    });
 
+    document.addEventListener("DOMContentLoaded", () => {
+      const kayitliTema = localStorage.getItem("tema") || "dark";
+      document.body.setAttribute("data-theme", kayitliTema);
+      themeToggle.textContent = kayitliTema === "light" ? "🌙" : "☀️";
+    });
+  </script>
 </body>
 </html>
