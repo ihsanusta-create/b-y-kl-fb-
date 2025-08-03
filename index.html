@@ -51,9 +51,16 @@
     }
     #themeToggle {
       position: fixed; top: 1rem; right: 1rem;
-      background: var(--accent-color); color: var(--bg-color);
-      border: none; padding: 0.6rem 1.2rem; border-radius: 12px;
+      background: transparent;
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1.2rem; border-radius: 12px;
       cursor: pointer; z-index: 1000;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+    #themeToggle:hover {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
     }
     main { max-width: 700px; margin: auto; padding: 2rem; }
     section { margin-bottom: 2rem; }
@@ -102,7 +109,7 @@
 <body data-theme="dark">
   <button id="themeToggle">🌙</button>
   <header>
-    <img src="biyiklifbi-logo.png" alt="Bıyıklıfbı Logo" />
+    <img src="1000000755.jpg" alt="Bıyıklıfbı Logo" />
     <h1>Bıyıklıfbı</h1>
     <p>Yerli, bağımsız bilgi tartışma platformu</p>
   </header>
