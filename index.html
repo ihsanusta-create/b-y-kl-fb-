@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bıyıklıfbi – Firebase Entegre</title>
+  <title>Bıyıklıfbı – Firebase Entegre</title>
   <style>
     :root {
       --bg-color: #0d0d0d;
@@ -81,6 +81,18 @@
       color: var(--text-color); border: 1px solid var(--border-color);
       border-radius: 4px; padding: 0.3rem 0.6rem;
     }
+    /* Hakkımızda bölümü için eklenen stil */
+    .hakkimizda-kutusu {
+      background-color: var(--section-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border-color);
+    }
+    .hakkimizda-kutusu h3 {
+      color: var(--accent-color);
+      margin-top: 0;
+    }
     footer {
       text-align: center; padding: 1rem;
       background-color: var(--footer-bg); color: #666;
@@ -90,9 +102,9 @@
 <body data-theme="dark">
   <button id="themeToggle">🌙</button>
   <header>
-    <img src="logo.png" alt="Logo" />
-    <h1>Bıyıklıfbi</h1>
-    <p>Yerli, bağımsız, tartışılabilir bilgi platformu</p>
+    <img src="biyiklifbi-logo.png" alt="Bıyıklıfbı Logo" />
+    <h1>Bıyıklıfbı</h1>
+    <p>Yerli, bağımsız bilgi tartışma platformu</p>
   </header>
   <nav>
     <a href="#">Ana Sayfa</a>
@@ -102,7 +114,7 @@
   <main>
     <section>
       <h2>📚 Giriş</h2>
-      <p>Burası Bıyıklıfbi'nin ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
+      <p>Burası Bıyıklıfbı'nın ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
     </section>
     <section id="tartismalar">
       <h2>💬 Tartışmalar</h2>
@@ -115,7 +127,14 @@
     </section>
     <section id="hakkimizda">
       <h2>🎈 Hakkımızda</h2>
-      <p>Yerli ve bağımsız bir bilgi platformu olarak, herkesin özgürce fikirlerini paylaşabildiği bir ortam sunmak.</p>
+      <div class="hakkimizda-kutusu">
+        <h3>Vizyonumuz</h3>
+        <p>Bıyıklıfbı olarak vizyonumuz; bilginin ışığında eşitlik, adalet ve şeffaflık ilkeleriyle hareket eden bir topluluk oluşturmaktır. Amacımız, her görüşten insanın kendini güvende hissederek fikirlerini özgürce ifade edebileceği, yapıcı tartışmalarla kolektif bilincin yükseldiği bir dijital ortam yaratmaktır.</p>
+      </div>
+      <div class="hakkimizda-kutusu">
+        <h3>Misyonumuz</h3>
+        <p>Yerli ve bağımsız bir platform olarak, sansürsüz ve nitelikli bilgi akışını teşvik ediyoruz. Kullanıcılarımızın, etik kurallar çerçevesinde farklı bakış açılarını öğrenmelerini, kendi fikirlerini sorgulamalarını ve bilgiyi birlikte inşa etmelerini sağlamak en temel görevimizdir. Bıyıklıfbı, sadece bir platform değil, aynı zamanda düşünceye değer veren bir ailedir.</p>
+      </div>
     </section>
   </main>
 
@@ -127,9 +146,8 @@
     <a href="https://youtube.com/@biyiklifbi6161" target="_blank"><button>▶️ YouTube</button></a>
   </section>
 
-  <footer>© 2025 Bıyıklıfbi — Tüm hakları saklıdır.</footer>
+  <footer>© 2025 Bıyıklıfbı — Tüm hakları saklıdır.</footer>
 
-  <!-- Firebase SDK & Realtime Database -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
     import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
@@ -169,21 +187,40 @@
       Object.entries(data).reverse().forEach(([key, item]) => {
         const div = document.createElement("div");
         div.className = "yorum";
-        div.innerHTML = `
+        
+        const yorumIcerik = document.createElement("div");
+        yorumIcerik.innerHTML = `
           <div class="ad">${item.ad}</div>
           <div class="tarih">${item.tarih}</div>
           <div class="icerik">${item.yorum}</div>
-          <div class="aksiyonlar">
-            <button onclick="update(ref(db,'yorumlar/'+key),{begen:item.begen+1})">👍 Beğen (${item.begen})</button>
-            <button onclick="remove(ref(db,'yorumlar/'+key))">🗑 Sil</button>
-          </div>
         `;
+
+        const aksiyonlarDiv = document.createElement("div");
+        aksiyonlarDiv.className = "aksiyonlar";
+
+        const begenButton = document.createElement("button");
+        begenButton.textContent = `👍 Beğen (${item.begen})`;
+        begenButton.addEventListener("click", () => {
+          update(ref(db, `yorumlar/${key}`), { begen: item.begen + 1 });
+        });
+
+        const silButton = document.createElement("button");
+        silButton.textContent = "🗑 Sil";
+        silButton.addEventListener("click", () => {
+          remove(ref(db, `yorumlar/${key}`));
+        });
+
+        aksiyonlarDiv.appendChild(begenButton);
+        aksiyonlarDiv.appendChild(silButton);
+
+        div.appendChild(yorumIcerik);
+        div.appendChild(aksiyonlarDiv);
+
         yorumlarDiv.appendChild(div);
       });
     });
   </script>
 
-  <!-- Tema değiştirici -->
   <script>
     const themeToggle = document.getElementById("themeToggle");
     themeToggle.addEventListener("click", () => {
