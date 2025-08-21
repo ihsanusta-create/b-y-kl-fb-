@@ -100,12 +100,30 @@
 
   <section id="kisi">
     <h2>🌟 Önemli Kişilikler</h2>
-    <div class="kisi-kutusu"><h3>Fatih Sultan Mehmet</h3><p>Osmanlı padişahı ve İstanbul'un fethini gerçekleştiren lider.</p></div>
-    <div class="kisi-kutusu"><h3>Yunus Emre</h3><p>Türk halk şairi ve mutasavvıf, tasavvuf edebiyatının öncülerindendir.</p></div>
-    <div class="kisi-kutusu"><h3>Mehmet Akif Ersoy</h3><p>İstiklal Marşı'nın yazarı, Türk edebiyatının önemli isimlerinden.</p></div>
-    <div class="kisi-kutusu"><h3>Barbaros Hayreddin Paşa</h3><p>Akdeniz’de Osmanlı hâkimiyetini kuran büyük Türk denizcisi.</p></div>
-    <div class="kisi-kutusu"><h3>Namık Kemal</h3><p>Hürriyet ve vatan şairi, Türk edebiyatında önemli fikir adamı.</p></div>
-    <div class="kisi-kutusu"><h3>Piri Reis</h3><p>Ünlü Osmanlı denizcisi ve dünya haritasını çizen haritacı.</p></div>
+    <div class="kisi-kutusu">
+      <h3>Fatih Sultan Mehmet</h3>
+      <p>Osmanlı padişahı ve İstanbul'un fethini gerçekleştiren lider.</p>
+    </div>
+    <div class="kisi-kutusu">
+      <h3>Yunus Emre</h3>
+      <p>Türk halk şairi ve mutasavvıf, tasavvuf edebiyatının öncülerindendir.</p>
+    </div>
+    <div class="kisi-kutusu">
+      <h3>Mehmet Akif Ersoy</h3>
+      <p>İstiklal Marşı'nın yazarı, Türk edebiyatının önemli isimlerinden.</p>
+    </div>
+    <div class="kisi-kutusu">
+      <h3>Barbaros Hayreddin Paşa</h3>
+      <p>Akdeniz’de Osmanlı hâkimiyetini kuran büyük Türk denizcisi.</p>
+    </div>
+    <div class="kisi-kutusu">
+      <h3>Namık Kemal</h3>
+      <p>Hürriyet ve vatan şairi, Türk edebiyatında önemli fikir adamı.</p>
+    </div>
+    <div class="kisi-kutusu">
+      <h3>Piri Reis</h3>
+      <p>Ünlü Osmanlı denizcisi ve dünya haritasını çizen haritacı.</p>
+    </div>
   </section>
 
   <section id="oyunlarimiz" style="background-color: var(--section-bg); padding:2rem; text-align:center;">
@@ -126,7 +144,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+import { getDatabase, ref, push, onValue, remove, runTransaction } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCNC1M0tgiKdV-YbE-zPrES2MP0oXN0xLU",
@@ -144,20 +162,123 @@ const db = getDatabase(app);
 const yorumRef = ref(db, "yorumlar");
 const yorumlarDiv = document.getElementById("yorumlar");
 
-onValue(yorumRef, snapshot => {
+function renderYorumlar(data) {
   yorumlarDiv.innerHTML = "";
-  const data = snapshot.val() || {};
-
   Object.entries(data).reverse().forEach(([key, item]) => {
     const yorumKapsayici = document.createElement("div");
     yorumKapsayici.className = "yorum";
 
-    const begenKey = `begen_${key}`;
-    const kullaniciBegenmisMi = localStorage.getItem(begenKey) === "true";
+    const begenSayisi = item.begen || 0;
 
     yorumKapsayici.innerHTML = `
       <div class="ad">${item.ad}</div>
       <div class="tarih">${item.tarih}</div>
       <div class="icerik">${item.yorum}</div>
       <div class="aksiyonlar">
-        <button class="begen-btn" ${kullaniciBegen
+        <button class="begenBtn" data-key="${key}">👍 Beğen (${begenSayisi})</button>
+        <button class="yanitla-butonu" data-key="${key}" data-ad="${item.ad}">↩️ Yanıtla</button>
+        <button class="silBtn" data-key="${key}">🗑 Sil</button>
+      </div>
+      <div class="yanitlar" id="yanitlar-${key}"></div>
+      <div class="yanit-formu" id="yanitForm-${key}" style="display:none;">
+        <input type="text" placeholder="Adınız" class="yanitAd" />
+        <textarea rows="2" placeholder="Yanıtınızı yazın..." class="yanitMetni"></textarea>
+        <button class="gonderYanit" data-key="${key}">Gönder Yanıt</button>
+      </div>
+    `;
+
+    // Yanıtları varsa ekle
+    if (item.yanitlar) {
+      Object.entries(item.yanitlar).forEach(([yk, yitem]) => {
+        const yDiv = document.createElement("div");
+        yDiv.className = "yanit-kapsayici";
+        yDiv.innerHTML = `<b>${yitem.ad}</b>: ${yitem.yorum} <span style="font-size:0.7rem;color:#aaa;">${yitem.tarih}</span>`;
+        yorumKapsayici.querySelector(`#yanitlar-${key}`).appendChild(yDiv);
+      });
+    }
+
+    yorumlarDiv.appendChild(yorumKapsayici);
+  });
+
+  // Beğeni tıklama
+  document.querySelectorAll(".begenBtn").forEach(btn=>{
+    btn.onclick = () => {
+      const key = btn.dataset.key;
+      runTransaction(ref(db, "yorumlar/" + key), current => {
+        if (current) {
+          current.begen = (current.begen || 0) + 1;
+        }
+        return current;
+      });
+    };
+  });
+
+  // Yanıt form toggle
+  document.querySelectorAll(".yanitla-butonu").forEach(btn=>{
+    btn.onclick = () => {
+      const key = btn.dataset.key;
+      const form = document.getElementById("yanitForm-" + key);
+      form.style.display = form.style.display === "none" ? "block" : "none";
+    };
+  });
+
+  // Yanıt gönderme
+  document.querySelectorAll(".gonderYanit").forEach(btn=>{
+    btn.onclick = () => {
+      const key = btn.dataset.key;
+      const form = document.getElementById("yanitForm-" + key);
+      const ad = form.querySelector(".yanitAd").value.trim();
+      const yorum = form.querySelector(".yanitMetni").value.trim();
+      const tarih = new Date().toLocaleString("tr-TR");
+      if(ad && yorum){
+        const yRef = ref(db, "yorumlar/" + key + "/yanitlar");
+        push(yRef, {ad,yorum,tarih});
+        form.querySelector(".yanitAd").value = "";
+        form.querySelector(".yanitMetni").value = "";
+        form.style.display = "none";
+      }
+    };
+  });
+
+  // Silme
+  document.querySelectorAll(".silBtn").forEach(btn=>{
+    btn.onclick = () => {
+      const key = btn.dataset.key;
+      remove(ref(db, "yorumlar/" + key));
+    };
+  });
+}
+
+onValue(yorumRef, snapshot=>{
+  renderYorumlar(snapshot.val() || {});
+});
+
+document.getElementById("anaYorumForm").addEventListener("submit", e=>{
+  e.preventDefault();
+  const ad=document.getElementById("kullaniciAdi").value.trim();
+  const yorum=document.getElementById("yorumMetni").value.trim();
+  const tarih=new Date().toLocaleString("tr-TR");
+  if(ad && yorum){
+    push(yorumRef,{ad,yorum,tarih,begen:0});
+    e.target.reset();
+  }
+});
+</script>
+
+<script>
+const themeToggle=document.getElementById("themeToggle");
+themeToggle.addEventListener("click",()=>{
+  const next=document.body.getAttribute("data-theme")==="light"?"dark":"light";
+  document.body.setAttribute("data-theme",next);
+  localStorage.setItem("tema",next);
+  themeToggle.textContent=next==="light"?"🌙":"☀️";
+});
+document.addEventListener("DOMContentLoaded",()=>{
+  const t=localStorage.getItem("tema")||"dark";
+  document.body.setAttribute("data-theme",t);
+  themeToggle.textContent=t==="light"?"🌙":"☀️";
+});
+</script>
+
+</body>
+</html>
