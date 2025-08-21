@@ -23,32 +23,47 @@
       --border-color: #ccc;
       --footer-bg: #eee;
     }
+
     html { scroll-behavior: smooth; }
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
-    }
+    body { background-color: var(--bg-color); color: var(--text-color); font-family: Arial, sans-serif; margin: 0; padding: 0; }
+
     header { text-align: center; padding: 2rem 1rem; background-color: var(--section-bg); }
     header img { width: 100px; border-radius: 12px; }
     h1 { margin-top: 1rem; color: var(--accent-color); }
-    nav { display: flex; justify-content: center; gap: 1rem; background-color: var(--footer-bg); padding: 1rem; }
-    nav a {
-      color: var(--text-color); text-decoration: none; font-weight: bold;
-      transition: transform 0.3s, color 0.3s;
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      flex-wrap: wrap; /* Menü ekrana sığacak */
+      justify-content: center;
+      gap: 0.8rem;
+      background-color: var(--footer-bg);
+      padding: 0.8rem;
     }
+    nav a { color: var(--text-color); text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: transform 0.3s, color 0.3s; }
     nav a:hover { transform: scale(1.05); color: var(--accent-color); }
+
     #themeToggle {
-      position: fixed; top: 1rem; right: 1rem; background: transparent;
-      color: var(--text-color); border: 1px solid var(--border-color);
-      padding: 0.6rem 1.2rem; border-radius: 12px; cursor: pointer; z-index: 1000;
+      position: fixed;
+      top: 4rem;
+      right: 1rem;
+      background: transparent;
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      z-index: 1000;
       transition: background-color 0.3s, color 0.3s, border-color 0.3s;
     }
     #themeToggle:hover { background-color: var(--accent-color); color: var(--bg-color); }
+
     main { max-width: 700px; margin: auto; padding: 2rem; }
     section { margin-bottom: 2rem; }
     h2 { color: var(--accent-color); }
+
     input, textarea {
       width: 100%; padding: 0.75rem; background-color: var(--input-bg);
       border: 1px solid var(--border-color); color: var(--text-color);
@@ -59,39 +74,54 @@
       padding: 0.6rem 1.2rem; border: none; border-radius: 6px; cursor: pointer;
     }
     button:hover { background-color: #e6b800; }
-    .yorum { background-color: var(--section-bg); padding: 1rem; margin-top: 1rem;
-      border-left: 4px solid var(--border-color); border-radius: 6px; }
+
+    .yorum { background-color: var(--section-bg); padding: 1rem; margin-top: 1rem; border-left: 4px solid var(--border-color); border-radius: 6px; }
     .yorum .ad { font-weight: bold; }
     .yorum .tarih { font-size: 0.8rem; color: #aaa; }
-    .yorum .aksiyonlar button {
-      margin-right: 0.5rem; background: var(--input-bg);
-      color: var(--text-color); border: 1px solid var(--border-color);
-      border-radius: 4px; padding: 0.3rem 0.6rem;
-    }
-    .hakkimizda-kutusu { background-color: var(--section-bg); padding: 1.5rem;
-      border-radius: 8px; margin-bottom: 1rem; border: 1px solid var(--border-color); }
+    .yorum .aksiyonlar button { margin-right: 0.5rem; background: var(--input-bg); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 4px; padding: 0.3rem 0.6rem; }
+
+    .hakkimizda-kutusu { background-color: var(--section-bg); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid var(--border-color); }
     .hakkimizda-kutusu h3 { color: var(--accent-color); margin-top: 0; }
-    .yanit-kapsayici {
-      margin-left: 20px; border-left: 2px solid var(--accent-color);
-      padding-left: 10px; margin-top: 1rem;
-    }
+
+    .yanit-kapsayici { margin-left: 20px; border-left: 2px solid var(--accent-color); padding-left: 10px; margin-top: 1rem; }
     .yanit-formu { margin-top: 1rem; padding-left: 20px; }
+
     footer { text-align: center; padding: 1rem; background-color: var(--footer-bg); color: var(--text-color); }
+
+    /* Önemli Kişilikler */
+    .kisilikler { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .kisi-kutusu {
+      background: var(--section-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .kisi-kutusu:hover { transform: scale(1.05); }
+    .kisi-kutusu img { width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 0.5rem; }
+    .kisi-kutusu h4 { margin: 0.5rem 0; color: var(--accent-color); }
+    .kisi-kutusu p { font-size: 0.9rem; }
   </style>
 </head>
 <body data-theme="dark">
   <button id="themeToggle">🌙</button>
+
   <header>
     <img src="1000000755.jpg" alt="Bıyıklıfbı Logo" />
     <h1>Bıyıklıfbı</h1>
     <p>Yerli, bağımsız, bilgi platformu</p>
   </header>
+
+  <!-- Menü sırası: Ana Sayfa | Tartışmalar | Hakkımızda | Önemli Kişilikler | Oyunlarımız -->
   <nav>
     <a href="#">Ana Sayfa</a>
     <a href="#tartismalar">Tartışmalar</a>
     <a href="#hakkimizda">Hakkımızda</a>
+    <a href="#onemliKisilikler">Önemli Kişilikler</a>
     <a href="#oyunlarimiz">Oyunlarımız</a>
   </nav>
+
   <main>
     <section>
       <h2>📚 Giriş</h2>
@@ -118,10 +148,30 @@
         <h3>Misyonumuz</h3>
         <p>Yerli ve bağımsız bir platform olarak, sansürsüz ve nitelikli bilgi akışını teşvik ediyoruz.</p>
       </div>
+      <div class="hakkimizda-kutusu" id="onemliKisilikler">
+        <h3>Önemli Kişilikler</h3>
+        <div class="kisilikler">
+          <div class="kisi-kutusu">
+            <img src="images/fatih.jpg" alt="Fatih Sultan Mehmet">
+            <h4>Fatih Sultan Mehmet</h4>
+            <p>İstanbul’u fethederek Osmanlı’yı güçlü bir imparatorluk hâline getiren padişah.</p>
+          </div>
+          <div class="kisi-kutusu">
+            <img src="images/mevlana.jpg" alt="Mevlana">
+            <h4>Mevlana</h4>
+            <p>Evreni ve insanı aşk ile anlamaya çalışan büyük düşünür ve şair.</p>
+          </div>
+          <div class="kisi-kutusu">
+            <img src="images/evliya.jpg" alt="Evliya Çelebi">
+            <h4>Evliya Çelebi</h4>
+            <p>Osmanlı döneminin ünlü seyyahı, 10 ciltlik Seyahatname ile tarihe ışık tutan gezgin.</p>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
-  <section id="oyunlarimiz" style="background-color: var(--section-bg); padding:2rem; text-align:center;">
+  <section id="oyunlarimiz" style="background-color: var(--section-bg); padding:2rem; text-align:left;">
     <h2 style="color:var(--accent-color); margin-bottom:1rem;">🕹️ Oyunlarımız</h2>
     <p>Yakında burada Bıyıklıfbı topluluğu için geliştirdiğimiz oyunları bulabilirsiniz!</p>
   </section>
@@ -136,154 +186,20 @@
 
   <footer>© 2025 Bıyıklıfbı — Tüm hakları saklıdır.</footer>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCNC1M0tgiKdV-YbE-zPrES2MP0oXN0xLU",
-      authDomain: "byklfb-c85d8.firebaseapp.com",
-      databaseURL: "https://byklfb-c85d8-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "byklfb-c85d8",
-      storageBucket: "byklfb-c85d8.appspot.com",
-      messagingSenderId: "115753196341",
-      appId: "1:115753196341:web:53eda190794a6e4b7e4a7c",
-      measurementId: "G-6GRY9LN4LE"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const yorumRef = ref(db, "yorumlar");
-    const yorumlarDiv = document.getElementById("yorumlar");
-    let aktifYanitFormu = null;
-
-    // Yorumları listele
-    onValue(yorumRef, snapshot => {
-      yorumlarDiv.innerHTML = "";
-      const data = snapshot.val() || {};
-      Object.entries(data).reverse().forEach(([key, item]) => {
-        const yorumKapsayici = document.createElement("div");
-        yorumKapsayici.className = "yorum";
-
-        const adDiv = document.createElement("div");
-        adDiv.className = "ad";
-        adDiv.textContent = item.ad;
-
-        const tarihDiv = document.createElement("div");
-        tarihDiv.className = "tarih";
-        tarihDiv.textContent = item.tarih;
-
-        const icerikDiv = document.createElement("div");
-        icerikDiv.className = "icerik";
-        icerikDiv.textContent = item.yorum;
-
-        // Butonlar
-        const aksiyonlarDiv = document.createElement("div");
-        aksiyonlarDiv.className = "aksiyonlar";
-
-        const begenBtn = document.createElement("button");
-        begenBtn.textContent = `👍 Beğen (${item.begen || 0})`;
-        begenBtn.addEventListener("click", () => {
-          update(ref(db, "yorumlar/" + key), { begen: (item.begen || 0) + 1 });
-        });
-
-        const yanitlaBtn = document.createElement("button");
-        yanitlaBtn.textContent = "↩️ Yanıtla";
-
-        const silBtn = document.createElement("button");
-        silBtn.textContent = "🗑 Sil";
-        silBtn.addEventListener("click", () => {
-          if (confirm("Bu yorumu silmek istediğinize emin misiniz?")) {
-            remove(ref(db, "yorumlar/" + key));
-          }
-        });
-
-        aksiyonlarDiv.append(begenBtn, yanitlaBtn, silBtn);
-
-        // Yanıt formu
-        const yanitFormDiv = document.createElement("div");
-        yanitFormDiv.className = "yanit-formu";
-        yanitFormDiv.style.display = "none";
-        yanitFormDiv.innerHTML = `
-          <input type="text" placeholder="Adınız" required />
-          <textarea rows="2" placeholder="Yanıtınızı yazın..." required></textarea>
-          <button class="yanit-gonder-butonu">Yanıtla</button>
-          <button class="yanit-iptal-butonu">İptal</button>
-        `;
-
-        // Yanıtla butonu
-        yanitlaBtn.addEventListener("click", () => {
-          if (aktifYanitFormu) aktifYanitFormu.style.display = "none";
-          yanitFormDiv.style.display = "block";
-          yanitFormDiv.querySelector("textarea").focus();
-          aktifYanitFormu = yanitFormDiv;
-        });
-
-        yanitFormDiv.querySelector(".yanit-iptal-butonu").addEventListener("click", () => {
-          yanitFormDiv.style.display = "none";
-          aktifYanitFormu = null;
-        });
-
-        yanitFormDiv.querySelector(".yanit-gonder-butonu").addEventListener("click", () => {
-          const ad = yanitFormDiv.querySelector("input").value.trim();
-          const yanitMetni = yanitFormDiv.querySelector("textarea").value.trim();
-          const tarih = new Date().toLocaleString("tr-TR");
-          if (ad && yanitMetni) {
-            push(ref(db, `yorumlar/${key}/yanitlar`), { ad, yorum: yanitMetni, tarih });
-            yanitFormDiv.style.display = "none";
-            yanitFormDiv.querySelector("input").value = "";
-            yanitFormDiv.querySelector("textarea").value = "";
-            aktifYanitFormu = null;
-          }
-        });
-
-        // Yanıtları ekle
-        if (item.yanitlar) {
-          const yanitKapsayici = document.createElement("div");
-          yanitKapsayici.className = "yanit-kapsayici";
-          Object.values(item.yanitlar).forEach(yanitItem => {
-            const yanitDiv = document.createElement("div");
-            yanitDiv.className = "yorum";
-            yanitDiv.innerHTML = `
-              <div class="ad">${yanitItem.ad}</div>
-              <div class="tarih">${yanitItem.tarih}</div>
-              <div class="icerik">${yanitItem.yorum}</div>
-            `;
-            yanitKapsayici.appendChild(yanitDiv);
-          });
-          yorumKapsayici.appendChild(yanitKapsayici);
-        }
-
-        yorumKapsayici.append(adDiv, tarihDiv, icerikDiv, aksiyonlarDiv, yanitFormDiv);
-        yorumlarDiv.appendChild(yorumKapsayici);
-      });
-    });
-
-    // Yeni yorum ekle
-    document.getElementById("anaYorumForm").addEventListener("submit", e => {
-      e.preventDefault();
-      const ad = document.getElementById("kullaniciAdi").value.trim();
-      const yorum = document.getElementById("yorumMetni").value.trim();
-      const tarih = new Date().toLocaleString("tr-TR");
-      if (ad && yorum) {
-        push(yorumRef, { ad, yorum, tarih, begen: 0 });
-        e.target.reset();
-      }
-    });
-  </script>
-
+  <!-- Tema Değiştirici Script -->
   <script>
     const themeToggle = document.getElementById("themeToggle");
+
+    const savedTheme = localStorage.getItem("tema") || "dark";
+    document.body.setAttribute("data-theme", savedTheme);
+    themeToggle.textContent = savedTheme === "light" ? "🌙" : "☀️";
+
     themeToggle.addEventListener("click", () => {
-      const next = document.body.getAttribute("data-theme")==="light"?"dark":"light";
+      const current = document.body.getAttribute("data-theme");
+      const next = current === "light" ? "dark" : "light";
       document.body.setAttribute("data-theme", next);
       localStorage.setItem("tema", next);
-      themeToggle.textContent = next==="light"?"🌙":"☀️";
-    });
-    document.addEventListener("DOMContentLoaded", () => {
-      const t = localStorage.getItem("tema")||"dark";
-      document.body.setAttribute("data-theme", t);
-      themeToggle.textContent = t==="light"?"🌙":"☀️";
+      themeToggle.textContent = next === "light" ? "🌙" : "☀️";
     });
   </script>
 </body>
