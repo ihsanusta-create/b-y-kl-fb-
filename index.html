@@ -48,7 +48,8 @@
   .yanit-kapsayici { margin-left: 20px; border-left: 2px solid var(--accent-color); padding-left: 10px; margin-top: 1rem; }
   .yanit-formu { margin-top: 1rem; padding-left: 20px; }
   footer { text-align: center; padding: 1rem; background-color: var(--footer-bg); color: var(--text-color); }
-  .kisi-kutusu { background-color: var(--section-bg); padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid var(--border-color);}
+  .kisi-kutusu { background-color: var(--section-bg); padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid var(--border-color); display:flex; align-items:center; gap:1rem; }
+  .kisi-kutusu img { width:60px; height:60px; border-radius:50%; object-fit:cover; border:2px solid var(--accent-color); }
   .kisi-kutusu h3 { color: var(--accent-color); margin-top:0;}
 </style>
 </head>
@@ -101,28 +102,46 @@
   <section id="kisi">
     <h2>🌟 Önemli Kişilikler</h2>
     <div class="kisi-kutusu">
-      <h3>Fatih Sultan Mehmet</h3>
-      <p>Osmanlı padişahı ve İstanbul'un fethini gerçekleştiren lider.</p>
+      <img src="Fatih Sultan Mehmet.jpg" alt="Fatih Sultan Mehmet">
+      <div>
+        <h3>Fatih Sultan Mehmet</h3>
+        <p>Osmanlı padişahı ve İstanbul'un fethini gerçekleştiren lider.</p>
+      </div>
     </div>
     <div class="kisi-kutusu">
-      <h3>Yunus Emre</h3>
-      <p>Türk halk şairi ve mutasavvıf, tasavvuf edebiyatının öncülerindendir.</p>
+      <img src="Yunus Emre.jpg" alt="Yunus Emre">
+      <div>
+        <h3>Yunus Emre</h3>
+        <p>Türk halk şairi ve mutasavvıf, tasavvuf edebiyatının öncülerindendir.</p>
+      </div>
     </div>
     <div class="kisi-kutusu">
-      <h3>Mehmet Akif Ersoy</h3>
-      <p>İstiklal Marşı'nın yazarı, Türk edebiyatının önemli isimlerinden.</p>
+      <img src="Mehmet Akif Ersoy.jpg" alt="Mehmet Akif Ersoy">
+      <div>
+        <h3>Mehmet Akif Ersoy</h3>
+        <p>İstiklal Marşı'nın yazarı, Türk edebiyatının önemli isimlerinden.</p>
+      </div>
     </div>
     <div class="kisi-kutusu">
-      <h3>Barbaros Hayreddin Paşa</h3>
-      <p>Akdeniz’de Osmanlı hâkimiyetini kuran büyük Türk denizcisi.</p>
+      <img src="Barbaros Hayrettin Paşa.jpg" alt="Barbaros Hayrettin Paşa">
+      <div>
+        <h3>Barbaros Hayreddin Paşa</h3>
+        <p>Akdeniz’de Osmanlı hâkimiyetini kuran büyük Türk denizcisi.</p>
+      </div>
     </div>
     <div class="kisi-kutusu">
-      <h3>Namık Kemal</h3>
-      <p>Hürriyet ve vatan şairi, Türk edebiyatında önemli fikir adamı.</p>
+      <img src="Namık Kemal.jpg" alt="Namık Kemal">
+      <div>
+        <h3>Namık Kemal</h3>
+        <p>Hürriyet ve vatan şairi, Türk edebiyatında önemli fikir adamı.</p>
+      </div>
     </div>
     <div class="kisi-kutusu">
-      <h3>Piri Reis</h3>
-      <p>Ünlü Osmanlı denizcisi ve dünya haritasını çizen haritacı.</p>
+      <img src="Piri Reis.jpg" alt="Piri Reis">
+      <div>
+        <h3>Piri Reis</h3>
+        <p>Ünlü Osmanlı denizcisi ve dünya haritasını çizen haritacı.</p>
+      </div>
     </div>
   </section>
 
@@ -187,7 +206,6 @@ function renderYorumlar(data) {
       </div>
     `;
 
-    // Yanıtları varsa ekle
     if (item.yanitlar) {
       Object.entries(item.yanitlar).forEach(([yk, yitem]) => {
         const yDiv = document.createElement("div");
@@ -200,7 +218,6 @@ function renderYorumlar(data) {
     yorumlarDiv.appendChild(yorumKapsayici);
   });
 
-  // Beğeni tıklama
   document.querySelectorAll(".begenBtn").forEach(btn=>{
     btn.onclick = () => {
       const key = btn.dataset.key;
@@ -213,7 +230,6 @@ function renderYorumlar(data) {
     };
   });
 
-  // Yanıt form toggle
   document.querySelectorAll(".yanitla-butonu").forEach(btn=>{
     btn.onclick = () => {
       const key = btn.dataset.key;
@@ -222,7 +238,6 @@ function renderYorumlar(data) {
     };
   });
 
-  // Yanıt gönderme
   document.querySelectorAll(".gonderYanit").forEach(btn=>{
     btn.onclick = () => {
       const key = btn.dataset.key;
@@ -240,7 +255,6 @@ function renderYorumlar(data) {
     };
   });
 
-  // Silme
   document.querySelectorAll(".silBtn").forEach(btn=>{
     btn.onclick = () => {
       const key = btn.dataset.key;
