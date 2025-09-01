@@ -218,17 +218,24 @@ function renderYorumlar(data) {
     yorumlarDiv.appendChild(yorumKapsayici);
   });
 
-  document.querySelectorAll(".begenBtn").forEach(btn=>{
-    btn.onclick = () => {
-      const key = btn.dataset.key;
-      runTransaction(ref(db, "yorumlar/" + key), current => {
-        if (current) {
-          current.begen = (current.begen || 0) + 1;
-        }
-        return current;
-      });
-    };
-  });
+  document.querySelectorAll(".begenBtn").forEach(btn => {
+  btn.onclick = () => {
+    const key = btn.dataset.key;
+
+    // Eğer kullanıcı bu yorumu daha önce beğendiyse return
+    if(localStorage.getItem("begen_" + key)) return;
+
+    runTransaction(ref(db, "yorumlar/" + key), current => {
+      if (current) {
+        current.begen = (current.begen || 0) + 1;
+      }
+      return current;
+    });
+
+    // Beğenildi bilgisini localStorage'a kaydet
+    localStorage.setItem("begen_" + key, "true");
+  };
+});
 
   document.querySelectorAll(".yanitla-butonu").forEach(btn=>{
     btn.onclick = () => {
