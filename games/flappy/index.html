@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Bıyıklıfbı — Flappy Bird (Ses + Leaderboard + Silme)</title>
+<style>
+  :root {
+    --bg: linear-gradient(#70c5ce,#7bd3e0);
+    --card-bg: #a0e0e8;
+    --panel: rgba(255,255,255,0.92);
+    --btn: #2d8a3b;
+    --text: #073642;
+  }
+  html,body { height:100%; margin:0; font-family:Inter,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--text); }
+  .wrap { display:flex; align-items:flex-start; justify-content:center; gap:20px; padding:20px; box-sizing:border-box; min-height:100vh; }
+  #gameCard { width:100%; max-width:420px; border-radius:12px; overflow:hidden; box-shadow:0 12px 30px rgba(0,0,0,0.2); background:var(--card-bg); position:relative; }
+  canvas { display:block; width:100%; height:auto; background: transparent; }
+  .hud { position:absolute; left:12px; top:10px; z-index:10; color:var(--text); font-weight:700; text-shadow:0 1px 0 rgba(255,255,255,0.5); }
+  .centerOverlay { position:absolute; left:0; right:0; top:0; bottom:0; display:flex; align-items:center; justify-content:center; z-index:20; pointer-events:none; }
+  .panel { background: var(--panel); color:var(--text); padding:18px 20px; border-radius:10px; text-align:center; pointer-events:auto; box-shadow:0 6px 18px rgba(0,0,0,0.12); width:90%; max-width:320px; }
+  .panel h2 { margin:0 0 8px; font-size:20px; }
+  .panel p { margin:8px 0 12px; font-size:14px; color:#055; }
+  .btn { display:inline-block; background:var(--btn); color:white; padding:8px 12px; border-radius:8px; cursor:pointer; text-decoration:none; font-weight:700; border:none;}
+  .footerNote { text-align:center; padding:10px 0; color:#043; font-size:12px; width:100%; max-width:420px; }
+  /* leaderboard panel */
+  #leaderboard { width:300px; max-width:30vw; min-width:220px; background:var(--panel); border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,0.12); height:fit-content; }
+  #leaderboard h3 { margin-top:0; font-size:16px; }
+  .scoreRow { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed rgba(0,0,0,0.06); font-weight:600; align-items:center; gap:8px; }
+  .small { font-size:12px; color:#055; margin-top:6px; }
+  .controls { display:flex; gap:8px; margin-top:8px; justify-content:center; }
+  .toggleSprite{ background:#0a66a3; }
+  input[type="text"]{ width:100%; padding:8px; border-radius:8px; border:1px solid rgba(0,0,0,0.08); box-sizing:border-box; }
+  .deleteBtn { background: #b22222; padding:4px 8px; border-radius:6px; color:#fff; border:none; cursor:pointer; font-weight:700; font-size:12px; }
+  .myScoresTitle { margin-top:12px; font-weight:700; }
+  @media (max-width:900px){
+    .wrap { flex-direction:column; align-items:center; }
+    #leaderboard{ width:92%; max-width:420px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="gameCard" role="application" aria-label="Flappy Bird oyunu">
+    <canvas id="game"></canvas>
+
+    <div class="hud" id="hudScore">Skor: 0</div>
+
+    <div class="centerOverlay" id="overlayStart">
+      <div class="panel" id="startPanel">
+        <h2>Flappy Bıyıklıfbı</h2>
+        <p>Dokun, tıkla ya da boşluk tuşuna basarak kuşu zıplat. Borulara çarpma!</p>
+        <div class="controls">
+          <button class="btn" id="startBtn">Oyunu Başlat</button>
+          <button class="btn toggleSprite" id="toggleSpriteBtn">Sprite Kullan</button>
+        </div>
+        <p class="small">En yüksek skor (yerel): <span id="bestBefore">0</span></p>
+      </div>
+    </div>
+
+    <div class="centerOverlay" id="overlayGameOver" style="display:none">
+      <div class="panel" id="overPanel">
+        <h2>Oyun Bitti</h2>
+        <p>Skorunuz: <strong id="finalScore">0</strong></p>
+        <p class="small">En yüksek (yerel): <strong id="finalBest">0</strong></p>
+
+        <div style="margin-top:10px; text-align:left;">
+          <label for="nameInput">Skor kaydetmek için isim:</label>
+          <input id="nameInput" type="text" placeholder="İsminiz (kısa)" />
+          <div style="display:flex; gap:8px; margin-top:8px;">
+            <button class="btn" id="submitScoreBtn">Skoru Kaydet</button>
+            <button class="btn" id="restartBtn">Tekrar Oyna</button>
+          </div>
+          <p class="small">Kaydedilen skorlar global leaderboard'a gider. Kendi skorlarını leaderboard veya "Benim Skorlarım"dan silebilirsin.</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div id="leaderboard" aria-live="polite">
+    <h3>🏆 Top 10 Leaderboard</h3>
+    <div id="scoresList">
+      <div style="text-align:center;color:#666;padding:8px 0;">Yükleniyor...</div>
+    </div>
+
+    <div style="margin-top:10px;">
+      <div style="font-size:13px;color:#055;">En yüksek (global): <strong id="globalTop">0</strong></div>
+      <div class="small">İsimle gönder ve toplulukta rekabet et!</div>
+    </div>
+
+    <div class="myScoresTitle">🔐 Benim Skorlarım</div>
+    <div id="myScoresList" style="margin-top:8px;">
+      <div style="text-align:center;color:#666;padding:8px 0;">Yükleniyor...</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footerNote">Kontroller: dokun / tık / boşluk. Artık kendi skorlarını silebilirsin. İyi oyunlar!</div>
+
+<script type="module">
+/* ===========================
+   OYUN + SES + FIREBASE LEADERBOARD + KULLANICI SKOR SİLME
+   =========================== */
+
+/* ---------- Firebase imports ---------- */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import {
+  getDatabase, ref, push, onValue, runTransaction, query, orderByChild, limitToLast, remove, equalTo
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+/* ---------- Firebase config (kendi proje config'in) ---------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyCNC1M0tgiKdV-YbE-zPrES2MP0oXN0xLU",
+  authDomain: "byklfb-c85d8.firebaseapp.com",
+  databaseURL: "https://byklfb-c85d8-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "byklfb-c85d8",
+  storageBucket: "byklfb-c85d8.appspot.com",
+  messagingSenderId: "115753196341",
+  appId: "1:115753196341:web:53eda190794a6e4b7e4a7c",
+  measurementId: "G-6GRY9LN4LE"
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ---------- USER ID (localStorage) ---------- */
+// Benzersiz kullanıcı id (anonim) oluştur / tekrar kullan
+let userId = localStorage.getItem('biyik_userId');
+if (!userId) {
+  userId = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('uid_' + Date.now() + '_' + Math.floor(Math.random()*10000));
+  localStorage.setItem('biyik_userId', userId);
+}
+
+/* ---------- DOM ---------- */
+const canvas = document.getElementById('game');
+const card = document.getElementById('gameCard');
+const ctx = canvas.getContext('2d', { alpha: true });
+const hudScore = document.getElementById('hudScore');
+const overlayStart = document.getElementById('overlayStart');
+const overlayGameOver = document.getElementById('overlayGameOver');
+const startBtn = document.getElementById('startBtn');
+const restartBtn = document.getElementById('restartBtn');
+const bestBefore = document.getElementById('bestBefore');
+const finalScore = document.getElementById('finalScore');
+const finalBest = document.getElementById('finalBest');
+const nameInput = document.getElementById('nameInput');
+const submitScoreBtn = document.getElementById('submitScoreBtn');
+const scoresList = document.getElementById('scoresList');
+const globalTopEl = document.getElementById('globalTop');
+const toggleSpriteBtn = document.getElementById('toggleSpriteBtn');
+const myScoresList = document.getElementById('myScoresList');
+
+/* ---------- Oyun parametreleri ---------- */
+const BASE_W = 400, BASE_H = 600;
+const BIRD_RADIUS = 12;
+const GRAVITY = 1000;
+const FLAP_V = -320;
+const PIPE_W = 60;
+const GAP_MIN = 140;
+const GAP_MAX = 200;
+const PIPE_SPACING = 180;
+const PIPE_SPEED = 140;
+const GROUND_H = 90;
+
+/* ---------- yerel en yüksek ---------- */
+const STORAGE_KEY_LOCAL = 'biyik_flappy_best';
+let bestLocal = parseInt(localStorage.getItem(STORAGE_KEY_LOCAL) || '0', 10);
+bestBefore.textContent = bestLocal;
+
+/* ---------- canvas scaling ---------- */
+function fitCanvas() {
+  const rect = card.getBoundingClientRect();
+  const scale = Math.min(rect.width / BASE_W, (rect.height || window.innerHeight) / BASE_H) || rect.width / BASE_W;
+  const pixelW = Math.round(BASE_W * scale);
+  const pixelH = Math.round(BASE_H * scale);
+  const dpr = window.devicePixelRatio || 1;
+  canvas.style.width = rect.width + 'px';
+  canvas.style.height = Math.round(rect.width * (BASE_H / BASE_W)) + 'px';
+  canvas.width = pixelW * dpr;
+  canvas.height = pixelH * dpr;
+  ctx.setTransform(dpr * (pixelW / BASE_W), 0, 0, dpr * (pixelH / BASE_H), 0, 0);
+}
+window.addEventListener('resize', fitCanvas);
+fitCanvas();
+
+/* ---------- oyun state ---------- */
+let state = 'idle'; // idle | running | over
+let bird = { x: BASE_W * 0.28, y: BASE_H * 0.5, vy: 0, rot: 0 };
+let pipes = [];
+let score = 0;
+let lastTs = 0;
+let useSprite = false;
+
+/* ---------- sprite (SVG data URI) ---------- */
+const birdSVG = encodeURIComponent(`
+<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'>
+  <g>
+    <circle cx='60' cy='60' r='28' fill='#ffdd57' stroke='#f2c94c' stroke-width='2'/>
+    <ellipse cx='56' cy='68' rx='22' ry='14' fill='#ffd86b'/>
+    <circle cx='74' cy='52' r='5' fill='#222'/>
+    <polygon points='82,60 98,56 98,66' fill='#ff9d3c' />
+  </g>
+</svg>
+`);
+const spriteImg = new Image();
+spriteImg.src = `data:image/svg+xml;charset=utf-8,${birdSVG}`;
+
+/* ---------- Audio: WebAudio simple effects ---------- */
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+function ensureAudio(){ if(!audioCtx) audioCtx = new AudioCtx(); }
+function playFlap(){ ensureAudio(); const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type='triangle'; o.frequency.value=600; g.gain.value=0.0001; o.connect(g); g.connect(audioCtx.destination); const now=audioCtx.currentTime; g.gain.setValueAtTime(0.0001,now); g.gain.exponentialRampToValueAtTime(0.12,now+0.01); g.gain.exponentialRampToValueAtTime(0.0001,now+0.25); o.start(now); o.stop(now+0.26); }
+function playPoint(){ ensureAudio(); const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type='sine'; o.frequency.value=880; g.gain.value=0.0001; o.connect(g); g.connect(audioCtx.destination); const now=audioCtx.currentTime; g.gain.exponentialRampToValueAtTime(0.12,now+0.01); g.gain.exponentialRampToValueAtTime(0.0001,now+0.22); o.start(now); o.stop(now+0.26); }
+function playHit(){ ensureAudio(); const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type='sawtooth'; o.frequency.value=120; g.gain.value=0.0001; o.connect(g); g.connect(audioCtx.destination); const now=audioCtx.currentTime; g.gain.exponentialRampToValueAtTime(0.18,now+0.01); g.gain.exponentialRampToValueAtTime(0.0001,now+0.6); o.start(now); o.stop(now+0.65); }
+
+/* ---------- oyun fonksiyonları ---------- */
+function resetGame(){
+  state = 'running';
+  bird = { x: BASE_W * 0.28, y: BASE_H * 0.5, vy: 0, rot: 0 };
+  pipes = [];
+  score = 0;
+  hudScore.textContent = 'Skor: 0';
+  overlayStart.style.display = 'none';
+  overlayGameOver.style.display = 'none';
+  lastTs = performance.now();
+  for(let i=0;i<3;i++){
+    const x = BASE_W + i * PIPE_SPACING + 60;
+    const gap = Math.round(Math.random() * (GAP_MAX - GAP_MIN) + GAP_MIN);
+    const gapY = Math.round(Math.random() * (BASE_H - 140 - gap - 80) + 80);
+    pipes.push({ x, gapY, gap, passed:false });
+  }
+  requestAnimationFrame(loop);
+}
+function gameOver(){
+  state = 'over';
+  overlayGameOver.style.display = 'flex';
+  finalScore.textContent = score;
+  if(score > bestLocal){ bestLocal = score; localStorage.setItem(STORAGE_KEY_LOCAL, String(bestLocal)); }
+  finalBest.textContent = bestLocal;
+  bestBefore.textContent = bestLocal;
+  playHit();
+}
+
+/* collision helper */
+function circleRectCollide(cx, cy, r, rx, ry, rw, rh){
+  const nearestX = Math.max(rx, Math.min(cx, rx+rw));
+  const nearestY = Math.max(ry, Math.min(cy, ry+rh));
+  const dx = cx - nearestX, dy = cy - nearestY;
+  return (dx*dx + dy*dy) < (r*r);
+}
+
+/* flap input */
+function flap(){
+  if(state === 'idle'){ resetGame(); bird.vy = FLAP_V; playFlap(); return; }
+  if(state !== 'running') return;
+  bird.vy = FLAP_V; bird.rot = -0.5; playFlap();
+}
+
+/* inputs */
+window.addEventListener('keydown', (e) => { if(e.code === 'Space' || e.code === 'ArrowUp'){ e.preventDefault(); flap(); } });
+canvas.addEventListener('pointerdown', (e) => { flap(); });
+startBtn.addEventListener('click', resetGame);
+restartBtn.addEventListener('click', resetGame);
+
+/* sprite toggle */
+toggleSpriteBtn.addEventListener('click', ()=>{
+  useSprite = !useSprite;
+  toggleSpriteBtn.textContent = useSprite ? 'Sprite Kullanılıyor ✅' : 'Sprite Kullan';
+});
+
+/* main loop */
+function loop(ts){
+  if(state !== 'running') return;
+  const dt = Math.min(0.05, (ts - lastTs) / 1000);
+  lastTs = ts;
+  update(dt);
+  render();
+  requestAnimationFrame(loop);
+}
+function update(dt){
+  bird.vy += GRAVITY * dt;
+  bird.y += bird.vy * dt;
+  bird.rot += ( (bird.vy / 600) - bird.rot ) * 8 * dt;
+
+  for(const p of pipes){
+    p.x -= PIPE_SPEED * dt;
+    if(!p.passed && p.x + PIPE_W < bird.x - BIRD_RADIUS){
+      p.passed = true; score += 1; hudScore.textContent = 'Skor: ' + score; playPoint();
+    }
+  }
+  if(pipes.length && pipes[0].x + PIPE_W < -50) pipes.shift();
+
+  if(pipes.length === 0 || (BASE_W - (pipes[pipes.length-1].x) ) > PIPE_SPACING - 20 ){
+    const x = (pipes.length? pipes[pipes.length-1].x : BASE_W) + PIPE_SPACING;
+    const gap = Math.round(Math.random() * (GAP_MAX - GAP_MIN) + GAP_MIN);
+    const gapY = Math.round(Math.random() * (BASE_H - 140 - gap - 80) + 80);
+    pipes.push({ x, gapY, gap, passed:false });
+  }
+
+  if(bird.y - BIRD_RADIUS < 0 || bird.y + BIRD_RADIUS > BASE_H - GROUND_H){ gameOver(); return; }
+  for(const p of pipes){
+    if(circleRectCollide(bird.x, bird.y, BIRD_RADIUS, p.x, 0, PIPE_W, p.gapY)){ gameOver(); return; }
+    const bottomY = p.gapY + p.gap;
+    if(circleRectCollide(bird.x, bird.y, BIRD_RADIUS, p.x, bottomY, PIPE_W, BASE_H - GROUND_H - bottomY)){ gameOver(); return; }
+  }
+}
+
+/* rendering */
+function render(){
+  ctx.clearRect(0,0,BASE_W,BASE_H);
+  const g = ctx.createLinearGradient(0,0,0,BASE_H); g.addColorStop(0,'#70c5ce'); g.addColorStop(1,'#7bd3e0');
+  ctx.fillStyle = g; ctx.fillRect(0,0,BASE_W,BASE_H);
+  for(const p of pipes){
+    ctx.fillStyle = '#2d8a3b'; ctx.fillRect(Math.round(p.x), 0, PIPE_W, p.gapY);
+    const bottomY = p.gapY + p.gap; ctx.fillRect(Math.round(p.x), bottomY, PIPE_W, BASE_H - GROUND_H - bottomY);
+    ctx.fillStyle = '#236a2c'; ctx.fillRect(Math.round(p.x)-6, Math.round(p.gapY)-12, PIPE_W+12, 12); ctx.fillRect(Math.round(p.x)-6, Math.round(bottomY), PIPE_W+12, 12);
+  }
+  ctx.fillStyle = '#c19a57'; ctx.fillRect(0, BASE_H - GROUND_H, BASE_W, GROUND_H);
+  ctx.strokeStyle = 'rgba(0,0,0,0.06)'; for(let gx=0; gx<BASE_W; gx+=20){ ctx.beginPath(); ctx.moveTo(gx, BASE_H-40); ctx.lineTo(gx+10, BASE_H-90); ctx.stroke(); }
+
+  ctx.save(); ctx.translate(bird.x, bird.y); ctx.rotate(bird.rot);
+  if(useSprite && spriteImg.complete){ const w = BIRD_RADIUS*3.3, h = BIRD_RADIUS*3.3; ctx.drawImage(spriteImg, -w/2, -h/2, w, h); }
+  else {
+    ctx.beginPath(); ctx.fillStyle = '#ffdd57'; ctx.arc(0,0,BIRD_RADIUS,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.fillStyle='#ffd86b'; ctx.ellipse(-2,4,BIRD_RADIUS*0.9,BIRD_RADIUS*0.6,0,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.fillStyle='#222'; ctx.arc(6,-3,3,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.fillStyle='#ff9d3c'; ctx.moveTo(BIRD_RADIUS-2,0); ctx.lineTo(BIRD_RADIUS+12,-3); ctx.lineTo(BIRD_RADIUS+12,4); ctx.closePath(); ctx.fill();
+  }
+  ctx.restore();
+
+  ctx.fillStyle = 'rgba(255,255,255,0.55)'; ctx.font = '700 34px system-ui, Arial'; ctx.textAlign='center';
+  ctx.fillText(score, BASE_W*0.5, 58);
+}
+
+/* initial idle render */
+function renderIdle(){ render(); }
+renderIdle();
+overlayStart.style.display = 'flex';
+
+/* ---------- Leaderboard: Firebase RTDB integration ---------- */
+const scoresRef = ref(db, 'flappy_scores');
+// top10 query (orderByChild score, limitToLast 10)
+const topQuery = query(scoresRef, orderByChild('score'), limitToLast(10));
+onValue(topQuery, snapshot => {
+  const val = snapshot.val() || {};
+  const arr = Object.entries(val).map(([k,v]) => ({ key:k, ...v }));
+  arr.sort((a,b)=> b.score - a.score);
+  if(arr.length === 0){
+    scoresList.innerHTML = '<div style="text-align:center;color:#666;padding:8px 0;">Henüz skor yok.</div>';
+    globalTopEl.textContent = '0';
+    return;
+  }
+  const rows = arr.map((s, idx) => {
+    const displayName = escapeHtml(s.name || 'Anonim').slice(0,18);
+    // show delete button only if s.userId matches local userId
+    const delBtn = (s.userId && s.userId === userId) ? `<button class="deleteBtn" data-key="${s.key}">Sil</button>` : '';
+    return `<div class="scoreRow" data-key="${s.key}"><div style="flex:1">${idx+1}. ${displayName}</div><div style="min-width:60px;text-align:right">${s.score}</div><div>${delBtn}</div></div>`;
+  }).join('');
+  scoresList.innerHTML = rows;
+  globalTopEl.textContent = arr[0].score;
+
+  // attach delete listeners for shown rows
+  document.querySelectorAll('#scoresList .deleteBtn').forEach(btn=>{
+    btn.onclick = () => {
+      const key = btn.dataset.key;
+      if(!confirm('Bu skoru silmek istediğinizden emin misiniz?')) return;
+      remove(ref(db, 'flappy_scores/' + key)).then(()=> {
+        // UI güncellenir onValue listener ile
+        alert('Skor silindi.');
+      }).catch(err=> {
+        console.error('silme hata', err);
+        alert('Skor silinirken hata.');
+      });
+    };
+  });
+});
+
+// --- My Scores: tüm skorlar içinde kendi userId'ine ait olanları göster ---
+onValue(scoresRef, snapshot => {
+  const val = snapshot.val() || {};
+  const arr = Object.entries(val).map(([k,v]) => ({ key:k, ...v }));
+  // filtrele
+  const my = arr.filter(s => s.userId && s.userId === userId).sort((a,b)=> b.score - a.score);
+  if(my.length === 0){
+    myScoresList.innerHTML = '<div style="text-align:center;color:#666;padding:8px 0;">Henüz kayıtlı skorun yok.</div>';
+    return;
+  }
+  myScoresList.innerHTML = my.map(s => {
+    const displayName = escapeHtml(s.name || 'Anonim').slice(0,18);
+    return `<div class="scoreRow"><div style="flex:1">${displayName}</div><div style="min-width:60px;text-align:right">${s.score}</div><div><button class="deleteBtn myDel" data-key="${s.key}">Sil</button></div></div>`;
+  }).join('');
+
+  // attach delete listeners
+  document.querySelectorAll('#myScoresList .myDel').forEach(btn=>{
+    btn.onclick = () => {
+      const key = btn.dataset.key;
+      if(!confirm('Bu kaydı (sadece sizin kaydınız) silmek istediğinizden emin misiniz?')) return;
+      remove(ref(db, 'flappy_scores/' + key)).then(()=> {
+        alert('Skor kaydı silindi.');
+      }).catch(err=>{
+        console.error('silme hata', err);
+        alert('Silme başarısız.');
+      });
+    };
+  });
+});
+
+/* submit score (include userId) */
+function submitScoreToFirebase(name, scoreVal){
+  if(!name) name = 'Anonim';
+  push(scoresRef, { name: name.slice(0,24), score: scoreVal, ts: Date.now(), userId })
+    .then(()=> {
+      // kayıt başarılı -> onValue güncellemesi otomatik
+    })
+    .catch(err => {
+      console.error('score push err', err);
+      alert('Skor kaydedilemedi.');
+    });
+}
+
+/* form actions */
+submitScoreBtn.addEventListener('click', ()=>{
+  const nm = (nameInput.value || '').trim();
+  if(score <= 0){
+    alert('Skor 0 iken kayıt yapılamaz.');
+    return;
+  }
+  if(nm) localStorage.setItem('biyik_player_name', nm);
+  submitScoreToFirebase(nm || 'Anonim', score);
+  submitScoreBtn.textContent = 'Kaydedildi ✓';
+  setTimeout(()=> submitScoreBtn.textContent = 'Skoru Kaydet', 1400);
+});
+
+/* prefill name */
+const savedName = localStorage.getItem('biyik_player_name') || '';
+nameInput.value = savedName;
+
+/* Ensure audio co
