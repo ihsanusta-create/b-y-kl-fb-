@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="tr">
+<!DOCTYPE html>
+<html lang="tr">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -54,37 +55,45 @@
   #yorumlarYukleniyor { text-align:center; margin:1rem 0; color: var(--accent-color); display:none; }
   /* toast */
   #toast { display:none; position:fixed; right:20px; bottom:20px; background:var(--section-bg); color:var(--text-color); padding:10px 14px; border-radius:8px; border:1px solid var(--border-color); box-shadow:0 6px 18px rgba(0,0,0,0.4); z-index:2000;}
-  /* oyun butonu stil (küçük) */
-  .game-button { margin-top: 10px; padding: 0.55rem 1rem; border-radius: 8px; font-weight:700; border: none; cursor: pointer; background: var(--accent-color); color: var(--bg-color); }
-  .game-button:hover { background: #e6b800; }
 </style>
 </head>
-<body data-theme="dark"><button id="themeToggle">🌙</button>
+<body data-theme="dark">
+
+<button id="themeToggle">🌙</button>
 
 <header>
   <img src="1000000755.jpg" alt="Bıyıklıfbı Logo" />
   <h1>Bıyıklıfbı</h1>
   <p>Yerli bilgi platformu</p>
-</header><nav>
+</header>
+
+<nav>
   <a href="#anasayfa">Ana<br>Sayfa</a>
   <a href="#tartismalar">Tartışmalar</a>
   <a href="#hakkimizda">Hakkımızda</a>
   <a href="#kisi">Önemli<br>Kişilikler</a>
   <a href="#oyunlarimiz">Oyunlar</a>
-</nav><main>
+</nav>
+
+<main>
   <section id="anasayfa">
     <h2>📚 Giriş</h2>
     <p>Burası Bıyıklıfbı'nın ana sayfası. Bu site, özgürce bilgi paylaşmak ve fikirleri tartışmak için kuruldu.</p>
-  </section>  <section id="tartismalar">
+  </section>
+
+  <section id="tartismalar">
     <h2>💬 Tartışmalar</h2>
     <form id="anaYorumForm">
       <input type="text" id="kullaniciAdi" placeholder="Adınız" required />
       <textarea id="yorumMetni" rows="4" placeholder="Yorumunuzu yazın..." required></textarea>
       <button type="submit">Gönder</button>
-    </form><div id="yorumlarYukleniyor">Yükleniyor...</div>
-<div id="yorumlar"></div>
+    </form>
 
-  </section>  <section id="hakkimizda">
+    <div id="yorumlarYukleniyor">Yükleniyor...</div>
+    <div id="yorumlar"></div>
+  </section>
+
+  <section id="hakkimizda">
     <h2>🎈 Hakkımızda</h2>
     <div class="hakkimizda-kutusu">
       <h3>Vizyonumuz</h3>
@@ -94,69 +103,81 @@
       <h3>Misyonumuz</h3>
       <p>Yerli ve bağımsız bir platform olarak, sansürsüz ve nitelikli bilgi akışını teşvik ediyoruz.</p>
     </div>
-  </section>  <section id="kisi">
-    <h2>🌟 Önemli Kişilikler</h2><div class="kisi-kutusu">
-  <img src="Fatih Sultan Mehmet.jpg" alt="Fatih Sultan Mehmet">
-  <div>
-    <h3>Fatih Sultan Mehmet</h3>
-    <p>Osmanlı padişahı ve İstanbul'un fethini gerçekleştiren lider.</p>
-  </div>
-</div>
-
-<div class="kisi-kutusu">
-  <img src="Yunus Emre.jpg" alt="Yunus Emre">
-  <div>
-    <h3>Yunus Emre</h3>
-    <p>Türk halk şairi ve mutasavvıf, tasavvuf edebiyatının öncülerindendir.</p>
-  </div>
-</div>
-
-<div class="kisi-kutusu">
-  <img src="Mehmet Akif Ersoy.jpg" alt="Mehmet Akif Ersoy">
-  <div>
-    <h3>Mehmet Akif Ersoy</h3>
-    <p>İstiklal Marşı'nın yazarı, Türk edebiyatının önemli isimlerinden.</p>
-  </div>
-</div>
-
-<div class="kisi-kutusu">
-  <img src="Barbaros Hayrettin Paşa.jpg" alt="Barbaros Hayrettin Paşa">
-  <div>
-    <h3>Barbaros Hayreddin Paşa</h3>
-    <p>Akdeniz’de Osmanlı hâkimiyetini kuran büyük Türk denizcisi.</p>
-  </div>
-</div>
-
-<div class="kisi-kutusu">
-  <img src="Namık Kemal.jpg" alt="Namık Kemal">
-  <div>
-    <h3>Namık Kemal</h3>
-    <p>Hürriyet ve vatan şairi, Türk edebiyatında önemli fikir adamı.</p>
-  </div>
-</div>
-
-<div class="kisi-kutusu">
-  <img src="Piri Reis.jpg" alt="Piri Reis">
-  <div>
-    <h3>Piri Reis</h3>
-    <p>Ünlü Osmanlı denizcisi ve dünya haritasını çizen haritacı.</p>
-  </div>
-</div>
-
-  </section>  <section id="oyunlarimiz" style="background-color: var(--section-bg); padding:2rem; text-align:center;">
-    <h2 style="color:var(--accent-color); margin-bottom:1rem;">🕹️ Oyunlarımız</h2>
-    <!-- Yeni sekmede açılacak Flappy Bird butonu -->
-    <a href="games/flappy/" target="_blank" rel="noopener">
-      <button class="game-button">▶ Flappy Bıyıklıfbı (Yeni Sekme)</button>
-    </a>
   </section>
-</main><section style="background-color: var(--footer-bg); padding:2rem; text-align:center;">
+
+  <section id="kisi">
+    <h2>🌟 Önemli Kişilikler</h2>
+
+    <div class="kisi-kutusu">
+      <img src="Fatih Sultan Mehmet.jpg" alt="Fatih Sultan Mehmet">
+      <div>
+        <h3>Fatih Sultan Mehmet</h3>
+        <p>Osmanlı padişahı ve İstanbul'un fethini gerçekleştiren lider.</p>
+      </div>
+    </div>
+
+    <div class="kisi-kutusu">
+      <img src="Yunus Emre.jpg" alt="Yunus Emre">
+      <div>
+        <h3>Yunus Emre</h3>
+        <p>Türk halk şairi ve mutasavvıf, tasavvuf edebiyatının öncülerindendir.</p>
+      </div>
+    </div>
+
+    <div class="kisi-kutusu">
+      <img src="Mehmet Akif Ersoy.jpg" alt="Mehmet Akif Ersoy">
+      <div>
+        <h3>Mehmet Akif Ersoy</h3>
+        <p>İstiklal Marşı'nın yazarı, Türk edebiyatının önemli isimlerinden.</p>
+      </div>
+    </div>
+
+    <div class="kisi-kutusu">
+      <img src="Barbaros Hayrettin Paşa.jpg" alt="Barbaros Hayrettin Paşa">
+      <div>
+        <h3>Barbaros Hayreddin Paşa</h3>
+        <p>Akdeniz’de Osmanlı hâkimiyetini kuran büyük Türk denizcisi.</p>
+      </div>
+    </div>
+
+    <div class="kisi-kutusu">
+      <img src="Namık Kemal.jpg" alt="Namık Kemal">
+      <div>
+        <h3>Namık Kemal</h3>
+        <p>Hürriyet ve vatan şairi, Türk edebiyatında önemli fikir adamı.</p>
+      </div>
+    </div>
+
+    <div class="kisi-kutusu">
+      <img src="Piri Reis.jpg" alt="Piri Reis">
+      <div>
+        <h3>Piri Reis</h3>
+        <p>Ünlü Osmanlı denizcisi ve dünya haritasını çizen haritacı.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="oyunlarimiz" style="background-color: var(--section-bg); padding:2rem; text-align:center;">
+    <h2 style="color:var(--accent-color); margin-bottom:1rem;">🕹️ Oyunlarımız</h2>
+    <p>Yakında burada Bıyıklıfbı topluluğu için geliştirdiğimiz oyunları bulabilirsiniz!</p>
+  </section>
+</main>
+
+<section style="background-color: var(--footer-bg); padding:2rem; text-align:center;">
   <h2 style="color:var(--accent-color); margin-bottom:1rem;">📱 Bizi Takip Et</h2>
-  <a href="https://www.instagram.com/x_6.111" target="_blank"><button>📸 Instagram</button></a>
+  <a href="https://www.instagram.com/biyiklifbi61" target="_blank"><button>📸 Instagram</button></a>
   <a href="https://sosyal.teknofest.app/@biyiklifbi61" target="_blank"><button>🌐 Teknofest</button></a>
   <a href="https://x.com/BIYIKLIFBI61" target="_blank"><button>🐦 X</button></a>
   <a href="https://youtube.com/@biyiklifbi6161" target="_blank"><button>▶️ YouTube</button></a>
-</section><footer>© 2025 Bıyıklıfbı — Tüm hakları saklıdır.</footer><!-- toast elementi --><div id="toast" role="status" aria-live="polite"></div><script type="module">
+</section>
+
+<footer>© 2025 Bıyıklıfbı — Tüm hakları saklıdır.</footer>
+
+<!-- toast elementi -->
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import { getDatabase, ref, push, onValue, remove, runTransaction } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
@@ -224,60 +245,138 @@ function renderYorumlar(data) {
       <div class="yanitlar" id="yanitlar-${key}"></div>
       <div class="yanit-formu" id="yanitForm-${key}" style="display:none;">
         <input type="text" placeholder="Adınız" class="yanitAd" />
-        <textarea rows="2" placeholder="Yanıtınızı yazın..." class="yanitMetni"></textarea><button class="gonderYanit" data-key="${key}">Gönder Yanıt</button>
-  </div>
-`;
+        <textarea rows="2" placeholder="Yanıtınızı yazın..." class="yanitMetni"></textarea>
+        <button class="gonderYanit" data-key="${key}">Gönder Yanıt</button>
+      </div>
+    `;
 
-if (item.yanitlar) {
-  Object.entries(item.yanitlar).forEach(([yk, yitem]) => {
-    const yDiv = document.createElement("div");
-    yDiv.className = "yanit-kapsayici";
-    yDiv.innerHTML = `<b>${escapeHtml(yitem.ad)}</b>: ${escapeHtml(yitem.yorum)} <span style="font-size:0.7rem;color:#aaa;">${escapeHtml(yitem.tarih)}</span>`;
-    yorumKapsayici.querySelector(`#yanitlar-${key}`).appendChild(yDiv);
+    if (item.yanitlar) {
+      Object.entries(item.yanitlar).forEach(([yk, yitem]) => {
+        const yDiv = document.createElement("div");
+        yDiv.className = "yanit-kapsayici";
+        yDiv.innerHTML = `<b>${escapeHtml(yitem.ad)}</b>: ${escapeHtml(yitem.yorum)} <span style="font-size:0.7rem;color:#aaa;">${escapeHtml(yitem.tarih)}</span>`;
+        yorumKapsayici.querySelector(`#yanitlar-${key}`).appendChild(yDiv);
+      });
+    }
+
+    yorumlarDiv.appendChild(yorumKapsayici);
+  });
+
+  // event handler'ları tekrar bağla
+
+  // Beğen (localStorage ile double-like önleme)
+  document.querySelectorAll(".begenBtn").forEach(btn=>{
+    btn.onclick = () => {
+      const key = btn.dataset.key;
+      if(localStorage.getItem("begen_" + key)) {
+        showToast("Zaten beğendiniz.");
+        return;
+      }
+
+      runTransaction(ref(db, "yorumlar/" + key), current => {
+        if (current) {
+          current.begen = (current.begen || 0) + 1;
+        }
+        return current;
+      }).then(()=>{
+        localStorage.setItem("begen_" + key, "true");
+        showToast("Beğenildi ✅");
+      }).catch(err=>{
+        console.error(err);
+        showToast("Beğenme başarısız.");
+      });
+    };
+  });
+
+  // Yanıt formunu aç/kapat
+  document.querySelectorAll(".yanitla-butonu").forEach(btn=>{
+    btn.onclick = () => {
+      const key = btn.dataset.key;
+      const form = document.getElementById("yanitForm-" + key);
+      form.style.display = form.style.display === "none" ? "block" : "none";
+    };
+  });
+
+  // Yanıt gönder
+  document.querySelectorAll(".gonderYanit").forEach(btn=>{
+    btn.onclick = () => {
+      const key = btn.dataset.key;
+      const form = document.getElementById("yanitForm-" + key);
+      const ad = form.querySelector(".yanitAd").value.trim();
+      const yorum = form.querySelector(".yanitMetni").value.trim();
+      const tarih = new Date().toLocaleString("tr-TR");
+      if(ad && yorum){
+        const yRef = ref(db, "yorumlar/" + key + "/yanitlar");
+        push(yRef, {ad,yorum,tarih});
+        form.querySelector(".yanitAd").value = "";
+        form.querySelector(".yanitMetni").value = "";
+        form.style.display = "none";
+        showToast("Yanıt gönderildi");
+      } else {
+        showToast("Ad ve yanıt gerekli");
+      }
+    };
+  });
+
+  // Sil (sadece kendi yorumları için buton var; yine de burada kontrol et)
+  document.querySelectorAll(".silBtn").forEach(btn=>{
+    btn.onclick = () => {
+      const key = btn.dataset.key;
+      const targetRef = ref(db, "yorumlar/" + key);
+      remove(targetRef).then(()=>{
+        showToast("Yorum silindi");
+      }).catch(err=>{
+        console.error(err);
+        showToast("Silme başarısız");
+      });
+    };
   });
 }
 
-yorumlarDiv.appendChild(yorumKapsayici);
+// Yükleniyor göstergesi açık konuma getirilir
+yukleniyorEl.style.display = "block";
 
+// realtime dinleyici: snapshot geldikçe render et
+onValue(yorumRef, snapshot=>{
+  const data = snapshot.val() || {};
+  renderYorumlar(data);
+  // yükleniyor gizle
+  yukleniyorEl.style.display = "none";
+}, err=>{
+  console.error("onValue error:", err);
+  yukleniyorEl.style.display = "none";
+  showToast("Yorumlar yüklenirken hata");
 });
 
-// event handler'ları tekrar bağla
+// güvenli küçük escape (basit)
+function escapeHtml(str){
+  return String(str || '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+}
 
-// Beğen (localStorage ile double-like önleme) document.querySelectorAll(".begenBtn").forEach(btn=>{ btn.onclick = () => { const key = btn.dataset.key; if(localStorage.getItem("begen_" + key)) { showToast("Zaten beğendiniz."); return; }
+// Form gönderme - yeni yorum ekleme (userId ekleniyor)
+document.getElementById("anaYorumForm").addEventListener("submit", e=>{
+  e.preventDefault();
+  const ad=document.getElementById("kullaniciAdi").value.trim();
+  const yorum=document.getElementById("yorumMetni").value.trim();
+  const tarih=new Date().toLocaleString("tr-TR");
+  if(!ad || !yorum){
+    showToast("Ad ve yorum alanları gerekli");
+    return;
+  }
 
-runTransaction(ref(db, "yorumlar/" + key), current => {
-    if (current) {
-      current.begen = (current.begen || 0) + 1;
-    }
-    return current;
-  }).then(()=>{
-    localStorage.setItem("begen_" + key, "true");
-    showToast("Beğenildi ✅");
-  }).catch(err=>{
-    console.error(err);
-    showToast("Beğenme başarısız.");
-  });
-};
+  // Basit spam koruması: 1.5 saniye aralık
+  const lastPost = localStorage.getItem("biyik_lastPost");
+  if(lastPost && (Date.now() - parseInt(lastPost,10) < 1500)){
+    showToast("Çok hızlısınız, lütfen bekleyin");
+    return;
+  }
 
+  push(yorumRef, {ad,yorum,tarih,begen:0,userId});
+  localStorage.setItem("biyik_lastPost", String(Date.now()));
+  e.target.reset();
+  showToast("Yorum gönderildi");
 });
-
-// Yanıt formunu aç/kapat document.querySelectorAll(".yanitla-butonu").forEach(btn=>{ btn.onclick = () => { const key = btn.dataset.key; const form = document.getElementById("yanitForm-" + key); form.style.display = form.style.display === "none" ? "block" : "none"; }; });
-
-// Yanıt gönder document.querySelectorAll(".gonderYanit").forEach(btn=>{ btn.onclick = () => { const key = btn.dataset.key; const form = document.getElementById("yanitForm-" + key); const ad = form.querySelector(".yanitAd").value.trim(); const yorum = form.querySelector(".yanitMetni").value.trim(); const tarih = new Date().toLocaleString("tr-TR"); if(ad && yorum){ const yRef = ref(db, "yorumlar/" + key + "/yanitlar"); push(yRef, {ad,yorum,tarih}); form.querySelector(".yanitAd").value = ""; form.querySelector(".yanitMetni").value = ""; form.style.display = "none"; showToast("Yanıt gönderildi"); } else { showToast("Ad ve yanıt gerekli"); } }; });
-
-// Sil (sadece kendi yorumları için buton var; yine de burada kontrol et) document.querySelectorAll(".silBtn").forEach(btn=>{ btn.onclick = () => { const key = btn.dataset.key; const targetRef = ref(db, "yorumlar/" + key); remove(targetRef).then(()=>{ showToast("Yorum silindi"); }).catch(err=>{ console.error(err); showToast("Silme başarısız"); }); }; }); }
-
-// Yükleniyor göstergesi açık konuma getirilir yukleniyorEl.style.display = "block";
-
-// realtime dinleyici: snapshot geldikçe render et onValue(yorumRef, snapshot=>{ const data = snapshot.val() || {}; renderYorumlar(data); // yükleniyor gizle yukleniyorEl.style.display = "none"; }, err=>{ console.error("onValue error:", err); yukleniyorEl.style.display = "none"; showToast("Yorumlar yüklenirken hata"); });
-
-// güvenli küçük escape (basit) function escapeHtml(str){ return String(str || '').replaceAll('&','&').replaceAll('<','<').replaceAll('>','>').replaceAll('"','"'); }
-
-// Form gönderme - yeni yorum ekleme (userId ekleniyor) document.getElementById("anaYorumForm").addEventListener("submit", e=>{ e.preventDefault(); const ad=document.getElementById("kullaniciAdi").value.trim(); const yorum=document.getElementById("yorumMetni").value.trim(); const tarih=new Date().toLocaleString("tr-TR"); if(!ad || !yorum){ showToast("Ad ve yorum alanları gerekli"); return; }
-
-// Basit spam koruması: 1.5 saniye aralık const lastPost = localStorage.getItem("biyik_lastPost"); if(lastPost && (Date.now() - parseInt(lastPost,10) < 1500)){ showToast("Çok hızlısınız, lütfen bekleyin"); return; }
-
-push(yorumRef, {ad,yorum,tarih,begen:0,userId}); localStorage.setItem("biyik_lastPost", String(Date.now())); e.target.reset(); showToast("Yorum gönderildi"); }); </script>
+</script>
 
 <script>
 /* tema toggler (orijinal davranış korundu) */
@@ -293,5 +392,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   document.body.setAttribute("data-theme",t);
   themeToggle.textContent=t==="light"?"🌙":"☀️";
 });
-</script></body>
-</html>
+</script>
+
+</body>
+    </html>
