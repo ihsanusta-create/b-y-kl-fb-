@@ -437,4 +437,36 @@ submitScoreBtn.addEventListener('click', ()=>{
 const savedName = localStorage.getItem('biyik_player_name') || '';
 nameInput.value = savedName;
 
-/* Ensure audio co
+/* Ensure audio context resumes on gesture */
+document.addEventListener('click', () => { if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); });
+
+/* small helper escape */
+function escapeHtml(str){
+  return String(str || '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+}
+
+/* optional: auto submit saved name on gameover (keeps previous behavior) */
+function autoSubmitIfWanted(){
+  const nm = localStorage.getItem('biyik_player_name') || '';
+  if(nm && score > 0){
+    submitScoreToFirebase(nm, score);
+  }
+}
+/* patch gameOver to show overlay */
+(function patch(){
+  const original = gameOver;
+  window.gameOver = function(){
+    original();
+    nameInput.value = localStorage.getItem('biyik_player_name') || '';
+    // optionally auto submit (commented out to avoid accidental spam)
+    // autoSubmitIfWanted();
+  };
+})();
+
+/* expose for debug */
+window._flappy = { resetGame };
+
+/* End script */
+</script>
+</body>
+</html>
