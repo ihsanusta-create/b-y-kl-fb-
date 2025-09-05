@@ -5,41 +5,28 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Bıyıklıfbı — Flappy Bird (Ses + Leaderboard + Silme)</title>
 <style>
-  :root {
+  :root{
     --bg: linear-gradient(#70c5ce,#7bd3e0);
-    --card-bg: #a0e0e8;
-    --panel: rgba(255,255,255,0.92);
-    --btn: #2d8a3b;
-    --text: #073642;
+    --card-bg:#a0e0e8;
+    --panel:rgba(255,255,255,0.92);
+    --btn:#2d8a3b;
+    --text:#073642;
   }
-  html,body { height:100%; margin:0; font-family:Inter,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--text); }
-  .wrap { display:flex; align-items:flex-start; justify-content:center; gap:20px; padding:20px; box-sizing:border-box; min-height:100vh; }
-  #gameCard { width:100%; max-width:420px; border-radius:12px; overflow:hidden; box-shadow:0 12px 30px rgba(0,0,0,0.2); background:var(--card-bg); position:relative; }
-  canvas { display:block; width:100%; height:auto; background: transparent; }
-  .hud { position:absolute; left:12px; top:10px; z-index:10; color:var(--text); font-weight:700; text-shadow:0 1px 0 rgba(255,255,255,0.5); }
-  .centerOverlay { position:absolute; left:0; right:0; top:0; bottom:0; display:flex; align-items:center; justify-content:center; z-index:20; pointer-events:none; }
-  .panel { background: var(--panel); color:var(--text); padding:18px 20px; border-radius:10px; text-align:center; pointer-events:auto; box-shadow:0 6px 18px rgba(0,0,0,0.12); width:90%; max-width:320px; }
-  .panel h2 { margin:0 0 8px; font-size:20px; }
-  .panel p { margin:8px 0 12px; font-size:14px; color:#055; }
-  .btn { display:inline-block; background:var(--btn); color:white; padding:8px 12px; border-radius:8px; cursor:pointer; text-decoration:none; font-weight:700; border:none;}
-  .footerNote { text-align:center; padding:10px 0; color:#043; font-size:12px; width:100%; max-width:420px; }
-  /* leaderboard panel */
-  #leaderboard { width:300px; max-width:30vw; min-width:220px; background:var(--panel); border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,0.12); height:fit-content; }
-  #leaderboard h3 { margin-top:0; font-size:16px; }
-  .scoreRow { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed rgba(0,0,0,0.06); font-weight:600; align-items:center; gap:8px; }
-  .small { font-size:12px; color:#055; margin-top:6px; }
-  .controls { display:flex; gap:8px; margin-top:8px; justify-content:center; }
-  .toggleSprite{ background:#0a66a3; }
-  input[type="text"]{ width:100%; padding:8px; border-radius:8px; border:1px solid rgba(0,0,0,0.08); box-sizing:border-box; }
-  .deleteBtn { background: #b22222; padding:4px 8px; border-radius:6px; color:#fff; border:none; cursor:pointer; font-weight:700; font-size:12px; }
-  .myScoresTitle { margin-top:12px; font-weight:700; }
-  /* game button look */
-  .game-btn { background: linear-gradient(180deg,#ffdd57,#ffbf00); color:#071; border-radius:10px; padding:10px 14px; font-weight:800; box-shadow:0 6px 18px rgba(0,0,0,0.18); border:none; cursor:pointer; }
-  .game-btn:hover { transform: translateY(-2px); }
-  @media (max-width:900px){
-    .wrap { flex-direction:column; align-items:center; }
-    #leaderboard{ width:92%; max-width:420px;}
-  }
+  html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text);}
+  .wrap{display:flex;align-items:flex-start;justify-content:center;gap:20px;padding:20px;box-sizing:border-box;min-height:100vh;}
+  #gameCard{width:100%;max-width:420px;border-radius:12px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,0.2);background:var(--card-bg);position:relative;}
+  canvas{display:block;width:100%;height:auto;background:transparent;}
+  .hud{position:absolute;left:12px;top:10px;z-index:10;color:var(--text);font-weight:700;text-shadow:0 1px 0 rgba(255,255,255,0.5);}
+  .centerOverlay{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center;z-index:20;pointer-events:none;}
+  .panel{background:var(--panel);color:var(--text);padding:18px 20px;border-radius:10px;text-align:center;pointer-events:auto;box-shadow:0 6px 18px rgba(0,0,0,0.12);width:90%;max-width:320px;}
+  .panel h2{margin:0 0 8px;font-size:20px;}
+  .panel p{margin:8px 0 12px;font-size:14px;color:#055;}
+  .btn{display:inline-block;background:var(--btn);color:white;padding:8px 12px;border-radius:8px;cursor:pointer;text-decoration:none;font-weight:700;border:none;}
+  .small{font-size:12px;color:#055;margin-top:6px;}
+  #leaderboard{width:300px;max-width:30vw;min-width:220px;background:var(--panel);border-radius:12px;padding:12px;box-shadow:0 6px 18px rgba(0,0,0,0.12);height:fit-content;}
+  .scoreRow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed rgba(0,0,0,0.06);font-weight:600;align-items:center;gap:8px;}
+  .deleteBtn{background:#b22222;padding:4px 8px;border-radius:6px;color:#fff;border:none;cursor:pointer;font-weight:700;font-size:12px;}
+  @media (max-width:900px){ .wrap{flex-direction:column;align-items:center;} #leaderboard{width:92%;max-width:420px;} }
 </style>
 </head>
 <body>
@@ -53,9 +40,9 @@
       <div class="panel" id="startPanel">
         <h2>Flappy Bıyıklıfbı</h2>
         <p>Dokun, tıkla ya da boşluk tuşuna basarak kuşu zıplat. Borulara çarpma!</p>
-        <div class="controls">
+        <div style="display:flex;gap:8px;justify-content:center;">
           <button class="btn" id="startBtn">Oyunu Başlat</button>
-          <button class="btn toggleSprite" id="toggleSpriteBtn">Sprite Kullan</button>
+          <button class="btn" id="toggleSpriteBtn">Sprite Kullan</button>
         </div>
         <p class="small">En yüksek skor (yerel): <span id="bestBefore">0</span></p>
       </div>
@@ -66,17 +53,15 @@
         <h2>Oyun Bitti</h2>
         <p>Skorunuz: <strong id="finalScore">0</strong></p>
         <p class="small">En yüksek (yerel): <strong id="finalBest">0</strong></p>
-
-        <div style="margin-top:10px; text-align:left;">
+        <div style="margin-top:10px;text-align:left;">
           <label for="nameInput">Skor kaydetmek için isim:</label>
-          <input id="nameInput" type="text" placeholder="İsminiz (kısa)" />
-          <div style="display:flex; gap:8px; margin-top:8px;">
+          <input id="nameInput" type="text" placeholder="İsminiz (kısa)" style="width:100%;padding:8px;border-radius:6px;border:1px solid rgba(0,0,0,0.08);box-sizing:border-box;margin-top:6px;" />
+          <div style="display:flex;gap:8px;margin-top:8px;">
             <button class="btn" id="submitScoreBtn">Skoru Kaydet</button>
             <button class="btn" id="restartBtn">Tekrar Oyna</button>
           </div>
-          <p class="small">Kaydedilen skorlar global leaderboard'a gider. Kendi skorlarını leaderboard veya "Benim Skorlarım"dan silebilirsin.</p>
+          <p class="small">Kaydedilen skorlar global leaderboard'a gider. Kendi skorlarını silebilirsin.</p>
         </div>
-
       </div>
     </div>
 
@@ -84,38 +69,25 @@
 
   <div id="leaderboard" aria-live="polite">
     <h3>🏆 Top 10 Leaderboard</h3>
-    <div id="scoresList">
-      <div style="text-align:center;color:#666;padding:8px 0;">Yükleniyor...</div>
-    </div>
-
+    <div id="scoresList"><div style="text-align:center;color:#666;padding:8px 0;">Yükleniyor...</div></div>
     <div style="margin-top:10px;">
       <div style="font-size:13px;color:#055;">En yüksek (global): <strong id="globalTop">0</strong></div>
       <div class="small">İsimle gönder ve toplulukta rekabet et!</div>
     </div>
-
-    <div class="myScoresTitle">🔐 Benim Skorlarım</div>
-    <div id="myScoresList" style="margin-top:8px;">
-      <div style="text-align:center;color:#666;padding:8px 0;">Yükleniyor...</div>
-    </div>
-
+    <div style="margin-top:12px;font-weight:700;">🔐 Benim Skorlarım</div>
+    <div id="myScoresList" style="margin-top:8px;"><div style="text-align:center;color:#666;padding:8px 0;">Yükleniyor...</div></div>
   </div>
 </div>
 
-<div class="footerNote">Kontroller: dokun / tık / boşluk. Artık kendi skorlarını silebilirsin. İyi oyunlar!</div>
+<div style="text-align:center;padding:12px;color:#043;font-size:12px;">Kontroller: dokun / tık / boşluk. İyi oyunlar!</div>
 
 <script type="module">
-/* ===========================
-   OYUN + SES + FIREBASE LEADERBOARD + KULLANICI SKOR SİLME
-   Tam ve tamamlanmış sürüm.
-   =========================== */
+/* Full working flappy with Firebase leaderboard + delete (fixed & completed) */
 
-/* ---------- Firebase imports ---------- */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import {
-  getDatabase, ref, push, onValue, runTransaction, query, orderByChild, limitToLast, remove
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+import { getDatabase, ref, push, onValue, query, orderByChild, limitToLast, remove } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
-/* ---------- Firebase config (kullanılan config) ---------- */
+/* ---------- firebase config ---------- */
 const firebaseConfig = {
   apiKey: "AIzaSyCNC1M0tgiKdV-YbE-zPrES2MP0oXN0xLU",
   authDomain: "byklfb-c85d8.firebaseapp.com",
@@ -128,14 +100,6 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-
-/* ---------- USER ID (localStorage) ---------- */
-// Benzersiz kullanıcı id (anonim) oluştur / tekrar kullan
-let userId = localStorage.getItem('biyik_userId');
-if (!userId) {
-  userId = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('uid_' + Date.now() + '_' + Math.floor(Math.random()*10000));
-  localStorage.setItem('biyik_userId', userId);
-}
 
 /* ---------- DOM ---------- */
 const canvas = document.getElementById('game');
@@ -156,8 +120,31 @@ const globalTopEl = document.getElementById('globalTop');
 const toggleSpriteBtn = document.getElementById('toggleSpriteBtn');
 const myScoresList = document.getElementById('myScoresList');
 
-/* ---------- Oyun parametreleri ---------- */
+/* ---------- local id & best ---------- */
+let userId = localStorage.getItem('biyik_userId');
+if(!userId){ userId = (crypto && crypto.randomUUID)? crypto.randomUUID() : ('uid_'+Date.now()+'_'+Math.floor(Math.random()*10000)); localStorage.setItem('biyik_userId', userId); }
+const STORAGE_KEY_LOCAL = 'biyik_flappy_best';
+let bestLocal = parseInt(localStorage.getItem(STORAGE_KEY_LOCAL) || '0', 10);
+bestBefore.textContent = bestLocal;
+
+/* ---------- canvas scale ---------- */
 const BASE_W = 400, BASE_H = 600;
+function fitCanvas(){
+  const rect = card.getBoundingClientRect();
+  const scale = Math.min(rect.width / BASE_W, (rect.height || window.innerHeight) / BASE_H) || rect.width/BASE_W;
+  const pixelW = Math.round(BASE_W * scale);
+  const pixelH = Math.round(BASE_H * scale);
+  const dpr = window.devicePixelRatio || 1;
+  canvas.style.width = rect.width + 'px';
+  canvas.style.height = Math.round(rect.width * (BASE_H/BASE_W)) + 'px';
+  canvas.width = pixelW * dpr;
+  canvas.height = pixelH * dpr;
+  ctx.setTransform(dpr * (pixelW/BASE_W), 0, 0, dpr * (pixelH/BASE_H), 0, 0);
+}
+window.addEventListener('resize', fitCanvas);
+fitCanvas();
+
+/* ---------- game params ---------- */
 const BIRD_RADIUS = 12;
 const GRAVITY = 1000;
 const FLAP_V = -320;
@@ -168,58 +155,31 @@ const PIPE_SPACING = 180;
 const PIPE_SPEED = 140;
 const GROUND_H = 90;
 
-/* ---------- yerel en yüksek ---------- */
-const STORAGE_KEY_LOCAL = 'biyik_flappy_best';
-let bestLocal = parseInt(localStorage.getItem(STORAGE_KEY_LOCAL) || '0', 10);
-bestBefore.textContent = bestLocal;
-
-/* ---------- canvas scaling ---------- */
-function fitCanvas() {
-  const rect = card.getBoundingClientRect();
-  const scale = Math.min(rect.width / BASE_W, (rect.height || window.innerHeight) / BASE_H) || rect.width / BASE_W;
-  const pixelW = Math.round(BASE_W * scale);
-  const pixelH = Math.round(BASE_H * scale);
-  const dpr = window.devicePixelRatio || 1;
-  canvas.style.width = rect.width + 'px';
-  canvas.style.height = Math.round(rect.width * (BASE_H / BASE_W)) + 'px';
-  canvas.width = pixelW * dpr;
-  canvas.height = pixelH * dpr;
-  ctx.setTransform(dpr * (pixelW / BASE_W), 0, 0, dpr * (pixelH / BASE_H), 0, 0);
-}
-window.addEventListener('resize', fitCanvas);
-fitCanvas();
-
-/* ---------- oyun state ---------- */
-let state = 'idle'; // idle | running | over
-let bird = { x: BASE_W * 0.28, y: BASE_H * 0.5, vy: 0, rot: 0 };
+/* ---------- state ---------- */
+let state = 'idle';
+let bird = { x: BASE_W*0.28, y: BASE_H*0.5, vy:0, rot:0 };
 let pipes = [];
 let score = 0;
 let lastTs = 0;
 let useSprite = false;
 
-/* ---------- sprite (SVG data URI) ---------- */
-const birdSVG = encodeURIComponent(`
-<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'>
-  <g>
-    <circle cx='60' cy='60' r='28' fill='#ffdd57' stroke='#f2c94c' stroke-width='2'/>
-    <ellipse cx='56' cy='68' rx='22' ry='14' fill='#ffd86b'/>
-    <circle cx='74' cy='52' r='5' fill='#222'/>
-    <polygon points='82,60 98,56 98,66' fill='#ff9d3c' />
-  </g>
-</svg>
-`);
-const spriteImg = new Image();
-spriteImg.src = `data:image/svg+xml;charset=utf-8,${birdSVG}`;
+/* ---------- sprite ---------- */
+const birdSVG = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><g><circle cx='60' cy='60' r='28' fill='#ffdd57' stroke='#f2c94c' stroke-width='2'/><ellipse cx='56' cy='68' rx='22' ry='14' fill='#ffd86b'/><circle cx='74' cy='52' r='5' fill='#222'/><polygon points='82,60 98,56 98,66' fill='#ff9d3c' /></g></svg>`);
+const spriteImg = new Image(); spriteImg.src = `data:image/svg+xml;charset=utf-8,${birdSVG}`;
 
-/* ---------- Audio: WebAudio simple effects ---------- */
+/* ---------- audio ---------- */
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null;
 function ensureAudio(){ if(!audioCtx) audioCtx = new AudioCtx(); }
-function playFlap(){ ensureAudio(); const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type='triangle'; o.frequency.value=600; g.gain.value=0.0001; o.connect(g); g.connect(audioCtx.destination); const now=audioCtx.currentTime; g.gain.setValueAtTime(0.0001,now); g.gain.exponentialRampToValueAtTime(0.12,now+0.01); g.gain.exponentialRampToValueAtTime(0.0001,now+0.25); o.start(now); o.stop(now+0.26); }
-function playPoint(){ ensureAudio(); const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type='sine'; o.frequency.value=880; g.gain.value=0.0001; o.connect(g); g.connect(audioCtx.destination); const now=audioCtx.currentTime; g.gain.exponentialRampToValueAtTime(0.12,now+0.01); g.gain.exponentialRampToValueAtTime(0.0001,now+0.22); o.start(now); o.stop(now+0.26); }
-function playHit(){ ensureAudio(); const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type='sawtooth'; o.frequency.value=120; g.gain.value=0.0001; o.connect(g); g.connect(audioCtx.destination); const now=audioCtx.currentTime; g.gain.exponentialRampToValueAtTime(0.18,now+0.01); g.gain.exponentialRampToValueAtTime(0.0001,now+0.6); o.start(now); o.stop(now+0.65); }
+function tryUnlockAudio(){ try{ if(!audioCtx) audioCtx = new AudioCtx(); if(audioCtx && audioCtx.state==='suspended') audioCtx.resume().catch(()=>{}); }catch(e){} }
+function playFlap(){ try{ ensureAudio(); const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type='triangle'; o.frequency.value=600; g.gain.value=0.0001; o.connect(g); g.connect(audioCtx.destination); const now=audioCtx.currentTime; g.gain.setValueAtTime(0.0001,now); g.gain.exponentialRampToValueAtTime(0.12,now+0.01); g.gain.exponentialRampToValueAtTime(0.0001,now+0.25); o.start(now); o.stop(now+0.26);}catch(e){} }
+function playPoint(){ try{ ensureAudio(); const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type='sine'; o.frequency.value=880; g.gain.value=0.0001; o.connect(g); g.connect(audioCtx.destination); const now=audioCtx.currentTime; g.gain.exponentialRampToValueAtTime(0.12,now+0.01); g.gain.exponentialRampToValueAtTime(0.0001,now+0.22); o.start(now); o.stop(now+0.26);}catch(e){} }
+function playHit(){ try{ ensureAudio(); const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type='sawtooth'; o.frequency.value=120; g.gain.value=0.0001; o.connect(g); g.connect(audioCtx.destination); const now=audioCtx.currentTime; g.gain.exponentialRampToValueAtTime(0.18,now+0.01); g.gain.exponentialRampToValueAtTime(0.0001,now+0.6); o.start(now); o.stop(now+0.65);}catch(e){} }
 
-/* ---------- oyun fonksiyonları ---------- */
+/* ---------- helpers ---------- */
+function escapeHtml(str){ return String(str||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#39;"); }
+
+/* ---------- core game ---------- */
 function resetGame(){
   state = 'running';
   bird = { x: BASE_W * 0.28, y: BASE_H * 0.5, vy: 0, rot: 0 };
@@ -235,10 +195,10 @@ function resetGame(){
     const gapY = Math.round(Math.random() * (BASE_H - 140 - gap - 80) + 80);
     pipes.push({ x, gapY, gap, passed:false });
   }
-  // resume audio if suspended
-  try { if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); } catch(e){}
+  try{ if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); }catch(e){}
   requestAnimationFrame(loop);
 }
+
 function gameOver(){
   state = 'over';
   overlayGameOver.style.display = 'flex';
@@ -249,7 +209,6 @@ function gameOver(){
   playHit();
 }
 
-/* collision helper */
 function circleRectCollide(cx, cy, r, rx, ry, rw, rh){
   const nearestX = Math.max(rx, Math.min(cx, rx+rw));
   const nearestY = Math.max(ry, Math.min(cy, ry+rh));
@@ -257,8 +216,8 @@ function circleRectCollide(cx, cy, r, rx, ry, rw, rh){
   return (dx*dx + dy*dy) < (r*r);
 }
 
-/* flap input */
 function flap(){
+  tryUnlockAudio();
   if(state === 'idle'){ resetGame(); bird.vy = FLAP_V; playFlap(); return; }
   if(state !== 'running') return;
   bird.vy = FLAP_V; bird.rot = -0.5; playFlap();
@@ -267,7 +226,10 @@ function flap(){
 /* inputs */
 window.addEventListener('keydown', (e) => { if(e.code === 'Space' || e.code === 'ArrowUp'){ e.preventDefault(); flap(); } });
 canvas.addEventListener('pointerdown', (e) => { flap(); });
-// start and restart are wired below again as fallback
+
+toggleSpriteBtn && toggleSpriteBtn.addEventListener('click', ()=>{
+  useSprite = !useSprite;
+  toggleSpriteBtn.textContent = useSprite ? 'Sprite Kullanılıyor ✅' : 'Sprite Kullan';
 });
 
 /* main loop */
@@ -279,10 +241,11 @@ function loop(ts){
   render();
   requestAnimationFrame(loop);
 }
+
 function update(dt){
   bird.vy += GRAVITY * dt;
   bird.y += bird.vy * dt;
-  bird.rot += ( (bird.vy / 600) - bird.rot ) * 8 * dt;
+  bird.rot += ((bird.vy / 600) - bird.rot) * 8 * dt;
 
   for(const p of pipes){
     p.x -= PIPE_SPEED * dt;
@@ -329,7 +292,6 @@ function render(){
     ctx.beginPath(); ctx.fillStyle='#ff9d3c'; ctx.moveTo(BIRD_RADIUS-2,0); ctx.lineTo(BIRD_RADIUS+12,-3); ctx.lineTo(BIRD_RADIUS+12,4); ctx.closePath(); ctx.fill();
   }
   ctx.restore();
-
   ctx.fillStyle = 'rgba(255,255,255,0.55)'; ctx.font = '700 34px system-ui, Arial'; ctx.textAlign='center';
   ctx.fillText(score, BASE_W*0.5, 58);
 }
@@ -341,7 +303,6 @@ overlayStart.style.display = 'flex';
 
 /* ---------- Leaderboard: Firebase RTDB integration ---------- */
 const scoresRef = ref(db, 'flappy_scores');
-// top10 query (orderByChild score, limitToLast 10)
 const topQuery = query(scoresRef, orderByChild('score'), limitToLast(10));
 onValue(topQuery, snapshot => {
   const val = snapshot.val() || {};
@@ -354,33 +315,24 @@ onValue(topQuery, snapshot => {
   }
   const rows = arr.map((s, idx) => {
     const displayName = escapeHtml(s.name || 'Anonim').slice(0,18);
-    // show delete button only if s.userId matches local userId
     const delBtn = (s.userId && s.userId === userId) ? `<button class="deleteBtn" data-key="${s.key}">Sil</button>` : '';
     return `<div class="scoreRow" data-key="${s.key}"><div style="flex:1">${idx+1}. ${displayName}</div><div style="min-width:60px;text-align:right">${s.score}</div><div>${delBtn}</div></div>`;
   }).join('');
   if(scoresList) scoresList.innerHTML = rows;
   if(globalTopEl) globalTopEl.textContent = arr[0].score;
 
-  // attach delete listeners for shown rows
   document.querySelectorAll('#scoresList .deleteBtn').forEach(btn=>{
     btn.onclick = () => {
       const key = btn.dataset.key;
       if(!confirm('Bu skoru silmek istediğinizden emin misiniz?')) return;
-      remove(ref(db, 'flappy_scores/' + key)).then(()=> {
-        alert('Skor silindi.');
-      }).catch(err=> {
-        console.error('silme hata', err);
-        alert('Skor silinirken hata.');
-      });
+      remove(ref(db, 'flappy_scores/' + key)).then(()=> { alert('Skor silindi.'); }).catch(err=> { console.error('silme hata', err); alert('Skor silinirken hata.'); });
     };
   });
 });
 
-// --- My Scores: tüm skorlar içinde kendi userId'ine ait olanları göster ---
 onValue(scoresRef, snapshot => {
   const val = snapshot.val() || {};
   const arr = Object.entries(val).map(([k,v]) => ({ key:k, ...v }));
-  // filtrele
   const my = arr.filter(s => s.userId && s.userId === userId).sort((a,b)=> b.score - a.score);
   if(my.length === 0){
     if(myScoresList) myScoresList.innerHTML = '<div style="text-align:center;color:#666;padding:8px 0;">Henüz kayıtlı skorun yok.</div>';
@@ -391,17 +343,11 @@ onValue(scoresRef, snapshot => {
     return `<div class="scoreRow"><div style="flex:1">${displayName}</div><div style="min-width:60px;text-align:right">${s.score}</div><div><button class="deleteBtn myDel" data-key="${s.key}">Sil</button></div></div>`;
   }).join('');
 
-  // attach delete listeners
   document.querySelectorAll('#myScoresList .myDel').forEach(btn=>{
     btn.onclick = () => {
       const key = btn.dataset.key;
       if(!confirm('Bu kaydı (sadece sizin kaydınız) silmek istediğinizden emin misiniz?')) return;
-      remove(ref(db, 'flappy_scores/' + key)).then(()=> {
-        alert('Skor kaydı silindi.');
-      }).catch(err=>{
-        console.error('silme hata', err);
-        alert('Silme başarısız.');
-      });
+      remove(ref(db, 'flappy_scores/' + key)).then(()=> { alert('Skor kaydı silindi.'); }).catch(err=>{ console.error('silme hata', err); alert('Silme başarısız.'); });
     };
   });
 });
@@ -410,16 +356,49 @@ onValue(scoresRef, snapshot => {
 function submitScoreToFirebase(name, scoreVal){
   if(!name) name = 'Anonim';
   push(scoresRef, { name: name.slice(0,24), score: scoreVal, ts: Date.now(), userId })
-    .then(()=> {
-      // kayıt başarılı -> onValue güncellemesi otomatik
-    })
-    .catch(err => {
-      console.error('score push err', err);
-      alert('Skor kaydedilemedi.');
-    });
+    .then(()=> {})
+    .catch(err => { console.error('score push err', err); alert('Skor kaydedilemedi.'); });
 }
 
-/* form actions */
-submitScoreBtn.addEventListener('click', ()=>{
+/* form actions (completed) */
+submitScoreBtn && submitScoreBtn.addEventListener('click', ()=>{
   const nm = (nameInput.value || '').trim();
-  if(score <=
+  if(score <= 0){
+    alert('Skor 0 iken kayıt yapılamaz.');
+    return;
+  }
+  if(nm) localStorage.setItem('biyik_player_name', nm);
+  submitScoreToFirebase(nm || 'Anonim', score);
+  submitScoreBtn.textContent = 'Kaydedildi ✓';
+  setTimeout(()=> submitScoreBtn.textContent = 'Skoru Kaydet', 1400);
+});
+
+/* prefill name */
+const savedName = localStorage.getItem('biyik_player_name') || '';
+if(nameInput) nameInput.value = savedName;
+
+/* Start button wiring & fallbacks */
+(function wireStartButtons(){
+  if (startBtn) {
+    startBtn.addEventListener('click', (e) => { e.preventDefault(); tryUnlockAudio(); resetGame(); });
+  }
+  const overlay = document.getElementById('overlayStart');
+  if (overlay) {
+    overlay.addEventListener('pointerdown', (e) => {
+      if (e.target === overlay) { tryUnlockAudio(); resetGame(); }
+    });
+  }
+  if (restartBtn) restartBtn.addEventListener('click', (e)=>{ e.preventDefault(); tryUnlockAudio(); resetGame(); });
+})();
+
+/* Unlock audio on first gesture to avoid blocked audio on mobile/Chrome */
+document.addEventListener('pointerdown', tryUnlockAudio, { once:true, passive:true });
+
+/* small global error handler for debugging */
+window.addEventListener('error', (ev) => { console.error('[FLAPPY GLOBAL ERROR]', ev.message, ev.filename, ev.lineno); });
+
+/* nudge canvas sizing after layout */
+setTimeout(()=>{ try{ window.dispatchEvent(new Event('resize')); }catch(e){} }, 300);
+</script>
+</body>
+</html>
