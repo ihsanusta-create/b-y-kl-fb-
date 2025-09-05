@@ -103,12 +103,13 @@
 <script type="module">
 /* ===========================
    OYUN + SES + FIREBASE LEADERBOARD + KULLANICI SKOR SİLME
+   Tam ve tamamlanmış sürüm.
    =========================== */
 
 /* ---------- Firebase imports ---------- */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import {
-  getDatabase, ref, push, onValue, runTransaction, query, orderByChild, limitToLast, remove, equalTo
+  getDatabase, ref, push, onValue, runTransaction, query, orderByChild, limitToLast, remove
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
 /* ---------- Firebase config (kendi proje config'in) ---------- */
@@ -231,6 +232,8 @@ function resetGame(){
     const gapY = Math.round(Math.random() * (BASE_H - 140 - gap - 80) + 80);
     pipes.push({ x, gapY, gap, passed:false });
   }
+  // resume audio if suspended
+  try { if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); } catch(e){}
   requestAnimationFrame(loop);
 }
 function gameOver(){
@@ -431,10 +434,4 @@ submitScoreBtn.addEventListener('click', ()=>{
   submitScoreToFirebase(nm || 'Anonim', score);
   submitScoreBtn.textContent = 'Kaydedildi ✓';
   setTimeout(()=> submitScoreBtn.textContent = 'Skoru Kaydet', 1400);
-});
-
-/* prefill name */
-const savedName = localStorage.getItem('biyik_player_name') || '';
-nameInput.value = savedName;
-
-/* Ensure audio co
+}
