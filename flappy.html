@@ -33,6 +33,9 @@
   input[type="text"]{ width:100%; padding:8px; border-radius:8px; border:1px solid rgba(0,0,0,0.08); box-sizing:border-box; }
   .deleteBtn { background: #b22222; padding:4px 8px; border-radius:6px; color:#fff; border:none; cursor:pointer; font-weight:700; font-size:12px; }
   .myScoresTitle { margin-top:12px; font-weight:700; }
+  /* game button look */
+  .game-btn { background: linear-gradient(180deg,#ffdd57,#ffbf00); color:#071; border-radius:10px; padding:10px 14px; font-weight:800; box-shadow:0 6px 18px rgba(0,0,0,0.18); border:none; cursor:pointer; }
+  .game-btn:hover { transform: translateY(-2px); }
   @media (max-width:900px){
     .wrap { flex-direction:column; align-items:center; }
     #leaderboard{ width:92%; max-width:420px;}
@@ -112,7 +115,7 @@ import {
   getDatabase, ref, push, onValue, runTransaction, query, orderByChild, limitToLast, remove
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
-/* ---------- Firebase config (kendi proje config'in) ---------- */
+/* ---------- Firebase config (kullanılan config) ---------- */
 const firebaseConfig = {
   apiKey: "AIzaSyCNC1M0tgiKdV-YbE-zPrES2MP0oXN0xLU",
   authDomain: "byklfb-c85d8.firebaseapp.com",
@@ -264,8 +267,7 @@ function flap(){
 /* inputs */
 window.addEventListener('keydown', (e) => { if(e.code === 'Space' || e.code === 'ArrowUp'){ e.preventDefault(); flap(); } });
 canvas.addEventListener('pointerdown', (e) => { flap(); });
-startBtn.addEventListener('click', resetGame);
-restartBtn.addEventListener('click', resetGame);
+// start and restart are wired below again as fallback
 
 /* sprite toggle */
 toggleSpriteBtn.addEventListener('click', ()=>{
@@ -351,8 +353,8 @@ onValue(topQuery, snapshot => {
   const arr = Object.entries(val).map(([k,v]) => ({ key:k, ...v }));
   arr.sort((a,b)=> b.score - a.score);
   if(arr.length === 0){
-    scoresList.innerHTML = '<div style="text-align:center;color:#666;padding:8px 0;">Henüz skor yok.</div>';
-    globalTopEl.textContent = '0';
+    if(scoresList) scoresList.innerHTML = '<div style="text-align:center;color:#666;padding:8px 0;">Henüz skor yok.</div>';
+    if(globalTopEl) globalTopEl.textContent = '0';
     return;
   }
   const rows = arr.map((s, idx) => {
@@ -361,8 +363,8 @@ onValue(topQuery, snapshot => {
     const delBtn = (s.userId && s.userId === userId) ? `<button class="deleteBtn" data-key="${s.key}">Sil</button>` : '';
     return `<div class="scoreRow" data-key="${s.key}"><div style="flex:1">${idx+1}. ${displayName}</div><div style="min-width:60px;text-align:right">${s.score}</div><div>${delBtn}</div></div>`;
   }).join('');
-  scoresList.innerHTML = rows;
-  globalTopEl.textContent = arr[0].score;
+  if(scoresList) scoresList.innerHTML = rows;
+  if(globalTopEl) globalTopEl.textContent = arr[0].score;
 
   // attach delete listeners for shown rows
   document.querySelectorAll('#scoresList .deleteBtn').forEach(btn=>{
@@ -370,7 +372,6 @@ onValue(topQuery, snapshot => {
       const key = btn.dataset.key;
       if(!confirm('Bu skoru silmek istediğinizden emin misiniz?')) return;
       remove(ref(db, 'flappy_scores/' + key)).then(()=> {
-        // UI güncellenir onValue listener ile
         alert('Skor silindi.');
       }).catch(err=> {
         console.error('silme hata', err);
@@ -387,10 +388,10 @@ onValue(scoresRef, snapshot => {
   // filtrele
   const my = arr.filter(s => s.userId && s.userId === userId).sort((a,b)=> b.score - a.score);
   if(my.length === 0){
-    myScoresList.innerHTML = '<div style="text-align:center;color:#666;padding:8px 0;">Henüz kayıtlı skorun yok.</div>';
+    if(myScoresList) myScoresList.innerHTML = '<div style="text-align:center;color:#666;padding:8px 0;">Henüz kayıtlı skorun yok.</div>';
     return;
   }
-  myScoresList.innerHTML = my.map(s => {
+  if(myScoresList) myScoresList.innerHTML = my.map(s => {
     const displayName = escapeHtml(s.name || 'Anonim').slice(0,18);
     return `<div class="scoreRow"><div style="flex:1">${displayName}</div><div style="min-width:60px;text-align:right">${s.score}</div><div><button class="deleteBtn myDel" data-key="${s.key}">Sil</button></div></div>`;
   }).join('');
@@ -426,12 +427,4 @@ function submitScoreToFirebase(name, scoreVal){
 /* form actions */
 submitScoreBtn.addEventListener('click', ()=>{
   const nm = (nameInput.value || '').trim();
-  if(score <= 0){
-    alert('Skor 0 iken kayıt yapılamaz.');
-    return;
-  }
-  if(nm) localStorage.setItem('biyik_player_name', nm);
-  submitScoreToFirebase(nm || 'Anonim', score);
-  submitScoreBtn.textContent = 'Kaydedildi ✓';
-  setTimeout(()=> submitScoreBtn.textContent = 'Skoru Kaydet', 1400);
-}
+  if(score <=
