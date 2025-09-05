@@ -268,11 +268,6 @@ function flap(){
 window.addEventListener('keydown', (e) => { if(e.code === 'Space' || e.code === 'ArrowUp'){ e.preventDefault(); flap(); } });
 canvas.addEventListener('pointerdown', (e) => { flap(); });
 // start and restart are wired below again as fallback
-
-/* sprite toggle */
-toggleSpriteBtn.addEventListener('click', ()=>{
-  useSprite = !useSprite;
-  toggleSpriteBtn.textContent = useSprite ? 'Sprite Kullanılıyor ✅' : 'Sprite Kullan';
 });
 
 /* main loop */
