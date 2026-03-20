@@ -1,87 +1,188 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yakında Açılıyor</title>
-  <style>
-    /* Temel sayfa ayarları */
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-      color: #fff;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    /* Başlık */
-    h1 {
-      font-size: 4em;
-      margin: 0;
-      animation: pulse 2s infinite;
-    }
-
-    /* Alt yazı */
-    p {
-      font-size: 1.5em;
-      margin-top: 10px;
-      color: rgba(255, 255, 255, 0.85);
-    }
-
-    /* Pulse animasyonu */
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.8; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    /* Arka plan hareketi için baloncuk efekti */
-    .bubbles {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .bubble {
-      position: absolute;
-      bottom: -100px;
-      width: 20px;
-      height: 20px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 50%;
-      animation: rise 10s infinite;
-    }
-
-    @keyframes rise {
-      0% { transform: translateY(0) scale(1); opacity: 0.5; }
-      50% { opacity: 1; }
-      100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Geometry Dash - Evolved</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
+        body { background: #000; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: 'Arial Black', sans-serif; }
+        #gameContainer { position: relative; width: 100vw; height: 100vh; max-width: 900px; max-height: 450px; background: #050015; border: 2px solid #444; overflow: hidden; }
+        canvas { width: 100%; height: 100%; display: block; }
+        
+        #ui { position: absolute; top: 15px; width: 100%; display: flex; justify-content: space-between; padding: 0 20px; color: #fff; font-size: 14px; pointer-events: none; z-index: 10; text-shadow: 0 0 5px #000; }
+        .ui-box { background: rgba(0,0,0,0.6); padding: 8px 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); pointer-events: auto; cursor: pointer; }
+        
+        #customMenu, #menu { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            display: none; flex-direction: column; justify-content: center; align-items: center; 
+            background: rgba(0,0,0,0.95); z-index: 2000; color: white; text-align: center;
+        }
+        .skin-btn { width: 45px; height: 45px; margin: 5px; border: 2px solid #fff; display: inline-block; cursor: pointer; }
+        .shape-btn { padding: 8px 18px; margin: 5px; background: #222; border: 2px solid #fff; color: white; cursor: pointer; }
+        .active-opt { border-color: #00ffcc; box-shadow: 0 0 15px #00ffcc; color: #00ffcc; }
+        #restartBtn { padding: 15px 40px; font-size: 20px; background: #ff3366; border: none; border-radius: 8px; cursor: pointer; color: white; font-weight: bold; margin-top: 20px; }
+    </style>
 </head>
 <body>
-  <div class="bubbles">
-    <!-- Baloncukları çoğaltabilirsiniz -->
-    <div class="bubble" style="left:10%; width:15px; height:15px; animation-duration:12s;"></div>
-    <div class="bubble" style="left:30%; width:25px; height:25px; animation-duration:15s;"></div>
-    <div class="bubble" style="left:50%; width:20px; height:20px; animation-duration:10s;"></div>
-    <div class="bubble" style="left:70%; width:18px; height:18px; animation-duration:13s;"></div>
-    <div class="bubble" style="left:90%; width:22px; height:22px; animation-duration:17s;"></div>
-  </div>
 
-  <div style="position: relative; z-index: 1;">
-    <h1>Yakında Açılıyor</h1>
-    <p>Çooook yakında!</p></p>
-  </div>
+    <div id="gameContainer">
+        <div id="ui">
+            <div class="ui-box">REKOR: <span id="highTxt">0</span></div>
+            <div class="ui-box" id="openCustom">ÖZELLEŞTİR</div>
+            <div class="ui-box">SKOR: <span id="scoreTxt">0</span></div>
+        </div>
+
+        <div id="customMenu">
+            <h2>GÖRÜNÜM</h2>
+            <div style="margin: 15px 0;">
+                <div class="skin-btn" style="background: #00ffcc;" onclick="changeColor('#00ffcc', this)"></div>
+                <div class="skin-btn" style="background: #ff00ff;" onclick="changeColor('#ff00ff', this)"></div>
+                <div class="skin-btn" style="background: #ffff00;" onclick="changeColor('#ffff00', this)"></div>
+            </div>
+            <div>
+                <button class="shape-btn active-opt" id="btnSquare" onclick="changeShape('square')">KARE</button>
+                <button class="shape-btn" id="btnTriangle" onclick="changeShape('triangle')">ÜÇGEN</button>
+            </div>
+            <button id="closeCustom" style="margin-top:25px; background:transparent; color:#aaa; border:none;">Kapat</button>
+        </div>
+
+        <div id="menu">
+            <h1 id="biomeAlert" style="color: #ff3366; font-size: 40px;">ELENDİN!</h1>
+            <p id="finalScore" style="font-size: 20px;">Skor: 0</p>
+            <button id="restartBtn">TEKRAR DENE</button>
+        </div>
+
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const W = 900, H = 450;
+        canvas.width = W; canvas.height = H;
+
+        let gameSpeed = 8.5, score = 0, distance = 0, isGameOver = false, isPaused = false;
+        let obstacles = [], trail = [], nextTimer = 0;
+        let highscore = localStorage.getItem("gd_evolved_high") || 0;
+        document.getElementById("highTxt").innerText = highscore;
+
+        const player = {
+            x: 130, y: H - 85, size: 40,
+            dy: 0, gravity: 0.95, jump: -15.5,
+            grounded: false, rotation: 0, color: "#00ffcc", shape: "square"
+        };
+
+        // --- ÖZELLEŞTİRME VE RESET ---
+        function changeColor(c, el) { player.color = c; document.querySelectorAll('.skin-btn').forEach(b => b.classList.remove('active-opt')); el.classList.add('active-opt'); }
+        function changeShape(s) { player.shape = s; document.getElementById('btnSquare').classList.toggle('active-opt', s === 'square'); document.getElementById('btnTriangle').classList.toggle('active-opt', s === 'triangle'); }
+        document.getElementById("openCustom").onclick = () => { isPaused = true; document.getElementById("customMenu").style.display = "flex"; };
+        document.getElementById("closeCustom").onclick = () => { isPaused = false; document.getElementById("customMenu").style.display = "none"; };
+        document.getElementById("restartBtn").onclick = () => { score = 0; distance = 0; gameSpeed = 8.5; obstacles = []; trail = []; player.y = H-85; player.dy = 0; isGameOver = false; document.getElementById("menu").style.display = "none"; };
+
+        // --- OYUN DÜNYASI VE TEMALAR ---
+        function getBiome() {
+            if (score < 50) return { bg: "#050015", grid: "rgba(0, 255, 204, 0.15)", ground: "#00ffcc" };
+            if (score < 150) return { bg: "#200500", grid: "rgba(255, 60, 0, 0.2)", ground: "#ff3c00" };
+            return { bg: "#001020", grid: "rgba(0, 200, 255, 0.2)", ground: "#00ccff" };
+        }
+
+        function drawPlayer() {
+            trail.push({x: player.x, y: player.y, rotation: player.rotation});
+            if(trail.length > 10) trail.shift();
+            trail.forEach((t, i) => {
+                ctx.globalAlpha = i / 20; ctx.fillStyle = player.color;
+                ctx.save(); ctx.translate(t.x+20, t.y+20); ctx.rotate(t.rotation*Math.PI/180);
+                if(player.shape === "square") ctx.fillRect(-18, -18, 36, 36);
+                else { ctx.beginPath(); ctx.moveTo(0,-18); ctx.lineTo(-18,18); ctx.lineTo(18,18); ctx.fill(); }
+                ctx.restore();
+            });
+            ctx.globalAlpha = 1;
+
+            ctx.save(); ctx.translate(player.x + 20, player.y + 20); ctx.rotate(player.rotation * Math.PI / 180);
+            ctx.shadowBlur = 15; ctx.shadowColor = player.color; ctx.fillStyle = player.color;
+            if(player.shape === "square") {
+                ctx.fillRect(-20, -20, 40, 40); ctx.strokeStyle = "#fff"; ctx.lineWidth = 3; ctx.strokeRect(-14, -14, 28, 28);
+            } else {
+                ctx.beginPath(); ctx.moveTo(0,-20); ctx.lineTo(-20,20); ctx.lineTo(20,20); ctx.closePath(); ctx.fill();
+                ctx.strokeStyle = "#fff"; ctx.lineWidth = 3; ctx.stroke();
+            }
+            ctx.restore(); ctx.shadowBlur = 0;
+        }
+
+        // --- ANA DÖNGÜ ---
+        function update() {
+            if(isPaused) { requestAnimationFrame(update); return; }
+            let biome = getBiome();
+
+            // Arka Plan Temizliği
+            ctx.fillStyle = biome.bg; ctx.fillRect(0, 0, W, H);
+            
+            // Grid Optimizasyonu
+            ctx.strokeStyle = biome.grid; ctx.lineWidth = 1;
+            let offset = distance % 60;
+            for(let x = -offset; x < W; x += 60) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+
+            // Zemin
+            ctx.fillStyle = "#000"; ctx.fillRect(0, H - 35, W, 35);
+            ctx.strokeStyle = biome.ground; ctx.lineWidth = 3; ctx.strokeRect(0, H - 37, W, 2);
+
+            if(!isGameOver) {
+                distance += gameSpeed; gameSpeed += 0.002; score += 0.1;
+                document.getElementById("scoreTxt").innerText = Math.floor(score);
+
+                player.dy += player.gravity; player.y += player.dy;
+                let floor = H - 37 - 40;
+                if(player.y >= floor) { player.y = floor; player.dy = 0; player.grounded = true; player.rotation = 0; }
+                else { player.rotation += (gameSpeed * 0.85); player.grounded = false; }
+
+                nextTimer--;
+                if(nextTimer <= 0) {
+                    let type = Math.random() > 0.75 ? "saw" : "spike";
+                    if(type === "spike") {
+                        let c = Math.floor(Math.random()*3)+1;
+                        obstacles.push({type:"spike", x:W, y:H-72, w:35*c, h:35, count:c});
+                    } else {
+                        obstacles.push({type:"saw", x:W, y:H-135, w:42, h:42});
+                    }
+                    nextTimer = Math.floor(Math.random()*35) + (720/gameSpeed);
+                }
+
+                for(let i=obstacles.length-1; i>=0; i--) {
+                    let o = obstacles[i]; o.x -= gameSpeed;
+                    if(o.type === "spike") {
+                        ctx.fillStyle = "#ff3366";
+                        for(let j=0; j<o.count; j++) {
+                            let sx = o.x+(j*35);
+                            ctx.beginPath(); ctx.moveTo(sx, o.y+35); ctx.lineTo(sx+17.5, o.y); ctx.lineTo(sx+35, o.y+35); ctx.fill();
+                        }
+                    } else {
+                        ctx.save(); ctx.translate(o.x+21, o.y+21); ctx.rotate(distance*0.1);
+                        ctx.fillStyle = "#fff";
+                        for(let s=0; s<8; s++) { ctx.rotate(Math.PI/4); ctx.fillRect(-21, -4, 42, 8); }
+                        ctx.restore();
+                    }
+                    // Çarpışma
+                    if(player.x+10 < o.x+o.w-10 && player.x+30 > o.x+10 && player.y+35 > o.y+5 && player.y < o.y+o.h) {
+                        isGameOver = true;
+                        if(score > highscore) { highscore = Math.floor(score); localStorage.setItem("gd_evolved_high", highscore); document.getElementById("highTxt").innerText = highscore; }
+                        document.getElementById("menu").style.display = "flex";
+                        document.getElementById("finalScore").innerText = "Skor: " + Math.floor(score);
+                    }
+                    if(o.x+o.w < 0) obstacles.splice(i, 1);
+                }
+            }
+            drawPlayer();
+            requestAnimationFrame(update);
+        }
+
+        // Kontroller
+        const jump = () => { if(!isGameOver && !isPaused && player.grounded) { player.dy = player.jump; player.grounded = false; } };
+        window.addEventListener("touchstart", (e) => { if(e.target === canvas) { e.preventDefault(); jump(); } }, {passive: false});
+        window.addEventListener("mousedown", jump);
+        window.addEventListener("keydown", (e) => { if(e.code === "Space") jump(); });
+
+        update();
+    </script>
 </body>
 </html>
